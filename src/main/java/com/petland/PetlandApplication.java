@@ -1,4 +1,4 @@
-package com.petshop.petland_api;
+package com.petland;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
