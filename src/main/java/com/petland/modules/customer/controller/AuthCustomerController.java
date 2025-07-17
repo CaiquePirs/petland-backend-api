@@ -2,7 +2,12 @@ package com.petland.modules.customer.controller;
 
 import com.petland.modules.customer.dto.AuthCustomerRequestDTO;
 import com.petland.modules.customer.dto.AuthCustomerResponseDTO;
+import com.petland.modules.customer.dto.CustomerRequestDTO;
+import com.petland.modules.customer.dto.CustomerResponseDTO;
+import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.service.AuthCustomerUseCase;
+import com.petland.modules.customer.service.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,15 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("auth/login")
+@RequestMapping("customers/auth")
 @RequiredArgsConstructor
 public class AuthCustomerController {
 
     private final AuthCustomerUseCase authCustomerUseCase;
+    private final CustomerService customerService;
+    private final CustomerMapper customerMapper;
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<AuthCustomerResponseDTO> login(@RequestBody AuthCustomerRequestDTO authCustomer){
         AuthCustomerResponseDTO auth = authCustomerUseCase.execute(authCustomer);
         return ResponseEntity.ok().body(auth);
+    }
+
+    @PostMapping("register")
+    public ResponseEntity<CustomerResponseDTO> register(@RequestBody @Valid CustomerRequestDTO customerRequestDTO){
+        var customer = customerService.register(customerRequestDTO);
+        var customerResponseDTO = customerMapper.toDTO(customer);
+        return ResponseEntity.ok().body(customerResponseDTO);
     }
 }

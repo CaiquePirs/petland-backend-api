@@ -22,7 +22,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers( "/auth/login").permitAll()
+                    auth.requestMatchers( "/customers/auth/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtCustomerFilter, BasicAuthenticationFilter.class);

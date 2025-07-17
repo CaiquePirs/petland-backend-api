@@ -17,13 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private final CustomerService service;
-    private final CustomerMapper customerMapper;
 
-    @PostMapping
-    public ResponseEntity<CustomerResponseDTO> register(@RequestBody @Valid CustomerRequestDTO customerRequestDTO){
-        var customer = service.register(customerRequestDTO);
-        var customerResponseDTO = customerMapper.toDTO(customer);
-        return ResponseEntity.ok().body(customerResponseDTO);
-    }
+
+
 }
