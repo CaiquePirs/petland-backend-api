@@ -21,7 +21,7 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<CustomerResponseDTO> findById(HttpServletRequest request){
-        String customerId = request.getAttribute("customer_id").toString();
+        String customerId = request.getAttribute("id").toString();
         Customer customer = customerService.findCustomerById(UUID.fromString(customerId));
         return ResponseEntity.ok().body(customerMapper.toDTO(customer));
     }

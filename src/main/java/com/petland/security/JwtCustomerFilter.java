@@ -31,7 +31,7 @@ public class JwtCustomerFilter extends OncePerRequestFilter {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     return;
                 }
-                request.setAttribute("customer_id", token.getSubject());
+                request.setAttribute("id", token.getSubject());
                 var roles = token.getClaim("roles").asList(Object.class);
                 var grants = roles.stream()
                         .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString().toUpperCase())).toList();
