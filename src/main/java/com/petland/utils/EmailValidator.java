@@ -1,6 +1,6 @@
 package com.petland.utils;
 
-import com.petland.exceptions.InvalidCredentialsException;
+import com.petland.exceptions.EmailFoundException;
 import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.modules.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class ValidateEmailExist {
+public class EmailValidator {
 
     private final CustomerRepository customerRepository;
     private final EmployeeRepository employeeRepository;
 
-    public void validate(String email){
+    public void checkIfEmailExists(String email){
         boolean existCustomer = customerRepository
                 .findByEmail(email).isPresent();
 
@@ -21,7 +21,7 @@ public class ValidateEmailExist {
                 .findByEmail(email).isPresent();
 
         if(existCustomer || existEmployee){
-            throw new InvalidCredentialsException("This email already exist");
+            throw new EmailFoundException("This email already exists");
         }
 
     }

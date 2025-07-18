@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.petland.exceptions.InvalidCredentialsException;
 import com.petland.modules.customer.dto.AuthCustomerRequestDTO;
 import com.petland.modules.customer.dto.AuthCustomerResponseDTO;
+import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,17 +30,17 @@ public class AuthCustomerUseCase {
     }
 
     public AuthCustomerResponseDTO execute(AuthCustomerRequestDTO authCustomerRequestDTO) {
-        var customer = customerRepository.findByEmail(authCustomerRequestDTO.email())
+        Customer customer = customerRepository.findByEmail(authCustomerRequestDTO.email())
                 .orElseThrow(() -> new InvalidCredentialsException("Email/password incorrect"));
 
-        var matches = encoder.matches(authCustomerRequestDTO.password(), customer.getPassword());
+        boolean matches = encoder.matches(authCustomerRequestDTO.password(), customer.getPassword());
 
         if(!matches){
             throw new InvalidCredentialsException("Email/password incorrect");
         }
 
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
-        var expiresIn = Instant.now().plus(Duration.ofMinutes(10));
+        Instant expiresIn = Instant.now().plus(Duration.ofMinutes(10));
 
         var token = JWT.create()
                 .withSubject(customer.getId().toString())

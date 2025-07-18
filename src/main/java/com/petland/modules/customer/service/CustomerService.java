@@ -6,7 +6,7 @@ import com.petland.modules.customer.dto.CustomerRequestDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.repository.CustomerRepository;
-import com.petland.utils.ValidateEmailExist;
+import com.petland.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,15 +16,15 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final ValidateEmailExist validateEmail;
+    private final EmailValidator validateEmail;
     private final CustomerMapper customerMapper;
     private final PasswordEncoder passwordEncoder;
 
     public Customer register(CustomerRequestDTO customerRequestDTO){
-        validateEmail.validate(customerRequestDTO.email());
-        var encryptedPassword = passwordEncoder.encode(customerRequestDTO.password());
+        validateEmail.checkIfEmailExists(customerRequestDTO.email());
+        String encryptedPassword = passwordEncoder.encode(customerRequestDTO.password());
 
-        var customer = customerMapper.toEntity(customerRequestDTO);
+        Customer customer = customerMapper.toEntity(customerRequestDTO);
         customer.setRole(Roles.CUSTOMER);
         customer.setStatus(StatusEntity.ACTIVE);
         customer.setPassword(encryptedPassword);

@@ -5,6 +5,7 @@ import com.petland.modules.customer.dto.AuthCustomerResponseDTO;
 import com.petland.modules.customer.dto.CustomerRequestDTO;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
+import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.AuthCustomerUseCase;
 import com.petland.modules.customer.service.CustomerService;
 import jakarta.validation.Valid;
@@ -32,8 +33,8 @@ public class AuthCustomerController {
 
     @PostMapping("register")
     public ResponseEntity<CustomerResponseDTO> register(@RequestBody @Valid CustomerRequestDTO customerRequestDTO){
-        var customer = customerService.register(customerRequestDTO);
-        var customerResponseDTO = customerMapper.toDTO(customer);
+        Customer customer = customerService.register(customerRequestDTO);
+        CustomerResponseDTO customerResponseDTO = customerMapper.toDTO(customer);
         return ResponseEntity.ok().body(customerResponseDTO);
     }
 }
