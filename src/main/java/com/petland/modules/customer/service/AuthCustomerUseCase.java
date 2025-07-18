@@ -3,6 +3,7 @@ package com.petland.modules.customer.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.petland.common.exception.InvalidCredentialsException;
+import com.petland.enums.Roles;
 import com.petland.modules.customer.dto.AuthCustomerRequestDTO;
 import com.petland.modules.customer.dto.AuthCustomerResponseDTO;
 import com.petland.modules.customer.model.Customer;
@@ -44,7 +45,7 @@ public class AuthCustomerUseCase {
 
         var token = JWT.create()
                 .withSubject(customer.getId().toString())
-                .withClaim("roles", List.of("CUSTOMER"))
+                .withClaim("roles", List.of(Roles.CUSTOMER.toString()))
                 .withExpiresAt(expiresIn)
                 .sign(algorithm);
 

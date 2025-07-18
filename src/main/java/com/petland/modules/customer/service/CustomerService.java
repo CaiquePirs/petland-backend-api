@@ -1,5 +1,6 @@
 package com.petland.modules.customer.service;
 
+import com.petland.common.exception.UserNotFoundException;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.dto.CustomerRequestDTO;
@@ -10,6 +11,8 @@ import com.petland.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,4 +34,11 @@ public class CustomerService {
 
         return customerRepository.save(customer);
     }
+
+    public Customer findCustomerById(UUID customerId){
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        return customer;
+    }
+
 }
