@@ -1,6 +1,6 @@
 package com.petland.modules.customer.dto;
 
-import com.petland.common.Address;
+import com.petland.utils.Address;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

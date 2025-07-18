@@ -2,7 +2,7 @@ package com.petland.modules.customer.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.petland.exceptions.InvalidCredentialsException;
+import com.petland.common.exception.InvalidCredentialsException;
 import com.petland.modules.customer.dto.AuthCustomerRequestDTO;
 import com.petland.modules.customer.dto.AuthCustomerResponseDTO;
 import com.petland.modules.customer.model.Customer;

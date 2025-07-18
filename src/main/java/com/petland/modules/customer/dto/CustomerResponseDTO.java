@@ -1,6 +1,6 @@
 package com.petland.modules.customer.dto;
 
-import com.petland.common.Address;
+import com.petland.utils.Address;
 
 import java.time.LocalDate;
 import java.util.UUID;

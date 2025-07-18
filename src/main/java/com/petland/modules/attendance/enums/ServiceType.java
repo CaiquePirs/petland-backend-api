@@ -1,6 +1,6 @@
 package com.petland.modules.attendance.enums;
 
-public enum ServiceTypes {
+public enum ServiceType {
     PET_CARE,
     BATH,
     GROOMING,

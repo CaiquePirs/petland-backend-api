@@ -1,6 +1,6 @@
 package com.petland.modules.attendance.model;
 
-import com.petland.modules.attendance.enums.ServiceTypes;
+import com.petland.modules.attendance.enums.ServiceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +23,7 @@ public class ServicesProvided {
     private UUID id;
 
     @Enumerated(value = EnumType.STRING)
-    private ServiceTypes serviceType;
+    private ServiceType serviceType;
 
     @Column(nullable = false)
     private BigDecimal servicePrice;

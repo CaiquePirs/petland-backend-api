@@ -1,7 +1,7 @@
 package com.petland.modules.employee.model;
 
 
-import com.petland.common.Address;
+import com.petland.utils.Address;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.employee.enums.Department;

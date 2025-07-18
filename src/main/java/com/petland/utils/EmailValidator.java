@@ -1,6 +1,6 @@
 package com.petland.utils;
 
-import com.petland.exceptions.EmailFoundException;
+import com.petland.common.exception.EmailFoundException;
 import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.modules.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.petland.modules.attendance.model;
 
-import com.petland.common.Address;
+import com.petland.utils.Address;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.attendance.enums.PaymentType;
 import com.petland.modules.attendance.enums.StatusService;
