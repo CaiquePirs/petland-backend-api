@@ -1,6 +1,7 @@
 package com.petland.utils;
 
 import com.petland.common.exception.EmailFoundException;
+import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.modules.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,10 @@ public class EmailValidator {
 
     public void checkIfEmailExists(String email){
         boolean existCustomer = customerRepository
-                .findByEmail(email).isPresent();
+                .findByEmailAndStatus(email, StatusEntity.ACTIVE).isPresent();
 
         boolean existEmployee = employeeRepository
-                .findByEmail(email).isPresent();
+                .findByEmailAndStatus(email, StatusEntity.ACTIVE).isPresent();
 
         if(existCustomer || existEmployee){
             throw new EmailFoundException("This email already exists");

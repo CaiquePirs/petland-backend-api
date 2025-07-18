@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.petland.common.exception.InvalidCredentialsException;
 import com.petland.enums.Roles;
+import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.dto.AuthCustomerRequestDTO;
 import com.petland.modules.customer.dto.AuthCustomerResponseDTO;
 import com.petland.modules.customer.model.Customer;
@@ -31,7 +32,7 @@ public class AuthCustomerUseCase {
     }
 
     public AuthCustomerResponseDTO execute(AuthCustomerRequestDTO authCustomerRequestDTO) {
-        Customer customer = customerRepository.findByEmail(authCustomerRequestDTO.email())
+        Customer customer = customerRepository.findByEmailAndStatus(authCustomerRequestDTO.email(), StatusEntity.ACTIVE)
                 .orElseThrow(() -> new InvalidCredentialsException("Email/password incorrect"));
 
         boolean matches = encoder.matches(authCustomerRequestDTO.password(), customer.getPassword());
