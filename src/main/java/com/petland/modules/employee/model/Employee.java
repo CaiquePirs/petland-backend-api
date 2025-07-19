@@ -1,6 +1,5 @@
 package com.petland.modules.employee.model;
 
-
 import com.petland.utils.Address;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
@@ -14,7 +13,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -40,9 +38,8 @@ public class Employee {
     @Column(nullable = false)
     private String phone;
 
-    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private List<Roles> roles;
+    private Roles role;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -51,17 +48,16 @@ public class Employee {
     @Column(nullable = false)
     private Address address;
 
-    @Enumerated(value = EnumType.STRING)
-    private StatusEntity status;
-
     @Column(nullable = false)
     private LocalDate hireDate;
 
     @Column(nullable = false)
     private LocalDate dateBirth;
 
-    @Column(nullable = false)
     private UUID employee_audit;
+
+    @Enumerated(value = EnumType.STRING)
+    private StatusEntity status;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

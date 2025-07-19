@@ -2,6 +2,10 @@ package com.petland.modules.employee.controller;
 
 import com.petland.common.auth.dto.AuthRequestDTO;
 import com.petland.common.auth.dto.AuthResponseDTO;
+import com.petland.modules.employee.dto.EmployeeRequestDTO;
+import com.petland.modules.employee.dto.EmployeeResponseDTO;
+import com.petland.modules.employee.mappers.EmployeeMapper;
+import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.AuthEmployeeUseCase;
 import com.petland.modules.employee.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthEmployeeController {
 
     private final AuthEmployeeUseCase authEmployeeUseCase;
+    private final EmployeeMapper employeeMapper;
+    private final EmployeeService employeeService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login (@RequestBody @Valid AuthRequestDTO authRequestDTO){
@@ -25,4 +31,9 @@ public class AuthEmployeeController {
        return ResponseEntity.ok(authResponseDTO);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<EmployeeResponseDTO> register (@RequestBody @Valid EmployeeRequestDTO employeeRequestDTO){
+        Employee employee = employeeService.register(employeeRequestDTO);
+        return ResponseEntity.ok(employeeMapper.toDTO(employee));
+    }
 }

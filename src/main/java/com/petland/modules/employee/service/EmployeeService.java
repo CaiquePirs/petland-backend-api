@@ -1,0 +1,41 @@
+package com.petland.modules.employee.service;
+
+import com.petland.enums.Roles;
+import com.petland.enums.StatusEntity;
+import com.petland.modules.employee.dto.EmployeeRequestDTO;
+import com.petland.modules.employee.mappers.EmployeeMapper;
+import com.petland.modules.employee.model.Employee;
+import com.petland.modules.employee.repository.EmployeeRepository;
+import com.petland.utils.EmailValidator;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+
+@Service
+@RequiredArgsConstructor
+public class EmployeeService {
+
+    private final EmployeeRepository employeeRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final EmployeeMapper employeeMapper;
+    private final EmailValidator emailValidator;
+
+    @Transactional
+    public Employee register(EmployeeRequestDTO employeeRequestDTO){
+        emailValidator.checkIfEmailExists(employeeRequestDTO.email());
+
+        String encryptedPassword = passwordEncoder.encode(employeeRequestDTO.password());
+
+        Employee employee = employeeMapper.toEntity(employeeRequestDTO);
+        employee.setStatus(StatusEntity.ACTIVE);
+        employee.setRole(Roles.ADMIN);
+        employee.setPassword(encryptedPassword);
+
+        Employee registeredEmployee = employeeRepository.save(employee);
+        registeredEmployee.setEmployee_audit(registeredEmployee.getId());
+
+        return registeredEmployee;
+    }
+}
