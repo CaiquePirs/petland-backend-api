@@ -1,7 +1,7 @@
 package com.petland.modules.customer.controller;
 
-import com.petland.modules.customer.dto.AuthCustomerRequestDTO;
-import com.petland.modules.customer.dto.AuthCustomerResponseDTO;
+import com.petland.common.auth.dto.AuthRequestDTO;
+import com.petland.common.auth.dto.AuthResponseDTO;
 import com.petland.modules.customer.dto.CustomerRequestDTO;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
@@ -26,9 +26,9 @@ public class AuthCustomerController {
     private final CustomerMapper customerMapper;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthCustomerResponseDTO> login(@RequestBody AuthCustomerRequestDTO authCustomer){
-        AuthCustomerResponseDTO auth = authCustomerUseCase.execute(authCustomer);
-        return ResponseEntity.ok().body(auth);
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO authRequestDTO){
+        AuthResponseDTO authResponse = authCustomerUseCase.execute(authRequestDTO);
+        return ResponseEntity.ok().body(authResponse);
     }
 
     @PostMapping("register")

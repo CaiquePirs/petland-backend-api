@@ -1,9 +1,9 @@
-package com.petland.modules.customer.dto;
+package com.petland.common.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public record AuthCustomerRequestDTO(
+public record AuthRequestDTO(
         @NotBlank(message = "Email is required")
         @Email(message = "Email must be valid")
         String email,

@@ -2,11 +2,11 @@ package com.petland.modules.customer.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.petland.common.auth.dto.AuthRequestDTO;
 import com.petland.common.exception.InvalidCredentialsException;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
-import com.petland.modules.customer.dto.AuthCustomerRequestDTO;
-import com.petland.modules.customer.dto.AuthCustomerResponseDTO;
+import com.petland.common.auth.dto.AuthResponseDTO;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,11 +31,11 @@ public class AuthCustomerUseCase {
         this.SECRET_KEY = SECRET_KEY;
     }
 
-    public AuthCustomerResponseDTO execute(AuthCustomerRequestDTO authCustomerRequestDTO) {
-        Customer customer = customerRepository.findByEmailAndStatus(authCustomerRequestDTO.email(), StatusEntity.ACTIVE)
+    public AuthResponseDTO execute(AuthRequestDTO authRequestDTO) {
+        Customer customer = customerRepository.findByEmailAndStatus(authRequestDTO.email(), StatusEntity.ACTIVE)
                 .orElseThrow(() -> new InvalidCredentialsException("Email/password incorrect"));
 
-        boolean matches = encoder.matches(authCustomerRequestDTO.password(), customer.getPassword());
+        boolean matches = encoder.matches(authRequestDTO.password(), customer.getPassword());
 
         if(!matches){
             throw new InvalidCredentialsException("Email/password incorrect");
@@ -50,7 +50,7 @@ public class AuthCustomerUseCase {
                 .withExpiresAt(expiresIn)
                 .sign(algorithm);
 
-        return AuthCustomerResponseDTO.builder()
+        return AuthResponseDTO.builder()
                 .access_token(token)
                 .expire_in(expiresIn.toEpochMilli())
                 .build();
