@@ -2,6 +2,7 @@ package com.petland.modules.product.enums;
 
 public enum ProductType {
     PET_FOOD,
+    HYGIENE,
     SNACKS,
     PET_BEDS,
     PET_HOUSES,

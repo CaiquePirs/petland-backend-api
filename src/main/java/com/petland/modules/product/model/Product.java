@@ -1,6 +1,7 @@
 package com.petland.modules.product.model;
 
 import com.petland.enums.StatusEntity;
+import com.petland.modules.employee.model.Employee;
 import com.petland.modules.product.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,7 +41,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
-    private UUID barCode = UUID.randomUUID();
+    private UUID barCode;
 
     @Column(nullable = false)
     private LocalDate manufactureDate;
@@ -56,6 +57,10 @@ public class Product {
 
     @Column(nullable = false)
     private int stockQuantity;
+
+    @ManyToOne
+    @JoinColumn(name = "employer_id")
+    private Employee employee;
 
     private StatusEntity status;
     private UUID employee_audit;
