@@ -1,4 +1,4 @@
-package com.petland.modules.pet;
+package com.petland.modules.pet.model;
 
 import com.petland.enums.StatusEntity;
 import com.petland.modules.attendance.model.Attendance;
