@@ -31,7 +31,7 @@ public class AuthCustomerController {
         return ResponseEntity.ok().body(authResponse);
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<CustomerResponseDTO> register(@RequestBody @Valid CustomerRequestDTO customerRequestDTO){
         Customer customer = customerService.register(customerRequestDTO);
         CustomerResponseDTO customerResponseDTO = customerMapper.toDTO(customer);
