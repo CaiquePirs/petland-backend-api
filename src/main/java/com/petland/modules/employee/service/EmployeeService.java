@@ -1,5 +1,6 @@
 package com.petland.modules.employee.service;
 
+import com.petland.common.exception.UserNotFoundException;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.employee.dto.EmployeeRequestDTO;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 
 @Service
@@ -38,4 +41,17 @@ public class EmployeeService {
 
         return registeredEmployee;
     }
+
+    public Employee findById(UUID employeeId){
+
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new UserNotFoundException("Employer not found"));
+
+        if(employee.getStatus().equals(StatusEntity.DELETED)){
+            throw new UserNotFoundException("Employer not found");
+        }
+
+        return employee;
+    }
+
 }
