@@ -1,6 +1,6 @@
 package com.petland.security;
 
-import com.petland.providers.JWTCustomerProvider;
+import com.petland.providers.JwtAuthenticationProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,16 +16,15 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class JwtCustomerFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JWTCustomerProvider customerProvider;
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String header = request.getHeader("Authorization");
 
-        if (request.getRequestURI().startsWith("/customers")) {
             if (header != null) {
-                var token = customerProvider.validateToken(header);
+                var token = jwtAuthenticationProvider.validateToken(header);
 
                 if (token == null) {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -40,7 +39,6 @@ public class JwtCustomerFilter extends OncePerRequestFilter {
                         token.getSubject(), null, grants);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
-        }
 
         filterChain.doFilter(request, response);
     }

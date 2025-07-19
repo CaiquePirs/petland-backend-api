@@ -4,7 +4,7 @@ import com.petland.utils.Address;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.attendance.model.Attendance;
-import com.petland.modules.pet.Pet;
+import com.petland.modules.pet.model.Pet;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JWTCustomerProvider {
+public class JwtAuthenticationProvider {
 
     private final String SECRET_KEY;
 
-    public JWTCustomerProvider(@Value("${SECRET_KEY}") String SECRET_KEY){
+    public JwtAuthenticationProvider(@Value("${SECRET_KEY}") String SECRET_KEY){
         this.SECRET_KEY = SECRET_KEY;
     }
 

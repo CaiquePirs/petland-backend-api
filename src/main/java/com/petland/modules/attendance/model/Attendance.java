@@ -6,7 +6,7 @@ import com.petland.modules.attendance.enums.PaymentType;
 import com.petland.modules.attendance.enums.StatusService;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.employee.model.Employee;
-import com.petland.modules.pet.Pet;
+import com.petland.modules.pet.model.Pet;
 import com.petland.modules.sale.model.Sale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
