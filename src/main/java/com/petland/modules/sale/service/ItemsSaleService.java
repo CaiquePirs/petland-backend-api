@@ -58,4 +58,18 @@ public class ItemsSaleService {
         }).collect(Collectors.toList());
         return listItemsSale;
     }
+
+    public ItemsSale findItemSaleById(UUID saleId, UUID itemSaleId){
+        Sale sale = saleRepository.findById(saleId)
+                .orElseThrow(() -> new NotFoundException("Sale not found"));
+
+        if(sale.getStatus().equals(StatusEntity.DELETED)){
+            throw new NotFoundException("Sale ID not found");
+        }
+
+       return sale.getItemsSale().stream()
+                .filter(itemsSale -> itemsSale.getId().equals(itemSaleId))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Item sale ID not found"));
+    }
 }
