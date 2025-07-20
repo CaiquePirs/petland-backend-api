@@ -6,6 +6,7 @@ import com.petland.common.exception.EmailFoundException;
 import com.petland.common.exception.InvalidCredentialsException;
 import com.petland.common.exception.UnauthorizedException;
 import com.petland.common.exception.NotFoundException;
+import com.petland.modules.sale.InsufficientStockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -59,7 +60,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handlerUserNotFound(NotFoundException e){
+    public ResponseEntity<ErrorResponseDTO> handleUserNotFound(NotFoundException e){
         ErrorMessageDTO errorMessageDTO = new ErrorMessageDTO("Not found", e.getMessage());
 
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
@@ -71,7 +72,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ErrorResponseDTO> handlerUnauthorized(UnauthorizedException e){
+    public ResponseEntity<ErrorResponseDTO> handleUnauthorized(UnauthorizedException e){
         ErrorMessageDTO errorMessage = new ErrorMessageDTO("Unauthorized", e.getMessage());
 
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
@@ -80,6 +81,18 @@ public class GlobalExceptionHandler {
                 List.of(errorMessage));
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+    }
+
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInsufficientStock(InsufficientStockException e){
+        ErrorMessageDTO errorMessage = new ErrorMessageDTO("Stock", e.getMessage());
+
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                e.getMessage(),
+                List.of(errorMessage));
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);
     }
 
 }
