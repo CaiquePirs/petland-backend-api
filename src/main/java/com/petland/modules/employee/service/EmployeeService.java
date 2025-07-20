@@ -1,6 +1,6 @@
 package com.petland.modules.employee.service;
 
-import com.petland.common.exception.UserNotFoundException;
+import com.petland.common.exception.NotFoundException;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.employee.dto.EmployeeRequestDTO;
@@ -45,10 +45,10 @@ public class EmployeeService {
     public Employee findById(UUID employeeId){
 
         Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new UserNotFoundException("Employer not found"));
+                .orElseThrow(() -> new NotFoundException("Employer not found"));
 
         if(employee.getStatus().equals(StatusEntity.DELETED)){
-            throw new UserNotFoundException("Employer not found");
+            throw new NotFoundException("Employer not found");
         }
 
         return employee;

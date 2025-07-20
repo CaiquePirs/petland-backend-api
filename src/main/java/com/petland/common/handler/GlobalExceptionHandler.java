@@ -5,7 +5,7 @@ import com.petland.common.error.ErrorResponseDTO;
 import com.petland.common.exception.EmailFoundException;
 import com.petland.common.exception.InvalidCredentialsException;
 import com.petland.common.exception.UnauthorizedException;
-import com.petland.common.exception.UserNotFoundException;
+import com.petland.common.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -58,9 +58,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handlerUserNotFound(UserNotFoundException e){
-        ErrorMessageDTO errorMessageDTO = new ErrorMessageDTO("User not found", e.getMessage());
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handlerUserNotFound(NotFoundException e){
+        ErrorMessageDTO errorMessageDTO = new ErrorMessageDTO("Not found", e.getMessage());
 
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 HttpStatus.NOT_FOUND.value(),

@@ -1,6 +1,6 @@
 package com.petland.modules.customer.service;
 
-import com.petland.common.exception.UserNotFoundException;
+import com.petland.common.exception.NotFoundException;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.dto.CustomerRequestDTO;
@@ -37,10 +37,10 @@ public class CustomerService {
 
     public Customer findCustomerById(UUID customerId){
         Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         if(customer.getStatus().equals(StatusEntity.DELETED)){
-            throw new UserNotFoundException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         return customer;
