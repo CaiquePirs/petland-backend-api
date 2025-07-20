@@ -32,11 +32,13 @@ public class ItemsSale {
 
     private int productQuantity;
 
-    private BigDecimal productTotal;
+    private BigDecimal itemsSaleTotal;
 
     @ManyToOne
     @JoinColumn(name = "sale_id")
     private Sale sale;
+
+    private UUID employeeAudit;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
