@@ -1,4 +1,4 @@
-package com.petland.modules.sale;
+package com.petland.modules.sale.exceptions;
 
 public class InsufficientStockException extends RuntimeException {
     public InsufficientStockException(String message) {

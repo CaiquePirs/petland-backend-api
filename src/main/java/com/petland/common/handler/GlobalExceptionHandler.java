@@ -6,7 +6,7 @@ import com.petland.common.exception.EmailFoundException;
 import com.petland.common.exception.InvalidCredentialsException;
 import com.petland.common.exception.UnauthorizedException;
 import com.petland.common.exception.NotFoundException;
-import com.petland.modules.sale.InsufficientStockException;
+import com.petland.modules.sale.exceptions.InsufficientStockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

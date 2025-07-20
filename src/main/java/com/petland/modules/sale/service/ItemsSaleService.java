@@ -3,7 +3,7 @@ package com.petland.modules.sale.service;
 import com.petland.common.auth.AccessValidator;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;
-import com.petland.modules.sale.InsufficientStockException;
+import com.petland.modules.sale.exceptions.InsufficientStockException;
 import com.petland.modules.sale.dtos.ItemsSaleRequestDTO;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
