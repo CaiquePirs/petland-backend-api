@@ -1,19 +1,16 @@
 package com.petland.modules.customer.model;
 
+import com.petland.common.entity.BaseEntity;
 import com.petland.utils.Address;
 import com.petland.enums.Roles;
-import com.petland.enums.StatusEntity;
 import com.petland.modules.attendance.model.Attendance;
 import com.petland.modules.pet.model.Pet;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +19,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class Customer extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -54,17 +51,5 @@ public class Customer {
 
     @Embedded
     private Address address;
-
-    private UUID lastModifiedBy;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StatusEntity status;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }
 

@@ -1,24 +1,23 @@
 package com.petland.modules.sale.model;
 
+import com.petland.common.entity.BaseEntity;
 import com.petland.modules.product.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Data
+@Table(name = "tb_items_sale")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ItemsSale {
+public class ItemsSale extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,12 +36,4 @@ public class ItemsSale {
     @ManyToOne
     @JoinColumn(name = "sale_id")
     private Sale sale;
-
-    private UUID employeeAudit;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }

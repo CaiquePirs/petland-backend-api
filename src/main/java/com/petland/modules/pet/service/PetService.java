@@ -22,7 +22,6 @@ public class PetService {
 
     private final CustomerService customerService;
     private final PetRepository petRepository;
-    private final AccessValidator accessValidator;
     private final PetMapper petMapper;
 
     @Transactional
@@ -30,12 +29,9 @@ public class PetService {
         Customer customer = customerService
                 .findCustomerById(petRequestDTO.customerId());
 
-        UUID userLogged = accessValidator.getLoggedInUser();
-
         Pet pet = petMapper.toEntity(petRequestDTO);
         pet.setOwner(customer);
         pet.setStatus(StatusEntity.ACTIVE);
-        pet.setLastModifiedBy(userLogged);
 
         customer.getMyPets().add(pet);
         return petRepository.save(pet);

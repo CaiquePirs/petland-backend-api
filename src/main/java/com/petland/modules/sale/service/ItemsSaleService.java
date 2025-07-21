@@ -35,7 +35,7 @@ public class ItemsSaleService {
 
         List<ItemsSale> listItemsSale = itemsSaleRequestDTO.stream().map(itemsSaleRequest -> {
             ItemsSale itemsSale = new ItemsSale();
-            itemsSale.setCreatedAt(LocalDateTime.now());
+            itemsSale.setCreateAt(LocalDateTime.now());
 
             Product product = productService.findById(itemsSaleRequest.productId());
 
@@ -45,10 +45,7 @@ public class ItemsSaleService {
 
             double totalItemsSale = product.getCostSale().doubleValue() * itemsSaleRequest.productQuantity();
 
-            UUID employee_id = accessValidator.getLoggedInUser();
-
             itemsSale.setProduct(product);
-            itemsSale.setEmployeeAudit(employee_id);
 
             itemsSale.setItemsSaleTotal(BigDecimal.valueOf(totalItemsSale));
             itemsSale.setProductPrice(product.getCostSale());

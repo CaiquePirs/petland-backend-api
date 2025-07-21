@@ -1,18 +1,15 @@
 package com.petland.modules.product.model;
 
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.BaseEntity;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.product.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +17,7 @@ import java.util.UUID;
 @Table(name = "tb_products")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -62,12 +59,4 @@ public class Product {
     @JoinColumn(name = "employer_id")
     private Employee employee;
 
-    private StatusEntity status;
-    private UUID employee_audit;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }

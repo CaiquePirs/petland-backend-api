@@ -36,14 +36,10 @@ public class EmployeeService {
         employee.setRole(Roles.ADMIN);
         employee.setPassword(encryptedPassword);
 
-        Employee registeredEmployee = employeeRepository.save(employee);
-        registeredEmployee.setEmployee_audit(registeredEmployee.getId());
-
-        return registeredEmployee;
+        return employeeRepository.save(employee);
     }
 
     public Employee findById(UUID employeeId){
-
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new NotFoundException("Employer not found"));
 

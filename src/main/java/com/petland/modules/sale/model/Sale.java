@@ -1,6 +1,6 @@
 package com.petland.modules.sale.model;
 
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.BaseEntity;
 import com.petland.modules.attendance.enums.PaymentType;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.employee.model.Employee;
@@ -9,20 +9,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Data
+@Table(name = "tb_sales")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Sale {
+public class Sale extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,17 +41,6 @@ public class Sale {
 
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
-
-    @Enumerated(EnumType.STRING)
-    private StatusEntity status;
-
-    private UUID employeeAudit;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 
 }
 

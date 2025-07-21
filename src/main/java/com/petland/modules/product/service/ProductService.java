@@ -21,7 +21,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final EmployeeService employeeService;
-    private final AccessValidator accessValidator;
 
     public Product register(UUID employeeId, ProductRequestDTO productRequestDTO){
         Employee employee = employeeService.findById(employeeId);
@@ -29,9 +28,6 @@ public class ProductService {
         Product product = productMapper.toEntity(productRequestDTO);
         product.setBarCode(UUID.randomUUID());
         product.setStatus(StatusEntity.ACTIVE);
-
-        UUID employerLogged = accessValidator.getLoggedInUser();
-        product.setEmployee_audit(employerLogged);
 
         product.setEmployee(employee);
         return productRepository.save(product);

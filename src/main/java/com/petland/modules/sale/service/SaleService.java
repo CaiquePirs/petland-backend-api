@@ -48,7 +48,6 @@ public class SaleService {
 
         sale.setEmployee(employee);
         sale.setCustomer(customer);
-        sale.setEmployeeAudit(employeeId);
         sale.setPaymentType(saleRequestDTO.paymentType());
         sale.setStatus(StatusEntity.ACTIVE);
         sale.setItemsSale(listItemsSale);
