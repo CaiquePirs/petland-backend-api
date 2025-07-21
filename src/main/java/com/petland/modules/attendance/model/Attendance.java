@@ -43,11 +43,8 @@ public class Attendance {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @OneToMany(mappedBy = "attendance", cascade = CascadeType.ALL)
-    private List<ServicesProvided> servicesProviders;
-
     @OneToMany
-    @JoinColumn(name = "attendance_id")
+    @JoinColumn(name = "sale_id")
     private List<Sale> sales;
 
     @Column(nullable = false)
