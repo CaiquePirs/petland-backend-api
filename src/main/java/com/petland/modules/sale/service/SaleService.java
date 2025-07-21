@@ -1,6 +1,7 @@
 package com.petland.modules.sale.service;
 
 import com.petland.common.auth.AccessValidator;
+import com.petland.common.exception.NotFoundException;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
@@ -49,10 +50,20 @@ public class SaleService {
         sale.setCustomer(customer);
         sale.setEmployeeAudit(employeeId);
         sale.setPaymentType(saleRequestDTO.paymentType());
-        sale.setStatusEntity(StatusEntity.ACTIVE);
+        sale.setStatus(StatusEntity.ACTIVE);
         sale.setItemsSale(listItemsSale);
         sale.setTotalSales(totalSale);
 
         return saleRepository.save(sale);
+    }
+
+    public Sale findSaleById(UUID saleId){
+        Sale sale = saleRepository.findById(saleId)
+                .orElseThrow(() -> new NotFoundException("Sale ID not found"));
+
+        if(sale.getStatus().equals(StatusEntity.DELETED)){
+              throw new NotFoundException("Sale ID not found");
+        }
+        return sale;
     }
 }

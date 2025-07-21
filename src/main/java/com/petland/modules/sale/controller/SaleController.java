@@ -8,10 +8,9 @@ import com.petland.modules.sale.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/sales")
@@ -28,4 +27,14 @@ public class SaleController {
         SaleResponseDTO saleResponseDTO = generateResponse.generateSaleResponse(sale);
         return ResponseEntity.ok().body(saleResponseDTO);
     }
+
+    @GetMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<SaleResponseDTO> findSaleById(@PathVariable(name = "id") UUID saleId){
+        Sale sale = saleService.findSaleById(saleId);
+        SaleResponseDTO saleResponse = generateResponse.generateSaleResponse(sale);
+        return ResponseEntity.ok().body(saleResponse);
+    }
+
+
 }

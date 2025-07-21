@@ -45,7 +45,7 @@ public class Sale {
     private PaymentType paymentType;
 
     @Enumerated(EnumType.STRING)
-    private StatusEntity statusEntity;
+    private StatusEntity status;
 
     private UUID employeeAudit;
 

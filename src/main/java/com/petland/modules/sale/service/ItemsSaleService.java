@@ -1,6 +1,8 @@
 package com.petland.modules.sale.service;
 
 import com.petland.common.auth.AccessValidator;
+import com.petland.common.exception.NotFoundException;
+import com.petland.enums.StatusEntity;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;
 import com.petland.modules.sale.exceptions.InsufficientStockException;
@@ -8,6 +10,7 @@ import com.petland.modules.sale.dtos.ItemsSaleRequestDTO;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.ItemsSaleRepository;
+import com.petland.modules.sale.repositories.SaleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,7 @@ public class ItemsSaleService {
 
     private final ProductService productService;
     private final ItemsSaleRepository itemsSaleRepository;
+    private final SaleRepository saleRepository;
     private final AccessValidator accessValidator;
 
     @Transactional
