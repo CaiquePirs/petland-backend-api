@@ -1,6 +1,5 @@
 package com.petland.common.auth;
 
-import com.petland.common.exception.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,7 @@ public class AccessValidator {
         Object userIdAttr = request.getAttribute("id");
 
         if (userIdAttr == null) {
-            throw new UnauthorizedException("User not authenticated");
+            return null;
         }
         return UUID.fromString(userIdAttr.toString());
     }
