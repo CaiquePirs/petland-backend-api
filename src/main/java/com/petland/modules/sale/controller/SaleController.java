@@ -28,7 +28,7 @@ public class SaleController {
         return ResponseEntity.ok().body(saleResponseDTO);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SaleResponseDTO> findSaleById(@PathVariable(name = "id") UUID saleId){
         Sale sale = saleService.findSaleById(saleId);

@@ -31,7 +31,7 @@ public class ProductController {
         return ResponseEntity.ok().body(productMapper.toDTO(product));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductResponseDTO> findById(@PathVariable(name = "id") UUID productId){
         Product product = productService.findById(productId);
