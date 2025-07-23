@@ -26,19 +26,19 @@ public class PetController {
     private final HttpServletRequest request;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER', 'RECEPTIONIST')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER'")
     public ResponseEntity<PetResponseDTO> create(@RequestBody @Valid PetRequestDTO petRequestDTO) {
         Pet pet = petService.create(petRequestDTO);
         return ResponseEntity.ok().body(petMapper.toDTO(pet));
     }
 
-    @GetMapping("{petId}")
-    @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<PetResponseDTO> findPetById(@PathVariable UUID petId){
-        String userCurrentlyLoggedIn = request.getAttribute("id").toString();
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER'")
+    public ResponseEntity<PetResponseDTO> findPetById(@PathVariable(name = "id") UUID petId){
+        String userCurrent = request.getAttribute("id").toString();
         Pet pet = petService.findPetById(petId);
 
-        if (!pet.getOwner().getId().toString().equals(userCurrentlyLoggedIn)) {
+        if (!pet.getOwner().getId().equals(UUID.fromString(userCurrent)) && !request.isUserInRole("ADMIN")) {
             throw new UnauthorizedException("Unauthorized user");
         }
         return ResponseEntity.ok().body(petMapper.toDTO(pet));
