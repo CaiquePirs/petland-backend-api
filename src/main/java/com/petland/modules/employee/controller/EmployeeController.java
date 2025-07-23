@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,11 +24,18 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private final EmployeeMapper employeeMapper;
 
-    @GetMapping
+    @GetMapping("/profile")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<EmployeeResponseDTO> findById(){
+    public ResponseEntity<EmployeeResponseDTO> getProfile(){
         String employerId = request.getAttribute("id").toString();
         Employee employee = employeeService.findById(UUID.fromString(employerId));
         return ResponseEntity.ok(employeeMapper.toDTO(employee));
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<EmployeeResponseDTO> findById(@PathVariable(name = "id") UUID employeeId){
+        Employee employee = employeeService.findById(employeeId);
+        return ResponseEntity.ok().body(employeeMapper.toDTO(employee));
     }
 }
