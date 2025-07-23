@@ -4,7 +4,7 @@ import com.petland.common.entity.BaseEntity;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.pet.model.Pet;
-import com.petland.utils.Address;
+import com.petland.common.entity.Address;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

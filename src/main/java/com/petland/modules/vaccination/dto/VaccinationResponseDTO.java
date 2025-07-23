@@ -1,6 +1,6 @@
 package com.petland.modules.vaccination.dto;
 
-import com.petland.utils.Address;
+import com.petland.common.entity.Address;
 import lombok.*;
 
 import java.math.BigDecimal;

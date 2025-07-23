@@ -1,7 +1,8 @@
 package com.petland.modules.attendance.model;
 
 import com.petland.common.entity.BaseEntity;
-import com.petland.utils.Address;
+import com.petland.modules.vaccination.module.Vaccination;
+import com.petland.common.entity.Address;
 import com.petland.modules.attendance.enums.PaymentType;
 import com.petland.modules.attendance.enums.StatusService;
 import com.petland.modules.customer.model.Customer;
@@ -43,6 +44,10 @@ public class Attendance extends BaseEntity {
     @OneToMany
     @JoinColumn(name = "sale_id")
     private List<Sale> sales;
+
+    @OneToMany
+    @JoinColumn(name = "vaccination_id")
+    private List<Vaccination> vaccinations;
 
     @Column(nullable = false)
     private String notes;

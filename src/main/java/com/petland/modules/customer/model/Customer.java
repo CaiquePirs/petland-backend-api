@@ -1,7 +1,7 @@
 package com.petland.modules.customer.model;
 
 import com.petland.common.entity.BaseEntity;
-import com.petland.utils.Address;
+import com.petland.common.entity.Address;
 import com.petland.enums.Roles;
 import com.petland.modules.attendance.model.Attendance;
 import com.petland.modules.pet.model.Pet;

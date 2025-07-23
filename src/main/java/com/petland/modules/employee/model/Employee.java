@@ -1,7 +1,7 @@
 package com.petland.modules.employee.model;
 
 import com.petland.common.entity.BaseEntity;
-import com.petland.utils.Address;
+import com.petland.common.entity.Address;
 import com.petland.enums.Roles;
 import com.petland.modules.employee.enums.Department;
 import jakarta.persistence.*;

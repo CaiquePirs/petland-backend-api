@@ -1,6 +1,6 @@
 package com.petland.modules.vaccination.dto;
 
-import com.petland.utils.Address;
+import com.petland.common.entity.Address;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 

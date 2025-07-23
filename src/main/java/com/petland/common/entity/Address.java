@@ -1,4 +1,4 @@
-package com.petland.utils;
+package com.petland.common.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;

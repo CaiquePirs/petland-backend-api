@@ -1,7 +1,7 @@
 package com.petland.modules.employee.dto;
 
 import com.petland.modules.employee.enums.Department;
-import com.petland.utils.Address;
+import com.petland.common.entity.Address;
 
 import java.time.LocalDate;
 import java.util.UUID;
