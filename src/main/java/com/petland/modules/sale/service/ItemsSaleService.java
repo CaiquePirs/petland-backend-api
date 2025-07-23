@@ -1,11 +1,9 @@
 package com.petland.modules.sale.service;
 
-import com.petland.common.auth.AccessValidator;
 import com.petland.common.exception.NotFoundException;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;
-import com.petland.modules.sale.exceptions.InsufficientStockException;
 import com.petland.modules.sale.dtos.ItemsSaleRequestDTO;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
@@ -28,32 +26,24 @@ public class ItemsSaleService {
     private final ProductService productService;
     private final ItemsSaleRepository itemsSaleRepository;
     private final SaleRepository saleRepository;
-    private final AccessValidator accessValidator;
 
     @Transactional
     public List<ItemsSale> createItemsSale(Sale sale, List<ItemsSaleRequestDTO> itemsSaleRequestDTO) {
-
         List<ItemsSale> listItemsSale = itemsSaleRequestDTO.stream().map(itemsSaleRequest -> {
             ItemsSale itemsSale = new ItemsSale();
             itemsSale.setCreateAt(LocalDateTime.now());
 
             Product product = productService.findById(itemsSaleRequest.productId());
-
-            if (product.getStockQuantity() <= 0 || itemsSaleRequest.productQuantity() > product.getStockQuantity()) {
-                throw new InsufficientStockException("Insufficient stock for the product: " + product.getId());
-            }
+            productService.updateProductStock(itemsSaleRequest.productQuantity(), product.getId());
 
             double totalItemsSale = product.getCostSale().doubleValue() * itemsSaleRequest.productQuantity();
 
             itemsSale.setProduct(product);
-
             itemsSale.setItemsSaleTotal(BigDecimal.valueOf(totalItemsSale));
             itemsSale.setProductPrice(product.getCostSale());
             itemsSale.setSale(sale);
             itemsSale.setProductQuantity(itemsSaleRequest.productQuantity());
-
-            int stockUpdated = product.getStockQuantity() - itemsSaleRequest.productQuantity();
-            product.setStockQuantity(stockUpdated);
+            itemsSale.setStatus(StatusEntity.ACTIVE);
 
             return itemsSaleRepository.save(itemsSale);
         }).collect(Collectors.toList());

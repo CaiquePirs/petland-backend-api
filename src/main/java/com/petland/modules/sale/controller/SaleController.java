@@ -3,7 +3,7 @@ package com.petland.modules.sale.controller;
 import com.petland.modules.sale.dtos.SaleRequestDTO;
 import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.Sale;
-import com.petland.modules.sale.service.GenerateResponse;
+import com.petland.modules.sale.service.GenerateSaleResponse;
 import com.petland.modules.sale.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +18,13 @@ import java.util.UUID;
 public class SaleController {
 
     private final SaleService saleService;
-    private final GenerateResponse generateResponse;
+    private final GenerateSaleResponse generateSaleResponse;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SaleResponseDTO> create(@RequestBody SaleRequestDTO saleRequestDTO){
         Sale sale = saleService.registerSale(saleRequestDTO);
-        SaleResponseDTO saleResponseDTO = generateResponse.generateSaleResponse(sale);
+        SaleResponseDTO saleResponseDTO = generateSaleResponse.generateSaleResponse(sale);
         return ResponseEntity.ok().body(saleResponseDTO);
     }
 
@@ -32,7 +32,7 @@ public class SaleController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SaleResponseDTO> findSaleById(@PathVariable(name = "id") UUID saleId){
         Sale sale = saleService.findSaleById(saleId);
-        SaleResponseDTO saleResponse = generateResponse.generateSaleResponse(sale);
+        SaleResponseDTO saleResponse = generateSaleResponse.generateSaleResponse(sale);
         return ResponseEntity.ok().body(saleResponse);
     }
 

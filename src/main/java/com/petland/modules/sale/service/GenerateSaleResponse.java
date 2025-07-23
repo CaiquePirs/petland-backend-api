@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GenerateResponse {
+public class GenerateSaleResponse {
 
     public SaleResponseDTO generateSaleResponse(Sale sale){
         List<ItemsSaleResponseDTO> listItemsSaleResponseDTO = generateItemsSaleResponse(sale.getItemsSale());

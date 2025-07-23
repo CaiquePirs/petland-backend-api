@@ -9,6 +9,7 @@ import com.petland.modules.product.dto.ProductRequestDTO;
 import com.petland.modules.product.mappers.ProductMapper;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.repository.ProductRepository;
+import com.petland.modules.sale.exceptions.InsufficientStockException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,18 @@ public class ProductService {
         }
 
         return product;
+    }
+
+    public void updateProductStock(int stockUsed, UUID productId){
+        Product product = findById(productId);
+
+        if(product.getStockQuantity() <= 0 || stockUsed > product.getStockQuantity()){
+            throw new InsufficientStockException("Vaccine stock is insufficient");
+        }
+
+        int stockUpdated = product.getStockQuantity() - stockUsed;
+        product.setStockQuantity(stockUpdated);
+        productRepository.save(product);
     }
 
 
