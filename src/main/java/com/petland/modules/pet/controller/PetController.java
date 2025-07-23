@@ -1,5 +1,6 @@
 package com.petland.modules.pet.controller;
 
+import com.petland.common.exception.UnauthorizedException;
 import com.petland.modules.pet.dto.PetRequestDTO;
 import com.petland.modules.pet.dto.PetResponseDTO;
 import com.petland.modules.pet.mapper.PetMapper;
@@ -34,8 +35,12 @@ public class PetController {
     @GetMapping("{petId}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<PetResponseDTO> findPetById(@PathVariable UUID petId){
-        String customerId = request.getAttribute("id").toString();
-        Pet pet = petService.findPetById(petId, UUID.fromString(customerId));
+        String userCurrentlyLoggedIn = request.getAttribute("id").toString();
+        Pet pet = petService.findPetById(petId);
+
+        if (!pet.getOwner().getId().toString().equals(userCurrentlyLoggedIn)) {
+            throw new UnauthorizedException("Unauthorized user");
+        }
         return ResponseEntity.ok().body(petMapper.toDTO(pet));
     }
 
