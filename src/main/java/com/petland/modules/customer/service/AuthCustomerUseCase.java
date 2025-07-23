@@ -42,7 +42,7 @@ public class AuthCustomerUseCase {
         }
 
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
-        Instant expiresIn = Instant.now().plus(Duration.ofMinutes(10));
+        Instant expiresIn = Instant.now().plus(Duration.ofHours(10));
 
         var token = JWT.create()
                 .withSubject(customer.getId().toString())
