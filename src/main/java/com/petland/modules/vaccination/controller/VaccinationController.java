@@ -8,13 +8,12 @@ import com.petland.modules.vaccination.service.VaccinationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/vaccination")
+@RequestMapping("/vaccinations")
 @RequiredArgsConstructor
 public class VaccinationController {
 
@@ -28,4 +27,13 @@ public class VaccinationController {
         VaccinationResponseDTO vaccinationResponseDTO = generateVaccinationResponse.generate(vaccination);
         return ResponseEntity.ok().body(vaccinationResponseDTO);
     }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<VaccinationResponseDTO> getById(@PathVariable(name = "id") UUID vaccinationId){
+        Vaccination vaccination = vaccinationService.findById(vaccinationId);
+        VaccinationResponseDTO vaccinationResponse = generateVaccinationResponse.generate(vaccination);
+        return ResponseEntity.ok().body(vaccinationResponse);
+    }
+
 }

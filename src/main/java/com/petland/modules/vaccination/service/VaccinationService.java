@@ -1,5 +1,6 @@
 package com.petland.modules.vaccination.service;
 
+import com.petland.common.exception.NotFoundException;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -52,4 +54,15 @@ public class VaccinationService {
 
         return vaccinationRepository.save(vaccination);
     }
+
+    public Vaccination findById(UUID vaccinationId){
+        Vaccination vaccination = vaccinationRepository.findById(vaccinationId)
+                .orElseThrow(() -> new NotFoundException("Vaccination ID not found"));
+
+        if (vaccination.getStatus().equals(StatusEntity.DELETED)) {
+            throw new NotFoundException("Vaccination ID not found");
+        }
+        return vaccination;
+    }
+
 }

@@ -28,7 +28,7 @@ public class VaccineController {
         return ResponseEntity.ok().body(vaccineMapper.toDTO(vaccine));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VaccineResponseDTO> findById(@PathVariable(name = "id") UUID vaccineId){
         Vaccine vaccine = vaccineService.findById(vaccineId);
