@@ -11,6 +11,7 @@ import com.petland.modules.pet.service.PetService;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
 import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.module.AppliedVaccine;
+import com.petland.modules.vaccination.repository.AppliedVaccineRepository;
 import com.petland.modules.vaccination.repository.VaccinationRepository;
 import com.petland.modules.vaccination.util.CalculateTotalVaccinationCost;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class VaccinationService {
     private final CustomerService customerService;
     private final PetService petService;
     private final AppliedVaccineService appliedVaccineService;
+    private final AppliedVaccineRepository appliedVaccineRepository;
     private final CalculateTotalVaccinationCost calculateTotalVaccinationCost;
     private final VaccinationRepository vaccinationRepository;
 
@@ -57,11 +59,14 @@ public class VaccinationService {
 
     public Vaccination findById(UUID vaccinationId){
         Vaccination vaccination = vaccinationRepository.findById(vaccinationId)
-                .orElseThrow(() -> new NotFoundException("Vaccination ID not found"));
+                .orElseThrow(() -> new NotFoundException("Vaccination not found"));
 
         if (vaccination.getStatus().equals(StatusEntity.DELETED)) {
             throw new NotFoundException("Vaccination ID not found");
         }
+
+        List<AppliedVaccine> appliedVaccineList = appliedVaccineRepository.findByVaccinationId(vaccinationId);
+        vaccination.setAppliedVaccines(appliedVaccineList);
         return vaccination;
     }
 
