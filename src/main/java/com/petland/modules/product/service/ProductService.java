@@ -1,6 +1,5 @@
 package com.petland.modules.product.service;
 
-import com.petland.common.auth.AccessValidator;
 import com.petland.common.exception.NotFoundException;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.employee.model.Employee;
@@ -58,6 +57,11 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    public void deleteById(UUID productId){
+        Product product = findById(productId);
+        product.setStatus(StatusEntity.DELETED);
+        productRepository.save(product);
+    }
 
 
 }
