@@ -50,4 +50,10 @@ public class EmployeeService {
         return employee;
     }
 
+    public void deleteById(UUID employeeId) {
+       Employee employee = findById(employeeId);
+       employee.setStatus(StatusEntity.DELETED);
+       employeeRepository.save(employee);
+    }
+
 }
