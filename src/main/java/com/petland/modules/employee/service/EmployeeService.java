@@ -28,8 +28,8 @@ public class EmployeeService {
     @Transactional
     public Employee register(EmployeeRequestDTO employeeRequestDTO){
         emailValidator.checkIfEmailExists(employeeRequestDTO.email());
-
         String encryptedPassword = passwordEncoder.encode(employeeRequestDTO.password());
+
         Employee employee = employeeMapper.toEntity(employeeRequestDTO);
         employee.setRole(Roles.ADMIN);
         employee.setPassword(encryptedPassword);
@@ -37,14 +37,9 @@ public class EmployeeService {
     }
 
     public Employee findById(UUID employeeId){
-        Employee employee = employeeRepository.findById(employeeId)
+       return employeeRepository.findById(employeeId)
+                .filter(e -> !e.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Employer not found"));
-
-        if(employee.getStatus().equals(StatusEntity.DELETED)){
-            throw new NotFoundException("Employer not found");
-        }
-
-        return employee;
     }
 
     public void deleteById(UUID employeeId) {

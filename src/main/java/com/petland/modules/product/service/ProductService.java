@@ -32,14 +32,9 @@ public class ProductService {
 
 
     public Product findById(UUID productId){
-        Product product = productRepository.findById(productId)
+        return productRepository.findById(productId)
+                .filter(p -> !p.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Product not found"));
-
-        if(product.getStatus().equals(StatusEntity.DELETED)){
-            throw new NotFoundException("Product not found");
-        }
-
-        return product;
     }
 
     public void updateProductStock(int stockUsed, UUID productId){

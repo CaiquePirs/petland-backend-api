@@ -42,13 +42,9 @@ public class CustomerService {
     }
 
     public Customer findCustomerById(UUID customerId){
-        Customer customer = customerRepository.findById(customerId)
+        return customerRepository.findById(customerId)
+                .filter(c -> !c.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("User not found"));
-
-        if(customer.getStatus().equals(StatusEntity.DELETED)){
-            throw new NotFoundException("User not found");
-        }
-        return customer;
     }
 
     @Transactional

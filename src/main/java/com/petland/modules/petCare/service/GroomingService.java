@@ -48,12 +48,8 @@ public class GroomingService {
     }
 
     public Grooming findById(UUID groomingId){
-        Grooming grooming = groomingRepository.findById(groomingId)
+        return groomingRepository.findById(groomingId)
+                .filter(g -> !g.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Grooming ID not found"));
-
-        if(grooming.getStatus().equals(StatusEntity.DELETED)){
-            throw new NotFoundException("Grooming ID not found");
-        }
-        return grooming;
     }
 }

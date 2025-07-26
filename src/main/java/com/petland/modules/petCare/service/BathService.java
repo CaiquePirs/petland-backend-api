@@ -48,12 +48,8 @@ public class BathService {
     }
 
     public Bath findById(UUID bathId){
-        Bath bath = bathRepository.findById(bathId)
+       return bathRepository.findById(bathId)
+                .filter(b -> !b.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Bath ID not found"));
-
-        if(bath.getStatus().equals(StatusEntity.DELETED)){
-            throw new NotFoundException("Bath ID not found");
-        }
-        return bath;
     }
 }
