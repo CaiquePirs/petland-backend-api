@@ -54,16 +54,13 @@ public class ItemsSaleService {
         return listItemsSale;
     }
 
-    public ItemsSale findItemSaleById(UUID saleId, UUID itemSaleId){
+    public ItemsSale findItemBySaleId(UUID saleId, UUID itemId){
         Sale sale = saleRepository.findById(saleId)
+                .filter(s -> !s.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Sale not found"));
 
-        if(sale.getStatus().equals(StatusEntity.DELETED)){
-            throw new NotFoundException("Sale ID not found");
-        }
-
-       return sale.getItemsSale().stream()
-                .filter(itemsSale -> itemsSale.getId().equals(itemSaleId))
+        return sale.getItemsSale().stream()
+                .filter(item -> item.getId().equals(itemId))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("ItemSale with ID " + itemId + " not found in Sale " + saleId));
     }

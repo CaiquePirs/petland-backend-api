@@ -57,13 +57,9 @@ public class SaleService {
     }
 
     public Sale findSaleById(UUID saleId){
-        Sale sale = saleRepository.findById(saleId)
-                .orElseThrow(() -> new NotFoundException("Sale ID not found"));
-
-        if(sale.getStatus().equals(StatusEntity.DELETED)){
-              throw new NotFoundException("Sale ID not found");
-        }
-        return sale;
+     return saleRepository.findById(saleId)
+                .filter(s -> !s.getStatus().equals(StatusEntity.DELETED))
+                .orElseThrow(() -> new NotFoundException("Sale not found"));
     }
 
     @Transactional

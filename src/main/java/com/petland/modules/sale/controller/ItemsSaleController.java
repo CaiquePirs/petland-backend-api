@@ -26,7 +26,7 @@ public class ItemsSaleController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ItemsSaleResponseDTO> findItemSaleById(@PathVariable(name = "saleId") UUID saleId,
                                                                  @PathVariable(name = "id") UUID itemSaleId){
-        ItemsSale itemsSale = itemsSaleService.findItemSaleById(saleId, itemSaleId);
+        ItemsSale itemsSale = itemsSaleService.findItemBySaleId(saleId, itemSaleId);
         return ResponseEntity.ok().body(itemSaleMapper.toDTO(itemsSale));
     }
 }
