@@ -2,7 +2,7 @@ package com.petland.modules.vaccination.service;
 
 import com.petland.common.exception.NotFoundException;
 import com.petland.enums.StatusEntity;
-import com.petland.modules.sale.exceptions.InsufficientStockException;
+import com.petland.common.exception.InsufficientStockException;
 import com.petland.modules.vaccination.dto.VaccineRequestDTO;
 import com.petland.modules.vaccination.mappers.VaccineMapper;
 import com.petland.modules.vaccination.module.Vaccine;

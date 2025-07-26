@@ -8,7 +8,7 @@ import com.petland.modules.product.dto.ProductRequestDTO;
 import com.petland.modules.product.mappers.ProductMapper;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.repository.ProductRepository;
-import com.petland.modules.sale.exceptions.InsufficientStockException;
+import com.petland.common.exception.InsufficientStockException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

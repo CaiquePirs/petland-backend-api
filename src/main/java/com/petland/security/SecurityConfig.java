@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -25,7 +25,7 @@ public class SecurityConfig {
                     auth.requestMatchers( "/auth/**").permitAll()
                             .anyRequest().authenticated();
                 })
-                .addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, BasicAuthenticationFilter.class);
         return http.build();
     }
 
