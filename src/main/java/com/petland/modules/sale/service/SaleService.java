@@ -28,6 +28,7 @@ public class SaleService {
     private final ItemsSaleService itemsSaleService;
     private final AccessValidator accessValidator;
     private final SaleRepository saleRepository;
+    private final SaleCalculator calculator;
 
     @Transactional
     public Sale registerSale(SaleRequestDTO saleRequestDTO){
@@ -36,9 +37,8 @@ public class SaleService {
         Employee employee = employeeService.findById(employeeId);
         Customer customer = customerService.findCustomerById(saleRequestDTO.customerId());
 
-        Sale sale = new Sale();
-
-        List<ItemsSale> listItemsSale = itemsSaleService.createItemsSale(sale, saleRequestDTO.itemsSaleRequestDTO());
+        List<ItemsSale> listItemsSale = itemsSaleService.createItems(sale, saleRequestDTO.itemsSaleRequestDTO());
+        BigDecimal totalSale = calculator.calculateTotalItemsSale(listItemsSale);
 
         BigDecimal totalSale = BigDecimal.ZERO;
 

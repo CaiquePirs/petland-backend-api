@@ -26,6 +26,7 @@ public class ItemsSaleService {
     private final ProductService productService;
     private final ItemsSaleRepository itemsSaleRepository;
     private final SaleRepository saleRepository;
+    private final SaleCalculator saleCalculator;
 
     @Transactional
     public List<ItemsSale> createItemsSale(Sale sale, List<ItemsSaleRequestDTO> itemsSaleRequestDTO) {
@@ -36,7 +37,10 @@ public class ItemsSaleService {
             Product product = productService.findById(itemsSaleRequest.productId());
             productService.updateProductStock(itemsSaleRequest.productQuantity(), product.getId());
 
-            double totalItemsSale = product.getCostSale().doubleValue() * itemsSaleRequest.productQuantity();
+            BigDecimal totalItemsSale = saleCalculator.calculateTotalSale(
+                    itemsSaleRequest.productQuantity(),
+                    product.getCostSale()
+            );
 
             itemsSale.setProduct(product);
             itemsSale.setItemsSaleTotal(BigDecimal.valueOf(totalItemsSale));
