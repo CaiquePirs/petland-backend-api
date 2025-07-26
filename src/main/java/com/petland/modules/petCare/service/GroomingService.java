@@ -52,4 +52,10 @@ public class GroomingService {
                 .filter(g -> !g.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Grooming ID not found"));
     }
+
+    public void deleteById(UUID groomingId){
+        Grooming grooming = findById(groomingId);
+        grooming.setStatus(StatusEntity.DELETED);
+        groomingRepository.save(grooming);
+    }
 }

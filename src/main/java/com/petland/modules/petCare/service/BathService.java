@@ -52,4 +52,10 @@ public class BathService {
                 .filter(b -> !b.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Bath ID not found"));
     }
+
+    public void deleteById(UUID bathId) {
+        Bath bath = findById(bathId);
+        bath.setStatus(StatusEntity.DELETED);
+        bathRepository.save(bath);
+    }
 }

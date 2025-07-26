@@ -34,4 +34,12 @@ public class GroomingController {
         Grooming grooming = groomingService.findById(groomingId);
         return ResponseEntity.ok().body(groomingMapper.toDTO(grooming));
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") UUID groomingId){
+        groomingService.deleteById(groomingId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

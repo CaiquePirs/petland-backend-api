@@ -34,4 +34,11 @@ public class BathController {
         Bath bath = bathService.findById(bathId);
         return ResponseEntity.ok().body(bathMapper.toDTO(bath));
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") UUID bathId){
+        bathService.deleteById(bathId);
+        return ResponseEntity.noContent().build();
+    }
 }
