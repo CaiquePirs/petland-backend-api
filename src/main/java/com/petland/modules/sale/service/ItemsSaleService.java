@@ -9,12 +9,11 @@ import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.ItemsSaleRepository;
 import com.petland.modules.sale.repositories.SaleRepository;
+import com.petland.modules.sale.util.SaleCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -28,12 +27,8 @@ public class ItemsSaleService {
     private final SaleRepository saleRepository;
     private final SaleCalculator saleCalculator;
 
-    @Transactional
-    public List<ItemsSale> createItemsSale(Sale sale, List<ItemsSaleRequestDTO> itemsSaleRequestDTO) {
+    public List<ItemsSale> createItems(Sale sale, List<ItemsSaleRequestDTO> itemsSaleRequestDTO) {
         List<ItemsSale> listItemsSale = itemsSaleRequestDTO.stream().map(itemsSaleRequest -> {
-            ItemsSale itemsSale = new ItemsSale();
-            itemsSale.setCreateAt(LocalDateTime.now());
-
             Product product = productService.findById(itemsSaleRequest.productId());
             productService.updateProductStock(itemsSaleRequest.productQuantity(), product.getId());
 
@@ -42,14 +37,13 @@ public class ItemsSaleService {
                     product.getCostSale()
             );
 
-            itemsSale.setProduct(product);
-            itemsSale.setItemsSaleTotal(BigDecimal.valueOf(totalItemsSale));
-            itemsSale.setProductPrice(product.getCostSale());
-            itemsSale.setSale(sale);
-            itemsSale.setProductQuantity(itemsSaleRequest.productQuantity());
-            itemsSale.setStatus(StatusEntity.ACTIVE);
-
-            return itemsSaleRepository.save(itemsSale);
+            return ItemsSale.builder()
+                    .sale(sale)
+                    .product(product)
+                    .productPrice(product.getCostSale())
+                    .productQuantity(itemsSaleRequest.productQuantity())
+                    .itemsSaleTotal(totalItemsSale)
+                    .build();
         }).collect(Collectors.toList());
         return listItemsSale;
     }

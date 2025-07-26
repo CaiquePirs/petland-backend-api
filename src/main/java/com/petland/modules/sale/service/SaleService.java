@@ -11,6 +11,7 @@ import com.petland.modules.sale.dtos.SaleRequestDTO;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.SaleRepository;
+import com.petland.modules.sale.util.SaleCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,27 +33,19 @@ public class SaleService {
 
     @Transactional
     public Sale registerSale(SaleRequestDTO saleRequestDTO){
+        Sale sale = new Sale();
         UUID employeeId = accessValidator.getLoggedInUser();
-
         Employee employee = employeeService.findById(employeeId);
         Customer customer = customerService.findCustomerById(saleRequestDTO.customerId());
 
         List<ItemsSale> listItemsSale = itemsSaleService.createItems(sale, saleRequestDTO.itemsSaleRequestDTO());
         BigDecimal totalSale = calculator.calculateTotalItemsSale(listItemsSale);
 
-        BigDecimal totalSale = BigDecimal.ZERO;
-
-        for(ItemsSale itemsSale : listItemsSale){
-            totalSale = totalSale.add(itemsSale.getItemsSaleTotal());
-        }
-
+        sale.setItemsSale(listItemsSale);
         sale.setEmployee(employee);
+        sale.setTotalSales(totalSale);
         sale.setCustomer(customer);
         sale.setPaymentType(saleRequestDTO.paymentType());
-        sale.setStatus(StatusEntity.ACTIVE);
-        sale.setItemsSale(listItemsSale);
-        sale.setTotalSales(totalSale);
-
         return saleRepository.save(sale);
     }
 
