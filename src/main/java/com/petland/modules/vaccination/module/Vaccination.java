@@ -39,7 +39,7 @@ public class Vaccination extends BaseEntity {
     @JoinColumn(name = "veterinarian_id")
     private Employee veterinarian;
 
-    @OneToMany(mappedBy = "vaccination", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "vaccination", cascade = CascadeType.ALL)
     private List<AppliedVaccine> appliedVaccines = new ArrayList<>();
 
     @Embedded

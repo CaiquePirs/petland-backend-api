@@ -38,7 +38,7 @@ public class VaccinationController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteById(UUID vaccinationId){
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") UUID vaccinationId){
      vaccinationService.deleteById(vaccinationId);
      return ResponseEntity.noContent().build();
     }

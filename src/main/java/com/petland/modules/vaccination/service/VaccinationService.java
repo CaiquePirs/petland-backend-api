@@ -69,8 +69,11 @@ public class VaccinationService {
     public void deleteById(UUID vaccinationId){
         Vaccination vaccination = findById(vaccinationId);
 
-        for(AppliedVaccine appliedVaccine : vaccination.getAppliedVaccines()){
-            appliedVaccine.setStatus(StatusEntity.DELETED);
+        if(!vaccination.getAppliedVaccines().isEmpty()){
+            for(AppliedVaccine appliedVaccine : vaccination.getAppliedVaccines()){
+                appliedVaccine.setStatus(StatusEntity.DELETED);
+            }
+            appliedVaccineRepository.saveAll(vaccination.getAppliedVaccines());
         }
         vaccination.setStatus(StatusEntity.DELETED);
         vaccinationRepository.save(vaccination);
