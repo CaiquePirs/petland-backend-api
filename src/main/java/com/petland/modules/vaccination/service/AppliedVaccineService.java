@@ -1,6 +1,5 @@
 package com.petland.modules.vaccination.service;
 
-import com.petland.enums.StatusEntity;
 import com.petland.modules.vaccination.dto.AppliedVaccineRequestDTO;
 import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.module.Vaccine;

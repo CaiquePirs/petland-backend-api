@@ -36,4 +36,11 @@ public class VaccinationController {
         return ResponseEntity.ok().body(vaccinationResponse);
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteById(UUID vaccinationId){
+     vaccinationService.deleteById(vaccinationId);
+     return ResponseEntity.noContent().build();
+    }
+
 }

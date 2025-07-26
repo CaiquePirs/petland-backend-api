@@ -65,4 +65,15 @@ public class VaccinationService {
                 }).orElseThrow(() -> new NotFoundException("Vaccination not found"));
     }
 
+    @Transactional
+    public void deleteById(UUID vaccinationId){
+        Vaccination vaccination = findById(vaccinationId);
+
+        for(AppliedVaccine appliedVaccine : vaccination.getAppliedVaccines()){
+            appliedVaccine.setStatus(StatusEntity.DELETED);
+        }
+        vaccination.setStatus(StatusEntity.DELETED);
+        vaccinationRepository.save(vaccination);
+    }
+
 }

@@ -34,4 +34,13 @@ public class VaccineController {
         Vaccine vaccine = vaccineService.findById(vaccineId);
         return ResponseEntity.ok().body(vaccineMapper.toDTO(vaccine));
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteById(UUID vaccineId){
+        vaccineService.deleteById(vaccineId);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

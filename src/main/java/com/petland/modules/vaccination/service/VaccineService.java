@@ -37,8 +37,14 @@ public class VaccineService {
         }
 
         int stockUpdated = vaccine.getStockQuantity() - stockUsed;
-
         vaccine.setStockQuantity(stockUpdated);
         return vaccineRepository.save(vaccine);
     }
+
+    public void deleteById(UUID vaccineId){
+        Vaccine vaccine = findById(vaccineId);
+        vaccine.setStatus(StatusEntity.DELETED);
+        vaccineRepository.save(vaccine);
+    }
+
 }
