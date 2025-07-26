@@ -65,4 +65,14 @@ public class SaleService {
         }
         return sale;
     }
+
+    @Transactional
+    public void deleteSaleById(UUID saleId){
+        Sale sale = findSaleById(saleId);
+        itemsSaleService.deleteItemsList(sale.getItemsSale());
+        sale.setStatus(StatusEntity.DELETED);
+        saleRepository.save(sale);
+    }
+
+
 }

@@ -61,6 +61,15 @@ public class ItemsSaleService {
        return sale.getItemsSale().stream()
                 .filter(itemsSale -> itemsSale.getId().equals(itemSaleId))
                 .findFirst()
-                .orElseThrow(() -> new NotFoundException("Item sale ID not found"));
+                .orElseThrow(() -> new NotFoundException("ItemSale with ID " + itemId + " not found in Sale " + saleId));
+    }
+
+    public void deleteItemsList(List<ItemsSale> itemsSalesList){
+        if(!itemsSalesList.isEmpty()){
+           for(ItemsSale itemsSale : itemsSalesList){
+               itemsSale.setStatus(StatusEntity.DELETED);
+           }
+           itemsSaleRepository.saveAll(itemsSalesList);
+        }
     }
 }
