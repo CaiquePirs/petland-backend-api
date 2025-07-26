@@ -44,4 +44,13 @@ public class PetController {
         return ResponseEntity.ok().body(petMapper.toDTO(pet));
     }
 
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER'")
+    public ResponseEntity<Void> deletePetById(@PathVariable(name = "id") UUID petId){
+        petService.deletePetById(petId);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
