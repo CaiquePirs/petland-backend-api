@@ -52,21 +52,17 @@ public class VaccinationService {
         List<AppliedVaccine> listAppliedVaccine = appliedVaccineService.create(vaccination, vaccinationRequestDTO.listAppliedVaccineRequestDTO());
         BigDecimal totalCostVaccination = calculateTotalVaccinationCost.calculate(listAppliedVaccine);
         vaccination.setTotalCostVaccination(totalCostVaccination);
-
         return vaccinationRepository.save(vaccination);
     }
 
-    public Vaccination findById(UUID vaccinationId){
-        Vaccination vaccination = vaccinationRepository.findById(vaccinationId)
-                .orElseThrow(() -> new NotFoundException("Vaccination not found"));
-
-        if (vaccination.getStatus().equals(StatusEntity.DELETED)) {
-            throw new NotFoundException("Vaccination ID not found");
-        }
-
-        List<AppliedVaccine> appliedVaccineList = appliedVaccineRepository.findByVaccinationId(vaccinationId);
-        vaccination.setAppliedVaccines(appliedVaccineList);
-        return vaccination;
+    public Vaccination findById(UUID vaccinationId) {
+        return vaccinationRepository.findById(vaccinationId)
+                .filter(v -> !v.getStatus().equals(StatusEntity.DELETED))
+                .map(vaccinesApplied -> {
+                    List<AppliedVaccine> appliedVaccineList = appliedVaccineRepository.findByVaccinationId(vaccinationId);
+                    vaccinesApplied.setAppliedVaccines(appliedVaccineList);
+                    return vaccinesApplied;
+                }).orElseThrow(() -> new NotFoundException("Vaccination not found"));
     }
 
 }

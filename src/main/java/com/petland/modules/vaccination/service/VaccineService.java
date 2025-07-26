@@ -16,20 +16,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class VaccineService {
 
-    private final VaccineMapper vaccineMapper;
+    private final VaccineMapper mapper;
     private final VaccineRepository vaccineRepository;
 
     public Vaccine create(VaccineRequestDTO vaccineRequestDTO){
+        return vaccineRepository.save(mapper.toEntity(vaccineRequestDTO));
     }
 
     public Vaccine findById(UUID vaccineId){
-        Vaccine vaccine = vaccineRepository.findById(vaccineId)
+        return vaccineRepository.findById(vaccineId)
+                .filter(v -> !v.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Vaccine ID not found"));
-
-        if(vaccine.getStatus().equals(StatusEntity.DELETED)){
-            throw new NotFoundException("Vaccine ID not found");
-        }
-        return vaccine;
     }
 
     public Vaccine updateVaccineStock(int stockUsed, UUID vaccineId){
