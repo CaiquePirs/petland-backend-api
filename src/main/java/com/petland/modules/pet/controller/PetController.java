@@ -26,14 +26,14 @@ public class PetController {
     private final HttpServletRequest request;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER'")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
     public ResponseEntity<PetResponseDTO> create(@RequestBody @Valid PetRequestDTO petRequestDTO) {
         Pet pet = petService.create(petRequestDTO);
         return ResponseEntity.ok().body(petMapper.toDTO(pet));
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER'")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
     public ResponseEntity<PetResponseDTO> findPetById(@PathVariable(name = "id") UUID petId){
         String userCurrent = request.getAttribute("id").toString();
         Pet pet = petService.findPetById(petId);
@@ -44,9 +44,8 @@ public class PetController {
         return ResponseEntity.ok().body(petMapper.toDTO(pet));
     }
 
-
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER'")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
     public ResponseEntity<Void> deletePetById(@PathVariable(name = "id") UUID petId){
         petService.deletePetById(petId);
         return ResponseEntity.noContent().build();
