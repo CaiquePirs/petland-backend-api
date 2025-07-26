@@ -7,10 +7,7 @@ import com.petland.modules.sale.service.ItemsSaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -24,9 +21,17 @@ public class ItemsSaleController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ItemsSaleResponseDTO> findItemSaleById(@PathVariable(name = "saleId") UUID saleId,
+    public ResponseEntity<ItemsSaleResponseDTO> findById(@PathVariable(name = "saleId") UUID saleId,
                                                                  @PathVariable(name = "id") UUID itemSaleId){
-        ItemsSale itemsSale = itemsSaleService.findItemBySaleId(saleId, itemSaleId);
+        ItemsSale itemsSale = itemsSaleService.findActiveItemInActiveSale(saleId, itemSaleId);
         return ResponseEntity.ok().body(itemSaleMapper.toDTO(itemsSale));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "saleId") UUID saleId,
+                                                   @PathVariable(name = "id") UUID itemSaleId){
+        itemsSaleService.deleteActiveItemInActiveSale(saleId, itemSaleId);
+        return ResponseEntity.noContent().build();
     }
 }

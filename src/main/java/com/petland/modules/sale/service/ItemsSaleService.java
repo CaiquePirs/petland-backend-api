@@ -48,13 +48,13 @@ public class ItemsSaleService {
         return listItemsSale;
     }
 
-    public ItemsSale findItemBySaleId(UUID saleId, UUID itemId){
+    public ItemsSale findActiveItemInActiveSale(UUID saleId, UUID itemId){
         Sale sale = saleRepository.findById(saleId)
                 .filter(s -> !s.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Sale not found"));
 
         return sale.getItemsSale().stream()
-                .filter(item -> item.getId().equals(itemId))
+                .filter(i -> i.getId().equals(itemId) && !i.getStatus().equals(StatusEntity.DELETED))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("ItemSale with ID " + itemId + " not found in Sale " + saleId));
     }
@@ -66,5 +66,12 @@ public class ItemsSaleService {
            }
            itemsSaleRepository.saveAll(itemsSalesList);
         }
+    }
+
+    public void deleteActiveItemInActiveSale(UUID saleId, UUID itemId){
+        ItemsSale item = findActiveItemInActiveSale(saleId, itemId);
+        item.setStatus(StatusEntity.DELETED);
+        itemsSaleRepository.save(item);
+
     }
 }
