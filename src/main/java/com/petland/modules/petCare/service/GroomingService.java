@@ -40,7 +40,6 @@ public class GroomingService {
         grooming.setCustomer(customer);
         grooming.setPet(pet);
         grooming.setEmployee(employee);
-        grooming.setStatus(StatusEntity.ACTIVE);
         grooming.setGroomingMoment(LocalDateTime.now());
 
         BigDecimal totalCost = calculateTotalCost.calculate(groomingRequestDTO.groomingQuantity(), groomingRequestDTO.priceCost());

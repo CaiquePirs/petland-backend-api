@@ -1,12 +1,9 @@
 package com.petland.modules.pet.service;
 
-import com.petland.common.exception.UnauthorizedException;
 import com.petland.common.exception.NotFoundException;
-import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
-import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.repository.EmployeeRepository;
 import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.dto.PetRequestDTO;
@@ -36,8 +33,6 @@ public class PetService {
 
         Pet pet = petMapper.toEntity(petRequestDTO);
         pet.setOwner(customer);
-        pet.setStatus(StatusEntity.ACTIVE);
-
         customer.getMyPets().add(pet);
         return petRepository.save(pet);
     }

@@ -20,9 +20,6 @@ public class VaccineService {
     private final VaccineRepository vaccineRepository;
 
     public Vaccine create(VaccineRequestDTO vaccineRequestDTO){
-        Vaccine vaccine = vaccineMapper.toEntity(vaccineRequestDTO);
-        vaccine.setStatus(StatusEntity.ACTIVE);
-        return vaccineRepository.save(vaccine);
     }
 
     public Vaccine findById(UUID vaccineId){

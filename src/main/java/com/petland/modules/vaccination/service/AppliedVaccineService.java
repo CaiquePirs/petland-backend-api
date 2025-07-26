@@ -27,7 +27,6 @@ public class AppliedVaccineService {
 
                     appliedVaccine.setVaccine(vaccine);
                     appliedVaccine.setQuantityUsed(appliedVaccineRequest.quantityUsed());
-                    appliedVaccine.setStatus(StatusEntity.ACTIVE);
                     return appliedVaccine;
                 }).collect(Collectors.toList());
 

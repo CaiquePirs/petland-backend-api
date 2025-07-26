@@ -30,12 +30,9 @@ public class EmployeeService {
         emailValidator.checkIfEmailExists(employeeRequestDTO.email());
 
         String encryptedPassword = passwordEncoder.encode(employeeRequestDTO.password());
-
         Employee employee = employeeMapper.toEntity(employeeRequestDTO);
-        employee.setStatus(StatusEntity.ACTIVE);
         employee.setRole(Roles.ADMIN);
         employee.setPassword(encryptedPassword);
-
         return employeeRepository.save(employee);
     }
 

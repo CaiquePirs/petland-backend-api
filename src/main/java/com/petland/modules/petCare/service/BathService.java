@@ -40,7 +40,6 @@ public class BathService {
         bath.setCustomer(customer);
         bath.setPet(pet);
         bath.setEmployee(employee);
-        bath.setStatus(StatusEntity.ACTIVE);
         bath.setBathMoment(LocalDateTime.now());
 
         BigDecimal totalCost = calculateTotalCost.calculate(bathRequestDTO.bathQuantity(), bathRequestDTO.priceCost());

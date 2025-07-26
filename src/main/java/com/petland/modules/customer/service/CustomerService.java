@@ -37,9 +37,7 @@ public class CustomerService {
 
         Customer customer = customerMapper.toEntity(customerRequestDTO);
         customer.setRole(Roles.CUSTOMER);
-        customer.setStatus(StatusEntity.ACTIVE);
         customer.setPassword(encryptedPassword);
-
         return customerRepository.save(customer);
     }
 

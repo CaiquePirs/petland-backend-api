@@ -45,7 +45,6 @@ public class VaccinationService {
         vaccination.setCustomer(customer);
         vaccination.setVeterinarian(veterinarian);
         vaccination.setLocation(vaccinationRequestDTO.location());
-        vaccination.setStatus(StatusEntity.ACTIVE);
         vaccination.setClinicalNotes(vaccinationRequestDTO.clinicalNotes());
         vaccination.setVaccinationDate(vaccinationRequestDTO.vaccinationDate());
         vaccination.setNextDoseDate(vaccinationRequestDTO.nextDoseDate());

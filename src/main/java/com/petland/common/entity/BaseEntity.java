@@ -20,7 +20,7 @@ import java.util.UUID;
 public abstract class BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    private StatusEntity status;
+    private StatusEntity status = StatusEntity.ACTIVE;
 
     @LastModifiedBy
     private UUID lastModifiedBy;

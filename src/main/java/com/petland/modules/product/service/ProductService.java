@@ -24,11 +24,8 @@ public class ProductService {
 
     public Product register(UUID employeeId, ProductRequestDTO productRequestDTO){
         Employee employee = employeeService.findById(employeeId);
-
         Product product = productMapper.toEntity(productRequestDTO);
         product.setBarCode(UUID.randomUUID());
-        product.setStatus(StatusEntity.ACTIVE);
-
         product.setEmployee(employee);
         return productRepository.save(product);
     }
