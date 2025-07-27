@@ -3,9 +3,11 @@ package com.petland.modules.customer.controller;
 import com.petland.common.auth.AccessValidator;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
+import com.petland.modules.customer.dto.UpdateCustomerDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,12 +57,12 @@ public class CustomerController {
         return ResponseEntity.ok().body(customersResponseDTO);
     }
 
-
-
-
-
-
-
-
-
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
+    public ResponseEntity<CustomerResponseDTO> updateCustomer(@PathVariable(name = "id") UUID customerId,
+                                                              @RequestBody @Valid UpdateCustomerDTO updateCustomerDTO){
+        accessValidator.isOwnerOrAdmin(customerId);
+        Customer customer = customerService.updateCustomerById(customerId, updateCustomerDTO);
+        return ResponseEntity.ok().body(customerMapper.toDTO(customer));
+    }
 }

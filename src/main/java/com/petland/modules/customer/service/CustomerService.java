@@ -5,6 +5,7 @@ import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.dto.CustomerRequestDTO;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
+import com.petland.modules.customer.dto.UpdateCustomerDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.repository.CustomerRepository;
@@ -34,7 +35,7 @@ public class CustomerService {
     private final CustomerMapper customerMapper;
     private final PasswordEncoder passwordEncoder;
     private final PetRepository petRepository;
-    private final CustomerSpecification specification;
+    private final CustomerUpdateValidator updateValidator;
 
     public Customer register(CustomerRequestDTO customerRequestDTO){
         validateEmail.checkIfEmailExists(customerRequestDTO.email());
@@ -73,6 +74,12 @@ public class CustomerService {
      Specification<Customer>  filterCustomers = CustomerSpecification.filterBy(name, email, phone, status);
      Page<Customer> customers = customerRepository.findAll(filterCustomers, pageable);
      return customers.map(customerMapper::toDTO);
+    }
+
+    public Customer updateCustomerById(UUID customerId, UpdateCustomerDTO updateCustomerDTO){
+        Customer customer = findCustomerById(customerId);
+        customer = updateValidator.validate(customer, updateCustomerDTO);
+        return customerRepository.save(customer);
     }
 
 }
