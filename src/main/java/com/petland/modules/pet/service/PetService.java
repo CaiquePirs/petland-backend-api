@@ -2,16 +2,20 @@ package com.petland.modules.pet.service;
 
 import com.petland.common.auth.AccessValidator;
 import com.petland.common.exception.NotFoundException;
-import com.petland.common.exception.UnauthorizedException;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.pet.dto.PetRequestDTO;
+import com.petland.modules.pet.dto.PetResponseDTO;
+import com.petland.modules.pet.enums.PetGender;
+import com.petland.modules.pet.enums.PetSpecies;
 import com.petland.modules.pet.mapper.PetMapper;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.repository.PetRepository;
-import jakarta.servlet.http.HttpServletRequest;
+import com.petland.modules.pet.specifications.PetSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +61,11 @@ public class PetService {
                 .stream()
                 .filter(pet -> !pet.getStatus().equals(StatusEntity.DELETED))
                 .toList();
+    }
+
+    public Page<PetResponseDTO> listAllPets(String name, String specie, String gender, String breed, Pageable pageable){
+      Page<Pet> petsByFilter = petRepository.findAll(PetSpecification.filterBy(name, specie, gender, breed), pageable);
+      return petsByFilter.map(petMapper::toDTO);
     }
 
 }

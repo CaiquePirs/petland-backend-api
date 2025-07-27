@@ -8,6 +8,8 @@ import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +46,20 @@ public class PetController {
     public ResponseEntity<Void> deletePetById(@PathVariable(name = "id") UUID petId){
         petService.deletePetById(petId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Page<PetResponseDTO>> listAllPetsByFilter(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "species", required = false) String species,
+            @RequestParam(value = "gender", required = false) String gender,
+            @RequestParam(value = "breed", required = false) String breed,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size){
+
+      Page<PetResponseDTO> petsByFilters = petService.listAllPets(name, species, gender, breed, PageRequest.of(page, size));
+      return ResponseEntity.ok().body(petsByFilters);
     }
 
 
