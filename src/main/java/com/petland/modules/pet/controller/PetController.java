@@ -1,12 +1,11 @@
 package com.petland.modules.pet.controller;
 
-import com.petland.common.exception.UnauthorizedException;
+import com.petland.common.auth.AccessValidator;
 import com.petland.modules.pet.dto.PetRequestDTO;
 import com.petland.modules.pet.dto.PetResponseDTO;
 import com.petland.modules.pet.mapper.PetMapper;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class PetController {
 
     private final PetService petService;
     private final PetMapper petMapper;
-    private final HttpServletRequest request;
+    private final AccessValidator accessValidator;
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
@@ -35,12 +34,8 @@ public class PetController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
     public ResponseEntity<PetResponseDTO> findPetById(@PathVariable(name = "id") UUID petId){
-        String userCurrent = request.getAttribute("id").toString();
         Pet pet = petService.findPetById(petId);
-
-        if (!pet.getOwner().getId().equals(UUID.fromString(userCurrent)) && !request.isUserInRole("ADMIN")) {
-            throw new UnauthorizedException("Unauthorized user");
-        }
+        accessValidator.isOwnerOrAdmin(pet.getOwner().getId());
         return ResponseEntity.ok().body(petMapper.toDTO(pet));
     }
 

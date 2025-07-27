@@ -25,7 +25,7 @@ public class PetService {
     private final CustomerService customerService;
     private final PetRepository petRepository;
     private final PetMapper petMapper;
-    private final HttpServletRequest request;
+    private final AccessValidator accessValidator;
 
     @Transactional
     public Pet create(PetRequestDTO petRequestDTO) {
@@ -46,12 +46,7 @@ public class PetService {
 
     public void deletePetById(UUID petId) {
         Pet pet = findPetById(petId);
-        String userCurrent = request.getAttribute("id").toString();
-
-        if (!pet.getOwner().getId().equals(UUID.fromString(userCurrent)) && !request.isUserInRole("ADMIN")) {
-            throw new UnauthorizedException("Unauthorized user");
-        }
-
+        accessValidator.isOwnerOrAdmin(pet.getOwner().getId());
         pet.setStatus(StatusEntity.DELETED);
         petRepository.save(pet);
     }

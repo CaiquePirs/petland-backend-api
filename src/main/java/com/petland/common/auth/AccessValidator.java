@@ -1,5 +1,6 @@
 package com.petland.common.auth;
 
+import com.petland.common.exception.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,5 +20,14 @@ public class AccessValidator {
             return null;
         }
         return UUID.fromString(userIdAttr.toString());
+    }
+
+    public void isOwnerOrAdmin(UUID ownerId){
+        boolean isAdmin = request.isUserInRole("ADMIN");
+        boolean isOwner = request.getAttribute("id").toString().equals(ownerId.toString());
+
+        if(!isAdmin && !isOwner){
+            throw new UnauthorizedException("User not authorized");
+        }
     }
 }

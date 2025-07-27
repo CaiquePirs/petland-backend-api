@@ -1,12 +1,11 @@
 package com.petland.modules.customer.controller;
 
-import com.petland.common.exception.UnauthorizedException;
+import com.petland.common.auth.AccessValidator;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +22,7 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final CustomerMapper customerMapper;
-    private final HttpServletRequest request;
+    private final AccessValidator accessValidator;
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -35,11 +34,7 @@ public class CustomerController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
     public ResponseEntity<Void> deleteCustomerById(@PathVariable(name = "id") UUID customerId){
-        var currentUserId = request.getAttribute("id").toString();
-
-        if(!request.isUserInRole("ADMIN") && !UUID.fromString(currentUserId).equals(customerId)){
-            throw new UnauthorizedException("User not authorized");
-        }
+        accessValidator.isOwnerOrAdmin(customerId);
         customerService.deleteById(customerId);
         return ResponseEntity.noContent().build();
     }
