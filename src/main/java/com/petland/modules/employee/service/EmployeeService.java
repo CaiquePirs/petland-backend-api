@@ -4,11 +4,14 @@ import com.petland.common.exception.NotFoundException;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.employee.dto.EmployeeRequestDTO;
+import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.repository.EmployeeRepository;
 import com.petland.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +49,10 @@ public class EmployeeService {
        Employee employee = findById(employeeId);
        employee.setStatus(StatusEntity.DELETED);
        employeeRepository.save(employee);
+    }
+
+    public Page<EmployeeResponseDTO> listAllEmployee(Pageable pageable){
+         return employeeRepository.findAll(pageable).map(employeeMapper::toDTO);
     }
 
 }
