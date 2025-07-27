@@ -25,14 +25,6 @@ public class CustomerController {
     private final CustomerMapper customerMapper;
     private final HttpServletRequest request;
 
-    @GetMapping("/profile")
-    @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<CustomerResponseDTO> getProfile(){
-        String customerId = request.getAttribute("id").toString();
-        Customer customer = customerService.findCustomerById(UUID.fromString(customerId));
-        return ResponseEntity.ok().body(customerMapper.toDTO(customer));
-    }
-
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CustomerResponseDTO> findCustomerById(@PathVariable(name = "id") UUID customerId){
@@ -42,7 +34,7 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") UUID customerId){
+    public ResponseEntity<Void> deleteCustomerById(@PathVariable(name = "id") UUID customerId){
         var currentUserId = request.getAttribute("id").toString();
 
         if(!request.isUserInRole("ADMIN") && !UUID.fromString(currentUserId).equals(customerId)){
@@ -51,7 +43,6 @@ public class CustomerController {
         customerService.deleteById(customerId);
         return ResponseEntity.noContent().build();
     }
-
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")

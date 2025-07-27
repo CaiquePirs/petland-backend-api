@@ -1,5 +1,6 @@
 package com.petland.modules.pet.service;
 
+import com.petland.common.auth.AccessValidator;
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.exception.UnauthorizedException;
 import com.petland.enums.StatusEntity;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -52,6 +54,14 @@ public class PetService {
 
         pet.setStatus(StatusEntity.DELETED);
         petRepository.save(pet);
+    }
+
+    public List<Pet> getPetsByCustomerId(UUID customerId){
+       customerService.findCustomerById(customerId);
+       return petRepository.findPetByOwnerId(customerId)
+                .stream()
+                .filter(pet -> !pet.getStatus().equals(StatusEntity.DELETED))
+                .toList();
     }
 
 }
