@@ -4,14 +4,18 @@ import com.petland.common.exception.NotFoundException;
 import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.dto.CustomerRequestDTO;
+import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.repository.CustomerRepository;
+import com.petland.modules.customer.specifications.CustomerSpecification;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.repository.PetRepository;
-import com.petland.modules.pet.service.PetService;
 import com.petland.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +34,7 @@ public class CustomerService {
     private final CustomerMapper customerMapper;
     private final PasswordEncoder passwordEncoder;
     private final PetRepository petRepository;
+    private final CustomerSpecification specification;
 
     public Customer register(CustomerRequestDTO customerRequestDTO){
         validateEmail.checkIfEmailExists(customerRequestDTO.email());
@@ -62,6 +67,12 @@ public class CustomerService {
             petRepository.saveAll(petByCustomer);
         }
         customerRepository.save(customer);
+    }
+
+    public Page<CustomerResponseDTO> listAllCustomerByFilter(String name, String email, String phone, StatusEntity status, Pageable pageable){
+     Specification<Customer>  filterCustomers = CustomerSpecification.filterBy(name, email, phone, status);
+     Page<Customer> customers = customerRepository.findAll(filterCustomers, pageable);
+     return customers.map(customerMapper::toDTO);
     }
 
 }
