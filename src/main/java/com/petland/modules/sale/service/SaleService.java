@@ -4,15 +4,20 @@ import com.petland.common.auth.AccessValidator;
 import com.petland.common.exception.NotFoundException;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
+import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.sale.dtos.SaleRequestDTO;
+import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.SaleRepository;
 import com.petland.modules.sale.util.SaleCalculator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,11 +30,13 @@ import java.util.UUID;
 public class SaleService {
 
     private final EmployeeService employeeService;
+    private final CustomerRepository customerRepository;
     private final CustomerService customerService;
     private final ItemsSaleService itemsSaleService;
     private final AccessValidator accessValidator;
     private final SaleRepository saleRepository;
     private final SaleCalculator calculator;
+    private final GenerateSaleResponse generateSaleResponse;
 
     @Transactional
     public Sale registerSale(SaleRequestDTO saleRequestDTO){
@@ -46,6 +53,9 @@ public class SaleService {
         sale.setTotalSales(totalSale);
         sale.setCustomer(customer);
         sale.setPaymentType(saleRequestDTO.paymentType());
+
+        customer.getSalesHistory().add(sale);
+        customerRepository.save(customer);
         return saleRepository.save(sale);
     }
 
@@ -61,6 +71,20 @@ public class SaleService {
         itemsSaleService.deleteItemsList(sale.getItemsSale());
         sale.setStatus(StatusEntity.DELETED);
         saleRepository.save(sale);
+    }
+
+    public Page<SaleResponseDTO> findSaleByCustomerId(UUID customerId, Pageable pageable) {
+        Customer customer = customerService.findCustomerById(customerId);
+        Page<Sale> listSales = saleRepository.findByCustomerId(customer.getId(), pageable);
+
+        if(listSales.isEmpty()){
+            throw new NotFoundException("Sales by customer ID not found");
+        }
+
+        List<SaleResponseDTO> listSaleResponse = generateSaleResponse.generateListSaleResponse(
+                listSales.getContent()
+        );
+        return new PageImpl<>(listSaleResponse, pageable, listSales.getSize());
     }
 
 

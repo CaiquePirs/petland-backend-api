@@ -5,6 +5,7 @@ import com.petland.common.entity.Address;
 import com.petland.enums.Roles;
 import com.petland.modules.attendance.model.Attendance;
 import com.petland.modules.pet.model.Pet;
+import com.petland.modules.sale.model.Sale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,6 +46,9 @@ public class Customer extends BaseEntity {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Attendance> serviceHistory;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Sale> salesHistory;
 
     @Enumerated(EnumType.STRING)
     private Roles role;

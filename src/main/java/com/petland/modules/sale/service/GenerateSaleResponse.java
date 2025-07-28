@@ -12,10 +12,9 @@ import java.util.List;
 @Service
 public class GenerateSaleResponse {
 
-    public SaleResponseDTO generateSaleResponse(Sale sale){
+    public SaleResponseDTO generateSaleResponse(Sale sale) {
         List<ItemsSaleResponseDTO> listItemsSaleResponseDTO = generateItemsSaleResponse(sale.getItemsSale());
-
-       SaleResponseDTO saleResponse = SaleResponseDTO.builder()
+        SaleResponseDTO saleResponse = SaleResponseDTO.builder()
                 .id(sale.getId())
                 .customerId(sale.getCustomer().getId())
                 .employeeId(sale.getEmployee().getId())
@@ -23,12 +22,11 @@ public class GenerateSaleResponse {
                 .totalSales(sale.getTotalSales())
                 .itemsSaleResponseDTO(listItemsSaleResponseDTO)
                 .build();
-       return saleResponse;
+        return saleResponse;
     }
 
     public List<ItemsSaleResponseDTO> generateItemsSaleResponse(List<ItemsSale> listItemsSale){
         List<ItemsSaleResponseDTO> listItemsSaleResponseDTO = new ArrayList<>();
-
         for(ItemsSale itemsSale : listItemsSale){
            ItemsSaleResponseDTO itemsSaleResponseDTO = ItemsSaleResponseDTO.builder()
                     .id(itemsSale.getId())
@@ -42,7 +40,13 @@ public class GenerateSaleResponse {
         return listItemsSaleResponseDTO;
     }
 
-
-
-
+    public List<SaleResponseDTO> generateListSaleResponse(List<Sale> listSales){
+        List<SaleResponseDTO> listSaleResponse = new ArrayList<>();
+        if(!listSales.isEmpty()){
+            for(Sale sale : listSales){
+                listSaleResponse.add(generateSaleResponse(sale));
+            }
+        }
+        return listSaleResponse;
+    }
 }
