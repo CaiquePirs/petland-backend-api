@@ -6,6 +6,8 @@ import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.service.GenerateSaleResponse;
 import com.petland.modules.sale.service.SaleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +43,19 @@ public class SaleController {
     public ResponseEntity<Void> deleteById(@PathVariable(name = "id") UUID saleId){
         saleService.deleteSaleById(saleId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/customer")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Page<SaleResponseDTO>> findSalesByCustomerId(
+            @PathVariable(name = "id") UUID customerId,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size){
+
+        Page<SaleResponseDTO> listSaleResponse = saleService.findSaleByCustomerId(
+                customerId, PageRequest.of(page, size)
+        );
+
+        return ResponseEntity.ok().body(listSaleResponse);
     }
 }
