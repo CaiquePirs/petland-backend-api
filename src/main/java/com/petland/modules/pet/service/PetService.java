@@ -7,8 +7,7 @@ import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.pet.dto.PetRequestDTO;
 import com.petland.modules.pet.dto.PetResponseDTO;
-import com.petland.modules.pet.enums.PetGender;
-import com.petland.modules.pet.enums.PetSpecies;
+import com.petland.modules.pet.dto.PetUpdateDTO;
 import com.petland.modules.pet.mapper.PetMapper;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.repository.PetRepository;
@@ -30,6 +29,7 @@ public class PetService {
     private final PetRepository petRepository;
     private final PetMapper petMapper;
     private final AccessValidator accessValidator;
+    private final PetUpdateValidator petUpdateValidator;
 
     @Transactional
     public Pet create(PetRequestDTO petRequestDTO) {
@@ -66,6 +66,13 @@ public class PetService {
     public Page<PetResponseDTO> listAllPets(String name, String specie, String gender, String breed, Pageable pageable){
       Page<Pet> petsByFilter = petRepository.findAll(PetSpecification.filterBy(name, specie, gender, breed), pageable);
       return petsByFilter.map(petMapper::toDTO);
+    }
+
+    public Pet updatePetById(UUID petId, PetUpdateDTO petUpdate){
+        Pet pet = findPetById(petId);
+        accessValidator.isOwnerOrAdmin(pet.getOwner().getId());
+        pet = petUpdateValidator.validate(petUpdate, pet);
+        return petRepository.save(pet);
     }
 
 }

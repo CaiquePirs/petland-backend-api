@@ -3,6 +3,7 @@ package com.petland.modules.pet.controller;
 import com.petland.common.auth.AccessValidator;
 import com.petland.modules.pet.dto.PetRequestDTO;
 import com.petland.modules.pet.dto.PetResponseDTO;
+import com.petland.modules.pet.dto.PetUpdateDTO;
 import com.petland.modules.pet.mapper.PetMapper;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
@@ -60,6 +61,14 @@ public class PetController {
 
       Page<PetResponseDTO> petsByFilters = petService.listAllPets(name, species, gender, breed, PageRequest.of(page, size));
       return ResponseEntity.ok().body(petsByFilters);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
+    public ResponseEntity<PetResponseDTO> updatePetById(@RequestBody PetUpdateDTO petUpdateDTO,
+                                                        @PathVariable(name = "id") UUID petId){
+        Pet pet = petService.updatePetById(petId, petUpdateDTO);
+        return ResponseEntity.ok(petMapper.toDTO(pet));
     }
 
 
