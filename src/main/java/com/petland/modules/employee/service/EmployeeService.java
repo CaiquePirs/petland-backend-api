@@ -8,6 +8,7 @@ import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.repository.EmployeeRepository;
+import com.petland.modules.specifications.EmployeeSpecification;
 import com.petland.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -51,8 +52,10 @@ public class EmployeeService {
        employeeRepository.save(employee);
     }
 
-    public Page<EmployeeResponseDTO> listAllEmployee(Pageable pageable){
-         return employeeRepository.findAll(pageable).map(employeeMapper::toDTO);
+    public Page<EmployeeResponseDTO> listAllEmployee(String name, String email, String phone, String department, String status, Pageable pageable){
+         return employeeRepository
+                 .findAll(EmployeeSpecification.Specification(name, email, phone, department, status), pageable)
+                 .map(employeeMapper::toDTO);
     }
 
 }

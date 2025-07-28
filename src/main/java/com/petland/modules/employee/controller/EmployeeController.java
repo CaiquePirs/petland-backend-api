@@ -47,10 +47,21 @@ public class EmployeeController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<EmployeeResponseDTO>> findAllEmployeeByFilter(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                                             @RequestParam(value = "size", defaultValue = "10") int size){
-        Page<EmployeeResponseDTO> employeeList = employeeService.listAllEmployee(PageRequest.of(page, size));
+    public ResponseEntity<Page<EmployeeResponseDTO>> findAllEmployeeByFilter(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "department", required = false) String department,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size){
+
+        Page<EmployeeResponseDTO> employeeList = employeeService.listAllEmployee(name, email, phone, department, status, PageRequest.of(page, size));
         return ResponseEntity.ok().body(employeeList);
     }
+
+
+
+
 
 }
