@@ -6,6 +6,7 @@ import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.product.dto.ProductRequestDTO;
 import com.petland.modules.product.dto.ProductResponseDTO;
+import com.petland.modules.product.dto.ProductUpdateDTO;
 import com.petland.modules.product.enums.ProductType;
 import com.petland.modules.product.mappers.ProductMapper;
 import com.petland.modules.product.model.Product;
@@ -31,6 +32,7 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final EmployeeService employeeService;
     private final ProductMapper mapper;
+    private final ProductUpdateValidator validator;
 
     public Product register(UUID employeeId, ProductRequestDTO productRequestDTO){
         Employee employee = employeeService.findById(employeeId);
@@ -77,6 +79,13 @@ public class ProductService {
                 .toList();
 
         return new PageImpl<>(productList, pageable, productList.size());
+    }
+
+    public ProductResponseDTO updateProduct(UUID productId, ProductUpdateDTO dto){
+        Product product = findById(productId);
+        product = validator.validate(dto, product);
+        productRepository.save(product);
+        return productMapper.toDTO(product);
     }
 
 }

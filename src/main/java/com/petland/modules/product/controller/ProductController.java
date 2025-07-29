@@ -3,6 +3,7 @@ package com.petland.modules.product.controller;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.product.dto.ProductRequestDTO;
 import com.petland.modules.product.dto.ProductResponseDTO;
+import com.petland.modules.product.dto.ProductUpdateDTO;
 import com.petland.modules.product.enums.ProductType;
 import com.petland.modules.product.mappers.ProductMapper;
 import com.petland.modules.product.model.Product;
@@ -72,6 +73,14 @@ public class ProductController {
         );
 
         return ResponseEntity.ok().body(productList);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable(name = "id") UUID productId,
+                                                            @RequestBody ProductUpdateDTO productDTO){
+        ProductResponseDTO productUpdated = productService.updateProduct(productId, productDTO);
+        return ResponseEntity.ok().body(productUpdated);
     }
 
 }
