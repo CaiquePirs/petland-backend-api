@@ -1,7 +1,7 @@
 package com.petland.modules.pet.controller;
 
 import com.petland.common.auth.AccessValidator;
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.pet.dto.PetRequestDTO;
 import com.petland.modules.pet.dto.PetResponseDTO;
 import com.petland.modules.pet.dto.PetUpdateDTO;

@@ -1,6 +1,6 @@
 package com.petland.modules.pet.specifications;
 
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.pet.model.Pet;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;

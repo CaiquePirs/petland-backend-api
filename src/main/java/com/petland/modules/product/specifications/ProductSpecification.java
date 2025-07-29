@@ -1,6 +1,6 @@
 package com.petland.modules.product.specifications;
 
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.product.enums.ProductType;
 import com.petland.modules.product.model.Product;
 import jakarta.persistence.criteria.Predicate;

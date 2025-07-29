@@ -1,6 +1,6 @@
 package com.petland.modules.employee.specifications;
 
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.employee.model.Employee;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;

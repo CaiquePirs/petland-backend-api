@@ -1,8 +1,8 @@
 package com.petland.modules.customer.service;
 
 import com.petland.common.exception.NotFoundException;
-import com.petland.enums.Roles;
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.Roles;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.customer.dto.CustomerRequestDTO;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.dto.UpdateCustomerDTO;

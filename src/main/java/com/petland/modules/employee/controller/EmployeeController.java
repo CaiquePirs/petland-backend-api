@@ -1,6 +1,6 @@
 package com.petland.modules.employee.controller;
 
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.dto.EmployeeUpdateDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;

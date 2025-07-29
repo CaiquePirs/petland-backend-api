@@ -1,8 +1,8 @@
 package com.petland.modules.employee.service;
 
 import com.petland.common.exception.NotFoundException;
-import com.petland.enums.Roles;
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.Roles;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.employee.dto.EmployeeRequestDTO;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.dto.EmployeeUpdateDTO;

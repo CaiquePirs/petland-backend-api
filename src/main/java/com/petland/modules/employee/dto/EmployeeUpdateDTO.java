@@ -1,7 +1,7 @@
 package com.petland.modules.employee.dto;
 
 import com.petland.common.entity.dto.UpdateAddressDTO;
-import com.petland.enums.Roles;
+import com.petland.common.entity.enums.Roles;
 import com.petland.modules.employee.enums.Department;
 import jakarta.validation.constraints.Email;
 

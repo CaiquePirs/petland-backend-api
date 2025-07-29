@@ -1,7 +1,7 @@
 package com.petland.utils;
 
 import com.petland.common.exception.EmailFoundException;
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.modules.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;

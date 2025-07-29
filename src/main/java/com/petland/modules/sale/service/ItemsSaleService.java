@@ -1,7 +1,7 @@
 package com.petland.modules.sale.service;
 
 import com.petland.common.exception.NotFoundException;
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;
 import com.petland.modules.sale.dtos.ItemsSaleRequestDTO;

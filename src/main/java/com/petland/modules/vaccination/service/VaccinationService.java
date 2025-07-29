@@ -1,7 +1,7 @@
 package com.petland.modules.vaccination.service;
 
 import com.petland.common.exception.NotFoundException;
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.employee.model.Employee;

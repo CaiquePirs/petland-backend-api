@@ -1,4 +1,4 @@
-package com.petland.enums;
+package com.petland.common.entity.enums;
 
 public enum Roles {
     CUSTOMER,

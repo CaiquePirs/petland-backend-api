@@ -1,6 +1,6 @@
 package com.petland.modules.product.controller;
 
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.product.dto.ProductRequestDTO;
 import com.petland.modules.product.dto.ProductResponseDTO;
 import com.petland.modules.product.enums.ProductType;

@@ -1,7 +1,7 @@
 package com.petland.modules.customer.controller;
 
 import com.petland.common.auth.AccessValidator;
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.dto.UpdateCustomerDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;

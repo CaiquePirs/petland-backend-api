@@ -2,7 +2,7 @@ package com.petland.modules.sale.service;
 
 import com.petland.common.auth.AccessValidator;
 import com.petland.common.exception.NotFoundException;
-import com.petland.enums.StatusEntity;
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.modules.customer.service.CustomerService;
