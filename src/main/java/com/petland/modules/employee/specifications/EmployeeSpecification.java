@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 public class EmployeeSpecification {
 
-    public static Specification<Employee> Specification(String name, String email, String phone, String department, String status){
+    public static Specification<Employee> Specification(String name, String email, String phone, String department, StatusEntity status){
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -32,11 +32,7 @@ public class EmployeeSpecification {
                 predicates.add(cb.like(cb.lower(root.get("department")), "%" + department.toLowerCase() + "%"));
             }
 
-            if(status!= null && !status.isBlank()){
-                predicates.add(cb.like(cb.lower(root.get("status")), "%" + status.toLowerCase() + "%"));
-            }
-
-            cb.equal(root.get("status"), StatusEntity.ACTIVE);
+            predicates.add(cb.equal(root.get("status"), status));
             return cb.and(predicates.toArray(new Predicate[0]));
         };
 

@@ -1,5 +1,6 @@
 package com.petland.modules.employee.controller;
 
+import com.petland.enums.StatusEntity;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.dto.EmployeeUpdateDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
@@ -54,7 +55,7 @@ public class EmployeeController {
             @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "phone", required = false) String phone,
             @RequestParam(value = "department", required = false) String department,
-            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") StatusEntity status,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 

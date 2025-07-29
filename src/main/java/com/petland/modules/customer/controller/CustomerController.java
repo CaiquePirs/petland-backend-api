@@ -47,7 +47,7 @@ public class CustomerController {
             @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "phone", required = false) String phone,
-            @RequestParam(value = "status", required = false) StatusEntity status,
+            @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") StatusEntity status,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 

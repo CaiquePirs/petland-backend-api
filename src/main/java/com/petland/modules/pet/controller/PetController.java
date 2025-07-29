@@ -1,6 +1,7 @@
 package com.petland.modules.pet.controller;
 
 import com.petland.common.auth.AccessValidator;
+import com.petland.enums.StatusEntity;
 import com.petland.modules.pet.dto.PetRequestDTO;
 import com.petland.modules.pet.dto.PetResponseDTO;
 import com.petland.modules.pet.dto.PetUpdateDTO;
@@ -56,10 +57,11 @@ public class PetController {
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "gender", required = false) String gender,
             @RequestParam(value = "breed", required = false) String breed,
+            @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") StatusEntity status,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
-      Page<PetResponseDTO> petsByFilters = petService.listAllPets(name, species, gender, breed, PageRequest.of(page, size));
+      Page<PetResponseDTO> petsByFilters = petService.listAllPets(name, species, gender, breed, status, PageRequest.of(page, size));
       return ResponseEntity.ok().body(petsByFilters);
     }
 

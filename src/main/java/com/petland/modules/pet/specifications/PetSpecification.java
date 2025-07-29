@@ -13,7 +13,7 @@ import jakarta.persistence.criteria.Predicate;
 public class PetSpecification {
 
     public static Specification<Pet> filterBy(String name,  String specie,
-                                       String gender, String breed){
+                                       String gender, String breed, StatusEntity status){
         return ((root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class PetSpecification {
                 predicates.add(cb.like(cb.lower(root.get("gender")), "%" + gender.toLowerCase() + "%"));
             }
 
-            predicates.add(cb.equal(root.get("status"), StatusEntity.ACTIVE));
+            predicates.add(cb.equal(root.get("status"), status));
             return cb.and(predicates.toArray(new Predicate[0]));
         });
     }

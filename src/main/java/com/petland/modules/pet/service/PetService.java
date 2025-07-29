@@ -63,8 +63,8 @@ public class PetService {
                 .toList();
     }
 
-    public Page<PetResponseDTO> listAllPets(String name, String specie, String gender, String breed, Pageable pageable){
-      Page<Pet> petsByFilter = petRepository.findAll(PetSpecification.filterBy(name, specie, gender, breed), pageable);
+    public Page<PetResponseDTO> listAllPets(String name, String specie, String gender, String breed, StatusEntity status, Pageable pageable){
+      Page<Pet> petsByFilter = petRepository.findAll(PetSpecification.filterBy(name, specie, gender, breed,status), pageable);
       return petsByFilter.map(petMapper::toDTO);
     }
 

@@ -28,11 +28,7 @@ public class CustomerSpecification {
                 predicates.add(cb.like(cb.lower(root.get("phone")), "%" + phone.toLowerCase() + "%"));
             }
 
-            if(status != null && !status.toString().isBlank()){
-                predicates.add(cb.like(cb.lower(root.get("status")), "%" + status.toString().toLowerCase() + "%"));
-            }
-
-            predicates.add(cb.equal(root.get("status"), StatusEntity.ACTIVE));
+            predicates.add(cb.equal(root.get("status"), status));
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }

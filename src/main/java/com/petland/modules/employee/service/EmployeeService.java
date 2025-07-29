@@ -54,7 +54,7 @@ public class EmployeeService {
        employeeRepository.save(employee);
     }
 
-    public Page<EmployeeResponseDTO> listAllEmployee(String name, String email, String phone, String department, String status, Pageable pageable){
+    public Page<EmployeeResponseDTO> listAllEmployee(String name, String email, String phone, String department, StatusEntity status, Pageable pageable){
          return employeeRepository
                  .findAll(EmployeeSpecification.Specification(name, email, phone, department, status), pageable)
                  .map(employeeMapper::toDTO);
