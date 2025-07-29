@@ -1,10 +1,12 @@
 package com.petland.modules.employee.controller;
 
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
+import com.petland.modules.employee.dto.EmployeeUpdateDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,6 +62,13 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employeeList);
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<EmployeeResponseDTO> updateEmployee(@PathVariable(name = "id") UUID employeeId,
+                                                              @RequestBody @Valid EmployeeUpdateDTO employeeDTO) {
+        EmployeeResponseDTO employeeResponse = employeeService.updateEmployee(employeeId, employeeDTO);
+        return ResponseEntity.ok().body(employeeResponse);
+    }
 
 
 

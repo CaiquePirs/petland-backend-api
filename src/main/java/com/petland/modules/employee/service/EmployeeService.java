@@ -5,10 +5,11 @@ import com.petland.enums.Roles;
 import com.petland.enums.StatusEntity;
 import com.petland.modules.employee.dto.EmployeeRequestDTO;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
+import com.petland.modules.employee.dto.EmployeeUpdateDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.repository.EmployeeRepository;
-import com.petland.modules.specifications.EmployeeSpecification;
+import com.petland.modules.employee.specifications.EmployeeSpecification;
 import com.petland.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ public class EmployeeService {
     private final PasswordEncoder passwordEncoder;
     private final EmployeeMapper employeeMapper;
     private final EmailValidator emailValidator;
+    private final EmployeeUpdateValidator updateValidator;
 
     @Transactional
     public Employee register(EmployeeRequestDTO employeeRequestDTO){
@@ -56,6 +58,13 @@ public class EmployeeService {
          return employeeRepository
                  .findAll(EmployeeSpecification.Specification(name, email, phone, department, status), pageable)
                  .map(employeeMapper::toDTO);
+    }
+
+    public EmployeeResponseDTO updateEmployee(UUID employeeId, EmployeeUpdateDTO dto){
+        Employee employee = findById(employeeId);
+        employee = updateValidator.validator(employee, dto);
+        employeeRepository.save(employee);
+        return employeeMapper.toDTO(employee);
     }
 
 }

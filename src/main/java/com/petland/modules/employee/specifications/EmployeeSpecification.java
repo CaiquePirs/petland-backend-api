@@ -1,4 +1,4 @@
-package com.petland.modules.specifications;
+package com.petland.modules.employee.specifications;
 
 import com.petland.enums.StatusEntity;
 import com.petland.modules.employee.model.Employee;

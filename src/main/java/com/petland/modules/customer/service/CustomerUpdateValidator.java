@@ -6,6 +6,7 @@ import com.petland.modules.customer.model.Customer;
 import com.petland.utils.EmailValidator;
 import com.petland.utils.AddressUpdateValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,6 +15,7 @@ public class CustomerUpdateValidator {
 
     private final EmailValidator emailValidator;
     private final AddressUpdateValidator validateAddress;
+    private final PasswordEncoder passwordEncoder;
 
     public Customer validate(Customer customer, UpdateCustomerDTO updateCustomer){
         if(updateCustomer.email() != null){
@@ -22,7 +24,7 @@ public class CustomerUpdateValidator {
         }
 
         if(updateCustomer.password() != null){
-            customer.setPassword(updateCustomer.password());
+            customer.setPassword(passwordEncoder.encode(updateCustomer.password()));
         }
 
         if(updateCustomer.phone() != null){
