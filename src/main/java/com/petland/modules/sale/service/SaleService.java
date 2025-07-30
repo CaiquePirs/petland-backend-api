@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,12 +51,15 @@ public class SaleService {
 
         List<ItemsSale> listItemsSale = itemsSaleService.createItems(sale, saleRequestDTO.itemsSaleRequestDTO());
         BigDecimal totalSale = calculator.calculateTotalItemsSale(listItemsSale);
+        BigDecimal profitSale = calculator.calculateProfitByItemsSale(listItemsSale);
 
         sale.setItemsSale(listItemsSale);
         sale.setEmployee(employee);
         sale.setTotalSales(totalSale);
         sale.setCustomer(customer);
         sale.setPaymentType(saleRequestDTO.paymentType());
+        sale.setProfitSale(profitSale);
+        sale.setCreateAt(LocalDateTime.now());
 
         customer.getSalesHistory().add(sale);
         customerRepository.save(customer);

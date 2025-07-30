@@ -39,6 +39,8 @@ public class Sale extends BaseEntity {
 
     private BigDecimal totalSales;
 
+    private BigDecimal profitSale;
+
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
 

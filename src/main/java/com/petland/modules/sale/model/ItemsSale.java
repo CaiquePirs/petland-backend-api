@@ -33,6 +33,8 @@ public class ItemsSale extends BaseEntity {
 
     private BigDecimal itemsSaleTotal;
 
+    private BigDecimal profit;
+
     @ManyToOne
     @JoinColumn(name = "sale_id")
     private Sale sale;

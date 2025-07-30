@@ -1,6 +1,7 @@
 package com.petland.modules.sale.util;
 
 import com.petland.modules.sale.model.ItemsSale;
+import com.petland.modules.sale.model.Sale;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -24,5 +25,12 @@ public class SaleCalculator {
                 .map(ItemsSale::getItemsSaleTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+    }
+
+    public BigDecimal calculateProfitByItemsSale(List<ItemsSale> listItemsSale) {
+        return listItemsSale.stream()
+                .map(ItemsSale::getProfit)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
     }
 }
