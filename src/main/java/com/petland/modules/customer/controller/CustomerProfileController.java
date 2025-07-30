@@ -52,7 +52,7 @@ public class CustomerProfileController {
 
     @GetMapping("/sales")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<Page<SaleResponseDTO>> findSalesByLoggedCustomer(
+    public ResponseEntity<Page<SaleResponseDTO>> findMySalesHistory(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
