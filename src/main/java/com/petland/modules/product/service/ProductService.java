@@ -53,7 +53,7 @@ public class ProductService {
         Product product = findById(productId);
 
         if(product.getStockQuantity() <= 0 || stockUsed > product.getStockQuantity()){
-            throw new InsufficientStockException("Vaccine stock is insufficient");
+            throw new InsufficientStockException("Product stock is insufficient");
         }
 
         int stockUpdated = product.getStockQuantity() - stockUsed;
