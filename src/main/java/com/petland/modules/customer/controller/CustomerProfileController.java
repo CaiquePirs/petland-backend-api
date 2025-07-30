@@ -9,7 +9,6 @@ import com.petland.modules.pet.dto.PetResponseDTO;
 import com.petland.modules.pet.mapper.PetMapper;
 import com.petland.modules.pet.service.PetService;
 import com.petland.modules.sale.dtos.SaleResponseDTO;
-import com.petland.modules.sale.service.GenerateSaleResponse;
 import com.petland.modules.sale.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -57,10 +56,10 @@ public class CustomerProfileController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
-        Page<SaleResponseDTO> listSalesPaginated = saleService.findSaleByCustomerId(
+        Page<SaleResponseDTO> salesList = saleService.findSalesByCustomerId(
                 accessValidator.getLoggedInUser(), PageRequest.of(page, size)
         );
 
-        return ResponseEntity.ok().body(listSalesPaginated);
+        return ResponseEntity.ok().body(salesList);
     }
 }

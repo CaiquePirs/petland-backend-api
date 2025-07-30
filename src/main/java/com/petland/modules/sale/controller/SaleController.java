@@ -1,5 +1,7 @@
 package com.petland.modules.sale.controller;
 
+import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.attendance.enums.PaymentType;
 import com.petland.modules.sale.dtos.SaleRequestDTO;
 import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.Sale;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @RestController
@@ -52,10 +55,29 @@ public class SaleController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
-        Page<SaleResponseDTO> listSaleResponse = saleService.findSaleByCustomerId(
+        Page<SaleResponseDTO> salesList = saleService.findSalesByCustomerId(
                 customerId, PageRequest.of(page, size)
         );
 
-        return ResponseEntity.ok().body(listSaleResponse);
+        return ResponseEntity.ok().body(salesList);
     }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Page<SaleResponseDTO>> findAllSalesByFilter(
+            @RequestParam(value = "employeeId", required = false) UUID employeeId,
+            @RequestParam(value = "customerId", required = false) UUID customerId,
+            @RequestParam(value = "paymentType", required = false) PaymentType paymentType,
+            @RequestParam(value = "totalSalesMin", required = false) BigDecimal totalSalesMin,
+            @RequestParam(value = "totalSalesMin", required = false) BigDecimal totalSalesMax,
+            @RequestParam(value = "status", defaultValue = "ACTIVE")StatusEntity status,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size){
+
+        Page<SaleResponseDTO> salesList = saleService.findAllSalesByFilter(employeeId, customerId, paymentType, totalSalesMin,
+                totalSalesMax, status ,PageRequest.of(page, size)
+        );
+        return ResponseEntity.ok().body(salesList);
+    }
+
 }

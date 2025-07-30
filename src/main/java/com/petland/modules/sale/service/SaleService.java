@@ -3,6 +3,7 @@ package com.petland.modules.sale.service;
 import com.petland.common.auth.AccessValidator;
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.attendance.enums.PaymentType;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.modules.customer.service.CustomerService;
@@ -13,6 +14,7 @@ import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.SaleRepository;
+import com.petland.modules.sale.specifications.SaleSpecifications;
 import com.petland.modules.sale.util.SaleCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -73,7 +75,7 @@ public class SaleService {
         saleRepository.save(sale);
     }
 
-    public Page<SaleResponseDTO> findSaleByCustomerId(UUID customerId, Pageable pageable) {
+    public Page<SaleResponseDTO> findSalesByCustomerId(UUID customerId, Pageable pageable) {
         Customer customer = customerService.findCustomerById(customerId);
         Page<Sale> listSales = saleRepository.findByCustomerId(customer.getId(), pageable);
 
@@ -85,6 +87,18 @@ public class SaleService {
                 listSales.getContent()
         );
         return new PageImpl<>(listSaleResponse, pageable, listSales.getSize());
+    }
+
+
+    public Page<SaleResponseDTO> findAllSalesByFilter(UUID employeeId, UUID customerId, PaymentType paymentType, BigDecimal totalSalesMin,
+                                                      BigDecimal totalSalesMax, StatusEntity status , Pageable pageable){
+
+        List<SaleResponseDTO> salesList = saleRepository.findAll(SaleSpecifications.specification(
+                employeeId, customerId, paymentType, totalSalesMin, totalSalesMax, status), pageable)
+                .stream()
+                .map(generateSaleResponse::generateSaleResponse)
+                .toList();
+        return new PageImpl<>(salesList, pageable, salesList.size());
     }
 
 
