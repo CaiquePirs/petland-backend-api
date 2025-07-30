@@ -32,10 +32,8 @@ public class ItemsSaleService {
             Product product = productService.findById(itemsSaleRequest.productId());
             productService.updateProductStock(itemsSaleRequest.productQuantity(), product.getId());
 
-            BigDecimal totalItemsSale = saleCalculator.calculateTotalSale(
-                    itemsSaleRequest.productQuantity(),
-                    product.getCostSale()
-            );
+            BigDecimal totalItemsSale = saleCalculator.calculateTotalSale(itemsSaleRequest.productQuantity(), product.getCostSale());
+            BigDecimal profitByItemSale = productService.calculateProfitByProduct(product);
 
             return ItemsSale.builder()
                     .sale(sale)
@@ -43,6 +41,7 @@ public class ItemsSaleService {
                     .productPrice(product.getCostSale())
                     .productQuantity(itemsSaleRequest.productQuantity())
                     .itemsSaleTotal(totalItemsSale)
+                    .profit(profitByItemSale)
                     .build();
         }).collect(Collectors.toList());
         return listItemsSale;
@@ -72,6 +71,5 @@ public class ItemsSaleService {
         ItemsSale item = findActiveItemInActiveSale(saleId, itemId);
         item.setStatus(StatusEntity.DELETED);
         itemsSaleRepository.save(item);
-
     }
 }
