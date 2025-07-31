@@ -5,7 +5,7 @@ import com.petland.modules.attendance.enums.PaymentType;
 import com.petland.modules.sale.dtos.SaleRequestDTO;
 import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.Sale;
-import com.petland.modules.sale.service.GenerateSaleResponse;
+import com.petland.modules.sale.util.GenerateSaleResponse;
 import com.petland.modules.sale.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

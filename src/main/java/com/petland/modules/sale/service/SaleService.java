@@ -15,6 +15,7 @@ import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.SaleRepository;
 import com.petland.modules.sale.specifications.SaleSpecifications;
+import com.petland.modules.sale.util.GenerateSaleResponse;
 import com.petland.modules.sale.util.SaleCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -97,8 +98,7 @@ public class SaleService {
 
     public Page<SaleResponseDTO> findAllSalesByFilter(UUID employeeId, UUID customerId, PaymentType paymentType, BigDecimal totalSalesMin,
                                                       BigDecimal totalSalesMax, StatusEntity status , Pageable pageable){
-
-        List<SaleResponseDTO> salesList = saleRepository.findAll(SaleSpecifications.specification(
+        List<SaleResponseDTO> salesList = saleRepository.findAll(SaleSpecifications.specifications(
                 employeeId, customerId, paymentType, totalSalesMin, totalSalesMax, status), pageable)
                 .stream()
                 .map(generateSaleResponse::generateSaleResponse)
@@ -106,5 +106,8 @@ public class SaleService {
         return new PageImpl<>(salesList, pageable, salesList.size());
     }
 
+    public List<Sale> findAllSalesByPeriod(LocalDate dateMin, LocalDate dateMax){
+        return saleRepository.findAll(SaleSpecifications.findByPeriod(dateMin, dateMax));
+    }
 
 }

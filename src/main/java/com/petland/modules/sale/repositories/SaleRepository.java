@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.UUID;
 
-public interface SaleRepository extends JpaRepository<Sale, UUID>, JpaSpecificationExecutor<Sale> {
+public interface SaleRepository extends JpaRepository<Sale, UUID>, JpaSpecificationExecutor<Sale>{
    Page<Sale> findByCustomerId(UUID customerId, Pageable pageable);
 }

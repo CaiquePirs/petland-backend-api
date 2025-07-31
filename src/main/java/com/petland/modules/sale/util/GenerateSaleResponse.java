@@ -1,4 +1,4 @@
-package com.petland.modules.sale.service;
+package com.petland.modules.sale.util;
 
 import com.petland.modules.sale.dtos.ItemsSaleResponseDTO;
 import com.petland.modules.sale.dtos.SaleResponseDTO;

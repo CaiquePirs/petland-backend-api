@@ -7,15 +7,16 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class SaleSpecifications {
 
-    public static Specification<Sale> specification(UUID employeeId, UUID customerId,
-                                                    PaymentType paymentType, BigDecimal totalSalesMin,
-                                                    BigDecimal totalSalesMax, StatusEntity status) {
+    public static Specification<Sale> specifications(UUID employeeId, UUID customerId,
+                                                     PaymentType paymentType, BigDecimal totalSalesMin,
+                                                     BigDecimal totalSalesMax, StatusEntity status) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -43,4 +44,17 @@ public class SaleSpecifications {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
+
+    public static Specification<Sale> findByPeriod(LocalDate dateMin, LocalDate dateMax) {
+        return (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (dateMin != null && dateMax != null) {
+                predicates.add(cb.between(root.get("createAt"), dateMin, dateMax));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+
 }

@@ -24,12 +24,35 @@ public class SaleCalculator {
         return listItemsSale.stream()
                 .map(ItemsSale::getItemsSaleTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
+    public BigDecimal calculateTotalListSales(List<Sale> listSales){
+        if (listSales == null || listSales.isEmpty()) {
+            throw new IllegalArgumentException("SalesReportGenerator list cannot be null or empty.");
+        }
+        return listSales.stream()
+                .map(Sale::getTotalSales)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public Integer sumTotalItemsSale(List<Sale> sales) {
+        return sales.stream()
+                .mapToInt(sale -> sale.getItemsSale().size())
+                .sum();
     }
 
     public BigDecimal calculateProfitByItemsSale(List<ItemsSale> listItemsSale) {
         return listItemsSale.stream()
+                .filter(item -> item.getProfit() != null)
                 .map(ItemsSale::getProfit)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
+
+    public BigDecimal calculateProfitBySales(List<Sale> listSales) {
+        return listSales.stream()
+                .filter(sale -> sale.getProfitSale() != null)
+                .map(Sale::getProfitSale)
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
     }
