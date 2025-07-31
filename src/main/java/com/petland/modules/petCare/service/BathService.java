@@ -9,11 +9,14 @@ import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
 import com.petland.modules.petCare.dtos.BathRequestDTO;
+import com.petland.modules.petCare.dtos.BathResponseDTO;
 import com.petland.modules.petCare.mappers.BathMapper;
 import com.petland.modules.petCare.model.Bath;
 import com.petland.modules.petCare.repositories.BathRepository;
 import com.petland.modules.petCare.utils.CalculateTotalCost;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -57,5 +60,9 @@ public class BathService {
         Bath bath = findById(bathId);
         bath.setStatus(StatusEntity.DELETED);
         bathRepository.save(bath);
+    }
+
+    public Page<BathResponseDTO> listAllBathServices(Pageable pageable){
+        return bathRepository.findAll(pageable).map(bathMapper::toDTO);
     }
 }

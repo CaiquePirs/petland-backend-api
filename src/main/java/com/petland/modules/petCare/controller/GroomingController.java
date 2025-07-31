@@ -7,6 +7,8 @@ import com.petland.modules.petCare.model.Grooming;
 import com.petland.modules.petCare.service.GroomingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +42,13 @@ public class GroomingController {
     public ResponseEntity<Void> deleteById(@PathVariable(name = "id") UUID groomingId){
         groomingService.deleteById(groomingId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<GroomingResponseDTO>> findAllGroomingServices(@RequestParam(required = false, defaultValue = "0") int page,
+                                                                             @RequestParam(required = false, defaultValue = "10") int size){
+        Page<GroomingResponseDTO> groomingServicesList = groomingService.listAllGroomingServices(PageRequest.of(page, size));
+        return ResponseEntity.ok(groomingServicesList);
     }
 
 }

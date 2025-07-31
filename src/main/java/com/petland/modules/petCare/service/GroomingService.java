@@ -9,11 +9,14 @@ import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
 import com.petland.modules.petCare.dtos.GroomingRequestDTO;
+import com.petland.modules.petCare.dtos.GroomingResponseDTO;
 import com.petland.modules.petCare.mappers.GroomingMapper;
 import com.petland.modules.petCare.model.Grooming;
 import com.petland.modules.petCare.repositories.GroomingRepository;
 import com.petland.modules.petCare.utils.CalculateTotalCost;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -57,5 +60,9 @@ public class GroomingService {
         Grooming grooming = findById(groomingId);
         grooming.setStatus(StatusEntity.DELETED);
         groomingRepository.save(grooming);
+    }
+
+    public Page<GroomingResponseDTO> listAllGroomingServices(Pageable pageable){
+        return groomingRepository.findAll(pageable).map(groomingMapper::toDTO);
     }
 }
