@@ -3,6 +3,7 @@ package com.petland.modules.vaccination.controller;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.vaccination.dto.VaccineRequestDTO;
 import com.petland.modules.vaccination.dto.VaccineResponseDTO;
+import com.petland.modules.vaccination.dto.VaccineUpdateDTO;
 import com.petland.modules.vaccination.enums.VaccineType;
 import com.petland.modules.vaccination.mappers.VaccineMapper;
 import com.petland.modules.vaccination.module.Vaccine;
@@ -73,6 +74,11 @@ public class VaccineController {
         return ResponseEntity.ok().body(vaccinesListPage);
     }
 
-
-
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<VaccineResponseDTO> updateVaccineByID(@PathVariable(name = "id") UUID vaccineId,
+                                                                @RequestBody VaccineUpdateDTO dto){
+        Vaccine vaccine = vaccineService.updateVaccineById(vaccineId, dto);
+        return ResponseEntity.ok().body(vaccineMapper.toDTO(vaccine));
+    }
 }
