@@ -2,6 +2,7 @@ package com.petland.modules.vaccination.service;
 
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
+import com.petland.common.exception.UnauthorizedException;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.employee.model.Employee;
@@ -9,11 +10,13 @@ import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
+import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
 import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.module.AppliedVaccine;
 import com.petland.modules.vaccination.repository.AppliedVaccineRepository;
 import com.petland.modules.vaccination.repository.VaccinationRepository;
 import com.petland.modules.vaccination.util.CalculateTotalVaccinationCost;
+import com.petland.modules.vaccination.util.VaccinationUpdateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +36,7 @@ public class VaccinationService {
     private final AppliedVaccineRepository appliedVaccineRepository;
     private final CalculateTotalVaccinationCost calculateTotalVaccinationCost;
     private final VaccinationRepository vaccinationRepository;
+    private final VaccinationUpdateValidator validator;
 
     @Transactional
     public Vaccination register(VaccinationRequestDTO vaccinationRequestDTO){
@@ -77,6 +81,11 @@ public class VaccinationService {
         }
         vaccination.setStatus(StatusEntity.DELETED);
         vaccinationRepository.save(vaccination);
+    }
+
+    public Vaccination updateVaccination(VaccinationUpdateDTO dto, UUID vaccinationId){
+       Vaccination vaccination = findById(vaccinationId);
+       return validator.validate(vaccination, dto);
     }
 
 }

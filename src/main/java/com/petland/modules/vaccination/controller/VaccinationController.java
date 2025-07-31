@@ -2,9 +2,11 @@ package com.petland.modules.vaccination.controller;
 
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
 import com.petland.modules.vaccination.dto.VaccinationResponseDTO;
+import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
 import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.util.GenerateVaccinationResponse;
 import com.petland.modules.vaccination.service.VaccinationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,6 +43,15 @@ public class VaccinationController {
     public ResponseEntity<Void> deleteById(@PathVariable(name = "id") UUID vaccinationId){
      vaccinationService.deleteById(vaccinationId);
      return ResponseEntity.noContent().build();
+    }
+
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<VaccinationResponseDTO> updateById(@RequestBody @Valid VaccinationUpdateDTO dto,
+                                                             @PathVariable(name = "id") UUID vaccinationId){
+        Vaccination vaccination = vaccinationService.updateVaccination(dto, vaccinationId);
+        return ResponseEntity.ok().body(generateVaccinationResponse.generate(vaccination));
     }
 
 }
