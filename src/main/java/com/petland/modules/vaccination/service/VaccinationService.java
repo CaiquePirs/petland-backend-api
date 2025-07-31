@@ -10,18 +10,25 @@ import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
+import com.petland.modules.vaccination.dto.VaccinationResponseDTO;
 import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
 import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.module.AppliedVaccine;
 import com.petland.modules.vaccination.repository.AppliedVaccineRepository;
 import com.petland.modules.vaccination.repository.VaccinationRepository;
+import com.petland.modules.vaccination.specifications.VaccinationSpecification;
+import com.petland.modules.vaccination.util.GenerateVaccinationResponse;
 import com.petland.modules.vaccination.util.VaccinationCalculator;
 import com.petland.modules.vaccination.util.VaccinationUpdateValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +44,7 @@ public class VaccinationService {
     private final VaccinationCalculator calculator;
     private final VaccinationRepository vaccinationRepository;
     private final VaccinationUpdateValidator validator;
+    private final GenerateVaccinationResponse generateResponse;
 
     @Transactional
     public Vaccination register(VaccinationRequestDTO vaccinationRequestDTO){
@@ -92,6 +100,15 @@ public class VaccinationService {
     public Vaccination updateVaccination(VaccinationUpdateDTO dto, UUID vaccinationId){
        Vaccination vaccination = findById(vaccinationId);
        return validator.validate(vaccination, dto);
+    }
+
+    public Page<VaccinationResponseDTO> listAllVaccinationsByFilter(UUID petId, UUID customerId, UUID veterinarianId, LocalDate vaccinationDate,
+                                                         LocalDate nextDoseBefore, StatusEntity status, Pageable pageable){
+
+        List<VaccinationResponseDTO> vaccinationsList = vaccinationRepository.findAll(VaccinationSpecification.specifications(
+                petId, customerId, veterinarianId, vaccinationDate, nextDoseBefore, status), pageable).map(generateResponse::generate).toList();
+
+        return new PageImpl<>(vaccinationsList, pageable, vaccinationsList.size());
     }
 
 }
