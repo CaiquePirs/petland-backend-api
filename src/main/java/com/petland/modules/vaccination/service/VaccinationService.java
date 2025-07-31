@@ -45,6 +45,10 @@ public class VaccinationService {
         Customer customer = customerService.findCustomerById(vaccinationRequestDTO.customerId());
         Employee veterinarian = employeeService.findById(vaccinationRequestDTO.veterinarianId());
 
+        if(!customer.getMyPets().contains(pet)){
+            throw new UnauthorizedException("This pet does not belong to this customer");
+        }
+
         vaccination.setPet(pet);
         vaccination.setCustomer(customer);
         vaccination.setVeterinarian(veterinarian);
