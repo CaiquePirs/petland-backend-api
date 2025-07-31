@@ -15,7 +15,7 @@ import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.module.AppliedVaccine;
 import com.petland.modules.vaccination.repository.AppliedVaccineRepository;
 import com.petland.modules.vaccination.repository.VaccinationRepository;
-import com.petland.modules.vaccination.util.CalculateTotalVaccinationCost;
+import com.petland.modules.vaccination.util.VaccinationCalculator;
 import com.petland.modules.vaccination.util.VaccinationUpdateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class VaccinationService {
     private final PetService petService;
     private final AppliedVaccineService appliedVaccineService;
     private final AppliedVaccineRepository appliedVaccineRepository;
-    private final CalculateTotalVaccinationCost calculateTotalVaccinationCost;
+    private final VaccinationCalculator calculator;
     private final VaccinationRepository vaccinationRepository;
     private final VaccinationUpdateValidator validator;
 
@@ -58,8 +58,10 @@ public class VaccinationService {
         vaccination.setNextDoseDate(vaccinationRequestDTO.nextDoseDate());
 
         List<AppliedVaccine> listAppliedVaccine = appliedVaccineService.create(vaccination, vaccinationRequestDTO.listAppliedVaccineRequestDTO());
-        BigDecimal totalCostVaccination = calculateTotalVaccinationCost.calculate(listAppliedVaccine);
-        vaccination.setTotalCostVaccination(totalCostVaccination);
+        BigDecimal totalCostVaccination = calculator.calculateTotalVaccination(listAppliedVaccine);
+        BigDecimal totalProfit = calculator.calculateProfitByVaccineApplied(listAppliedVaccine);
+        vaccination.setTotalByVaccination(totalCostVaccination);
+        vaccination.setProfitByVaccination(totalProfit);
         return vaccinationRepository.save(vaccination);
     }
 

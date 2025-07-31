@@ -47,7 +47,9 @@ public class Vaccination extends BaseEntity {
     private String clinicalNotes;
 
     @Column(nullable = false)
-    private BigDecimal totalCostVaccination;
+    private BigDecimal totalByVaccination;
+
+    private BigDecimal profitByVaccination;
 
     @Column(nullable = false)
     private LocalDate vaccinationDate;

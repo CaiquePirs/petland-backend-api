@@ -10,6 +10,7 @@ import com.petland.modules.vaccination.repository.VaccineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Service
@@ -45,6 +46,13 @@ public class VaccineService {
         Vaccine vaccine = findById(vaccineId);
         vaccine.setStatus(StatusEntity.DELETED);
         vaccineRepository.save(vaccine);
+    }
+
+    public BigDecimal calculateProfitByVaccine(Vaccine vaccine){
+        if(vaccine.getPurchasePrice() == null || vaccine.getPriceSale() == null){
+            return BigDecimal.ZERO;
+        }
+        return vaccine.getPriceSale().subtract(vaccine.getPurchasePrice());
     }
 
 }

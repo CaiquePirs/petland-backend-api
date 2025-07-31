@@ -21,11 +21,10 @@ public class AppliedVaccineService {
                 .map(appliedVaccineRequest -> {
                     AppliedVaccine appliedVaccine = new AppliedVaccine();
                     Vaccine vaccine = vaccineService.updateVaccineStock(appliedVaccineRequest.quantityUsed(), appliedVaccineRequest.vaccineId());
-                    appliedVaccine.setVaccination(vaccination);
-                    vaccination.getAppliedVaccines().add(appliedVaccine);
-
-                    appliedVaccine.setVaccine(vaccine);
-                    appliedVaccine.setQuantityUsed(appliedVaccineRequest.quantityUsed());
+                        appliedVaccine.setVaccination(vaccination);
+                        vaccination.getAppliedVaccines().add(appliedVaccine);
+                        appliedVaccine.setVaccine(vaccine);
+                        appliedVaccine.setQuantityUsed(appliedVaccineRequest.quantityUsed());
                     return appliedVaccine;
                 }).collect(Collectors.toList());
 

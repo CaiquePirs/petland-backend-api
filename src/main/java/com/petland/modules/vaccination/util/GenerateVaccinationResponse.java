@@ -27,7 +27,8 @@ public class GenerateVaccinationResponse {
                 .vaccinationDate(vaccination.getVaccinationDate())
                 .nextDoseDate(vaccination.getNextDoseDate())
                 .clinicalNotes(vaccination.getClinicalNotes())
-                .totalCostVaccination(vaccination.getTotalCostVaccination())
+                .totaByVaccination(vaccination.getTotalByVaccination())
+                .profitByVaccination(vaccination.getProfitByVaccination())
                 .build();
         return responseDTO;
     }

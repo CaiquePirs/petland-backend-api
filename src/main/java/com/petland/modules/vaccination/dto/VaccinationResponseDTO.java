@@ -22,5 +22,6 @@ public class VaccinationResponseDTO {
     private LocalDate nextDoseDate;
     private Address location;
     private String clinicalNotes;
-    private BigDecimal totalCostVaccination;
+    private BigDecimal totaByVaccination;
+    private BigDecimal profitByVaccination;
 }
