@@ -5,6 +5,7 @@ import com.petland.modules.attendance.model.Attendance;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.pet.enums.PetGender;
 import com.petland.modules.pet.enums.PetSpecies;
+import com.petland.modules.vaccination.module.Vaccination;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -54,4 +55,7 @@ public class Pet extends BaseEntity {
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
     private List<Attendance> serviceHistory;
+
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+    private List<Vaccination> vaccinationsHistory;
 }
