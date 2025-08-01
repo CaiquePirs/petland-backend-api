@@ -1,6 +1,7 @@
 package com.petland.modules.vaccination.util;
 
 import com.petland.modules.vaccination.module.AppliedVaccine;
+import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.module.Vaccine;
 import com.petland.modules.vaccination.service.VaccineService;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,28 @@ public class VaccinationCalculator {
             totalProfit = profitVaccine.multiply(BigDecimal.valueOf(appliedVaccine.getQuantityUsed()));
         }
         return totalProfit;
+    }
+
+    public BigDecimal calculateTotalBilledByVaccinationsList(List<Vaccination> vaccinationList){
+        return vaccinationList
+                .stream()
+                .map(Vaccination::getTotalByVaccination)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
+
+    public BigDecimal calculateTotalProfitByVaccinationsList(List<Vaccination> vaccinationList){
+        return vaccinationList
+                .stream()
+                .map(Vaccination::getProfitByVaccination)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
+
+    public Integer sumTotalVaccinationsApplied(List<Vaccination> vaccinationList){
+        return vaccinationList
+                .stream()
+                .mapToInt(vaccination -> vaccination.getAppliedVaccines().size())
+                .sum();
     }
 }

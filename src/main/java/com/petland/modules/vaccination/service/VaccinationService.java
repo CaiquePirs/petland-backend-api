@@ -15,6 +15,7 @@ import com.petland.modules.vaccination.dto.VaccinationResponseDTO;
 import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
 import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.module.AppliedVaccine;
+import com.petland.modules.vaccination.module.Vaccine;
 import com.petland.modules.vaccination.repository.AppliedVaccineRepository;
 import com.petland.modules.vaccination.repository.VaccinationRepository;
 import com.petland.modules.vaccination.specifications.VaccinationSpecification;
@@ -47,6 +48,7 @@ public class VaccinationService {
     private final VaccinationUpdateValidator validator;
     private final GenerateVaccinationResponse generateResponse;
     private final PetRepository petRepository;
+    private final VaccineService vaccineService;
 
     @Transactional
     public Vaccination register(VaccinationRequestDTO vaccinationRequestDTO){
@@ -105,6 +107,20 @@ public class VaccinationService {
     public Vaccination updateVaccination(VaccinationUpdateDTO dto, UUID vaccinationId){
        Vaccination vaccination = findById(vaccinationId);
        return validator.validate(vaccination, dto);
+    }
+
+    public List<Vaccination> findAllVaccinationsByPeriod(LocalDate dateMin, LocalDate dateMax) {
+        return vaccinationRepository.findAll(VaccinationSpecification.findByPeriod(dateMin, dateMax));
+    }
+
+    public List<Vaccination> findAllVaccinationsByVaccine(UUID vaccineId){
+        Vaccine vaccine = vaccineService.findById(vaccineId);
+        return vaccinationRepository.findAll()
+                .stream()
+                .filter(vaccination -> vaccination.getAppliedVaccines()
+                        .stream()
+                        .anyMatch(appliedVaccine -> appliedVaccine.getVaccine().equals(vaccine)))
+                .toList();
     }
 
     public Page<VaccinationResponseDTO> listAllVaccinationsByFilter(UUID petId, UUID customerId, UUID veterinarianId, LocalDate vaccinationDate,

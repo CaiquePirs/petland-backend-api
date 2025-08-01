@@ -39,6 +39,16 @@ public class VaccinationSpecification {
             predicates.add(cb.equal(root.get("status"), status));
             return cb.and(predicates.toArray(new Predicate[0]));
         };
+    }
 
+    public static Specification<Vaccination> findByPeriod(LocalDate dateMin, LocalDate dateMax){
+        return (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if(dateMin != null || dateMax !=null){
+                predicates.add(cb.between(root.get("vaccinationDate"), dateMin, dateMax));
+            }
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
     }
 }
