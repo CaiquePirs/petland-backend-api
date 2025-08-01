@@ -28,7 +28,7 @@ public class SaleCalculator {
 
     public BigDecimal calculateTotalListSales(List<Sale> listSales){
         if (listSales == null || listSales.isEmpty()) {
-            throw new IllegalArgumentException("SalesReportGenerator list cannot be null or empty.");
+            throw new IllegalArgumentException("Sales list cannot be null or empty.");
         }
         return listSales.stream()
                 .map(Sale::getTotalSales)

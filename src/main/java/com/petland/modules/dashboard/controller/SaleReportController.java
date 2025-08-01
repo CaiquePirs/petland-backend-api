@@ -1,7 +1,7 @@
 package com.petland.modules.dashboard.controller;
 
 import com.petland.modules.dashboard.dtos.ReportsResponseDTO;
-import com.petland.modules.dashboard.service.SalesReportGenerator;
+import com.petland.modules.dashboard.service.SalesReports;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SaleReportController {
 
-    private final SalesReportGenerator saleReport;
+    private final SalesReports saleReport;
 
     @GetMapping("/sales/by-period")
     @PreAuthorize("hasRole('ADMIN')")
