@@ -4,7 +4,7 @@ import lombok.Builder;
 import java.math.BigDecimal;
 
 @Builder
-public record SalesReportsDTO(
+public record ReportsResponseDTO(
         BigDecimal totalSales,
         Integer itemsQuantity,
         BigDecimal profitMargin){}

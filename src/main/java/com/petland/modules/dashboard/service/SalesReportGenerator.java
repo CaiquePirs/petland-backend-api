@@ -1,7 +1,7 @@
 package com.petland.modules.dashboard.service;
 
 import com.petland.common.exception.NotFoundException;
-import com.petland.modules.dashboard.dtos.SalesReportsDTO;
+import com.petland.modules.dashboard.dtos.ReportsResponseDTO;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;
 import com.petland.modules.sale.model.ItemsSale;
@@ -26,7 +26,7 @@ public class SalesReportGenerator {
     private final ItemsSaleService itemsSaleService;
     private final ProductService productService;
 
-    public SalesReportsDTO totalSalesByPeriod(LocalDate dateMin, LocalDate dateMax) {
+    public ReportsResponseDTO totalSalesByPeriod(LocalDate dateMin, LocalDate dateMax) {
         List<Sale> salesList = saleService.findAllSalesByPeriod(dateMin, dateMax);
 
         if(salesList.isEmpty()){
@@ -37,14 +37,14 @@ public class SalesReportGenerator {
         BigDecimal totalProfit = saleCalculator.calculateProfitBySales(salesList);
         Integer sumItems = saleCalculator.sumTotalItemsSale(salesList);
 
-        return SalesReportsDTO.builder()
+        return ReportsResponseDTO.builder()
                 .itemsQuantity(sumItems)
                 .totalSales(totalSales)
                 .profitMargin(totalProfit)
                 .build();
     }
 
-    public SalesReportsDTO totalSalesByProductId(UUID productId){
+    public ReportsResponseDTO totalSalesByProductId(UUID productId){
         Product product = productService.findById(productId);
         List<ItemsSale> itemsSaleList = itemsSaleService.findAllItemsSaleByProductId(product.getId());
 
@@ -55,7 +55,7 @@ public class SalesReportGenerator {
         BigDecimal totalSales = saleCalculator.calculateTotalItemsSale(itemsSaleList);
         BigDecimal totalProfit = saleCalculator.calculateProfitByItemsSale(itemsSaleList);
 
-        return SalesReportsDTO.builder()
+        return ReportsResponseDTO.builder()
                 .itemsQuantity(itemsSaleList.size())
                 .totalSales(totalSales)
                 .profitMargin(totalProfit)
