@@ -8,6 +8,7 @@ import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
+import com.petland.modules.pet.service.PetValidator;
 import com.petland.modules.petCare.dtos.GroomingRequestDTO;
 import com.petland.modules.petCare.dtos.GroomingResponseDTO;
 import com.petland.modules.petCare.mappers.GroomingMapper;
@@ -33,11 +34,14 @@ public class GroomingService {
     private final GroomingMapper groomingMapper;
     private final CalculateTotalCost calculateTotalCost;
     private final GroomingRepository groomingRepository;
+    private final PetValidator petValidator;
 
     public Grooming create(GroomingRequestDTO groomingRequestDTO) {
         Pet pet = petService.findPetById(groomingRequestDTO.petId());
         Customer customer = customerService.findCustomerById(groomingRequestDTO.customerId());
         Employee employee = employeeService.findById(groomingRequestDTO.employeeId());
+
+        petValidator.isPetOwner(pet, customer);
 
         Grooming grooming = groomingMapper.toEntity(groomingRequestDTO);
         grooming.setCustomer(customer);

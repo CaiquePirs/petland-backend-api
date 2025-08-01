@@ -2,7 +2,6 @@ package com.petland.modules.vaccination.service;
 
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.common.exception.UnauthorizedException;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.employee.model.Employee;
@@ -10,6 +9,7 @@ import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.repository.PetRepository;
 import com.petland.modules.pet.service.PetService;
+import com.petland.modules.pet.service.PetValidator;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
 import com.petland.modules.vaccination.dto.VaccinationResponseDTO;
 import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
@@ -49,6 +49,7 @@ public class VaccinationService {
     private final GenerateVaccinationResponse generateResponse;
     private final PetRepository petRepository;
     private final VaccineService vaccineService;
+    private final PetValidator petValidator;
 
     @Transactional
     public Vaccination register(VaccinationRequestDTO vaccinationRequestDTO){
@@ -57,9 +58,7 @@ public class VaccinationService {
         Customer customer = customerService.findCustomerById(vaccinationRequestDTO.customerId());
         Employee veterinarian = employeeService.findById(vaccinationRequestDTO.veterinarianId());
 
-        if(!customer.getMyPets().contains(pet)){
-            throw new UnauthorizedException("This pet does not belong to this customer");
-        }
+        petValidator.isPetOwner(pet, customer);
 
         vaccination.setPet(pet);
         vaccination.setCustomer(customer);
