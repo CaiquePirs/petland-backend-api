@@ -23,7 +23,7 @@ public class SalesReports {
     private final SaleService saleService;
     private final ItemsSaleService itemsSaleService;
     private final ProductService productService;
-    private final GenerateSaleReport generate;
+    private final GenerateSaleReport report;
 
     public ReportsResponseDTO totalSalesByPeriod(LocalDate dateMin, LocalDate dateMax) {
         List<Sale> salesList = saleService.findAllSalesByPeriod(dateMin, dateMax);
@@ -31,7 +31,7 @@ public class SalesReports {
         if (salesList.isEmpty()) {
             throw new NotFoundException("Sales reports not found");
         }
-        return generate.generateBySaleList(salesList);
+        return report.generateBySaleList(salesList);
     }
 
     public ReportsResponseDTO totalSalesByProductId(UUID productId) {
@@ -41,6 +41,6 @@ public class SalesReports {
         if (itemsSaleList.isEmpty()) {
             throw new NotFoundException("Sales reports not found");
         }
-        return generate.generateByItemsSaleList(itemsSaleList);
+        return report.generateByItemsSaleList(itemsSaleList);
     }
 }
