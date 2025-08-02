@@ -46,6 +46,9 @@ public class PetCare extends BaseEntity {
     private BigDecimal totalRevenue;
 
     @Column(nullable = false)
+    private BigDecimal totalCostOperating;
+
+    @Column(nullable = false)
     private BigDecimal totalProfit;
 
     private LocalDateTime serviceDate;

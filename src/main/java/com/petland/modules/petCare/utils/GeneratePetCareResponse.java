@@ -28,6 +28,7 @@ public class GeneratePetCareResponse {
                 .detailsResponseDTO(detailsResponseList)
                 .totalRevenue(petCare.getTotalRevenue())
                 .totalProfit(petCare.getTotalProfit())
+                .totalCostOperating(petCare.getTotalCostOperating())
                 .employeeId(petCare.getEmployee().getId())
                 .customerId(petCare.getCustomer().getId())
                 .petId(petCare.getPet().getId())

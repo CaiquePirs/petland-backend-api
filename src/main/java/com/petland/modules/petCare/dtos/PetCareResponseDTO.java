@@ -16,6 +16,7 @@ public record PetCareResponseDTO(UUID id,
                                  List<PetCareDetailsResponseDTO> detailsResponseDTO,
                                  BigDecimal totalRevenue,
                                  BigDecimal totalProfit,
+                                 BigDecimal totalCostOperating,
                                  LocalDateTime serviceDate,
                                  Address location) {
 }

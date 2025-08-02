@@ -34,4 +34,11 @@ public class PetCareServiceCalculator {
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
     }
+
+    public BigDecimal calculateTotalCostOperatingByServiceList(List<PetCareDetails> petCareDetailsList){
+        return petCareDetailsList.stream()
+                .map(PetCareDetails::getOperatingCost)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
 }

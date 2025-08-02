@@ -51,10 +51,12 @@ public class PetCareService {
         List<PetCareDetails> listServices = petCareDetailsService.createService(petCare, requestDTO.serviceDetailsList());
         BigDecimal totalRevenue = calculator.calculateTotalRevenueByServiceList(listServices);
         BigDecimal totalProfit = calculator.calculateTotalProfitByServiceList(listServices);
+        BigDecimal totalCostOperating = calculator.calculateTotalCostOperatingByServiceList(listServices);
 
         petCare.setPetCareDetails(listServices);
         petCare.setTotalRevenue(totalRevenue);
         petCare.setTotalProfit(totalProfit);
+        petCare.setTotalCostOperating(totalCostOperating);
         petCare.setLocation(requestDTO.location());
         petCare.setServiceDate(LocalDateTime.now());
         petCare.setPet(pet);

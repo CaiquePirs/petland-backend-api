@@ -14,7 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/dashboard/reports")
 @RequiredArgsConstructor
-public class SaleReportController {
+public class SalesReportController {
 
     private final SalesReports saleReport;
 
