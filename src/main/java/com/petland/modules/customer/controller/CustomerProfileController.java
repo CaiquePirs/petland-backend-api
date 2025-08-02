@@ -8,8 +8,11 @@ import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.pet.dto.PetResponseDTO;
 import com.petland.modules.pet.mapper.PetMapper;
 import com.petland.modules.pet.service.PetService;
+import com.petland.modules.petCare.dtos.PetCareHistoryResponseDTO;
+import com.petland.modules.petCare.service.PetCareService;
 import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.service.SaleService;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +36,7 @@ public class CustomerProfileController {
     private final PetMapper petMapper;
     private final CustomerMapper customerMapper;
     private final SaleService saleService;
+    private final PetCareService petCareService;
 
     @GetMapping
     @PreAuthorize("hasRole('CUSTOMER')")
@@ -50,16 +54,29 @@ public class CustomerProfileController {
         return ResponseEntity.ok().body(myPets);
     }
 
-    @GetMapping("/sales")
+    @GetMapping("/sales/history")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<Page<SaleResponseDTO>> findMySalesHistory(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size){
+    public ResponseEntity<Page<SaleResponseDTO>> getMySalesHistory(
+            @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
+            @RequestParam(value = "size", defaultValue = "10") @Min(1) int size){
 
         Page<SaleResponseDTO> salesList = saleService.findSalesByCustomerId(
                 accessValidator.getLoggedInUser(), PageRequest.of(page, size)
         );
 
         return ResponseEntity.ok().body(salesList);
+    }
+
+    @GetMapping("/pet-care/history")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<Page<PetCareHistoryResponseDTO>> getMyServicesHistory(
+            @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
+            @RequestParam(value = "size", defaultValue = "10") @Min(1) int size){
+
+        Page<PetCareHistoryResponseDTO> servicesHistoryList = petCareService.findAllServicesByCustomerId(
+                accessValidator.getLoggedInUser(), PageRequest.of(page, size)
+        );
+
+        return ResponseEntity.ok().body(servicesHistoryList);
     }
 }

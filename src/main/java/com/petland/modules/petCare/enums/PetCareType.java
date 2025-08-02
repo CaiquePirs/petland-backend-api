@@ -2,7 +2,7 @@ package com.petland.modules.petCare.enums;
 
 public enum PetCareType {
     GROOMING,
-    BATHING,
+    BATH,
     CHECKUP,
     NailTrimming,
     EarCleaning,
