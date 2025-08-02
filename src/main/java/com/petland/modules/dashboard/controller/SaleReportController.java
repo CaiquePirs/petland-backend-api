@@ -1,6 +1,6 @@
 package com.petland.modules.dashboard.controller;
 
-import com.petland.modules.dashboard.dtos.ReportsResponseDTO;
+import com.petland.modules.dashboard.dtos.Report;
 import com.petland.modules.dashboard.service.SalesReports;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,18 +20,18 @@ public class SaleReportController {
 
     @GetMapping("/sales/by-period")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ReportsResponseDTO> salesReportByPeriod(
+    public ResponseEntity<Report> salesReportByPeriod(
             @RequestParam(value = "dateMin", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMin,
             @RequestParam(value = "dateMax", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMax){
 
-        ReportsResponseDTO salesReport = saleReport.totalSalesByPeriod(dateMin, dateMax);
+        Report salesReport = saleReport.totalSalesByPeriod(dateMin, dateMax);
         return ResponseEntity.ok().body(salesReport);
     }
 
     @GetMapping("/sales/by-product/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ReportsResponseDTO> salesReportsByProduct(@PathVariable(name = "id") UUID productId){
-        ReportsResponseDTO salesReport = saleReport.totalSalesByProductId(productId);
+    public ResponseEntity<Report> salesReportsByProduct(@PathVariable(name = "id") UUID productId){
+        Report salesReport = saleReport.totalSalesByProductId(productId);
         return ResponseEntity.ok().body(salesReport);
     }
 }

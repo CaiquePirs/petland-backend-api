@@ -1,6 +1,6 @@
-package com.petland.modules.dashboard.util;
+package com.petland.modules.dashboard.reports;
 
-import com.petland.modules.dashboard.dtos.ReportsResponseDTO;
+import com.petland.modules.dashboard.dtos.Report;
 import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.util.VaccinationCalculator;
 import lombok.RequiredArgsConstructor;
@@ -11,16 +11,16 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class GenerateVaccinationReport {
+public class VaccinationReport {
 
     private final VaccinationCalculator calculator;
 
-    public ReportsResponseDTO generate(List<Vaccination> vaccinationList){
+    public Report generate(List<Vaccination> vaccinationList){
         BigDecimal totalBilled = calculator.calculateTotalBilledByVaccinationsList(vaccinationList);
         BigDecimal totalProfit = calculator.calculateTotalProfitByVaccinationsList(vaccinationList);
         Integer sumTotalVaccinations = calculator.sumTotalVaccinationsApplied(vaccinationList);
 
-        return ReportsResponseDTO.builder()
+        return Report.builder()
                 .totalSales(totalBilled)
                 .profitMargin(totalProfit)
                 .itemsQuantity(sumTotalVaccinations)

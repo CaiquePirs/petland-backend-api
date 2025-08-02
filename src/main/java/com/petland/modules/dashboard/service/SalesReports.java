@@ -1,8 +1,8 @@
 package com.petland.modules.dashboard.service;
 
 import com.petland.common.exception.NotFoundException;
-import com.petland.modules.dashboard.dtos.ReportsResponseDTO;
-import com.petland.modules.dashboard.util.GenerateSaleReport;
+import com.petland.modules.dashboard.dtos.Report;
+import com.petland.modules.dashboard.reports.SaleReport;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;
 import com.petland.modules.sale.model.ItemsSale;
@@ -23,9 +23,9 @@ public class SalesReports {
     private final SaleService saleService;
     private final ItemsSaleService itemsSaleService;
     private final ProductService productService;
-    private final GenerateSaleReport report;
+    private final SaleReport report;
 
-    public ReportsResponseDTO totalSalesByPeriod(LocalDate dateMin, LocalDate dateMax) {
+    public Report totalSalesByPeriod(LocalDate dateMin, LocalDate dateMax) {
         List<Sale> salesList = saleService.findAllSalesByPeriod(dateMin, dateMax);
 
         if (salesList.isEmpty()) {
@@ -34,7 +34,7 @@ public class SalesReports {
         return report.generateBySaleList(salesList);
     }
 
-    public ReportsResponseDTO totalSalesByProductId(UUID productId) {
+    public Report totalSalesByProductId(UUID productId) {
         Product product = productService.findById(productId);
         List<ItemsSale> itemsSaleList = itemsSaleService.findAllItemsSaleByProductId(product.getId());
 
