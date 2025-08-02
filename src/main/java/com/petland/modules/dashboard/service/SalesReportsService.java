@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class SalesReports {
+public class SalesReportsService {
 
     private final SaleService saleService;
     private final ItemsSaleService itemsSaleService;

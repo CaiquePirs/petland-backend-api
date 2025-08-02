@@ -1,7 +1,7 @@
 package com.petland.modules.dashboard.controller;
 
 import com.petland.modules.dashboard.dtos.Report;
-import com.petland.modules.dashboard.service.VaccinationsReports;
+import com.petland.modules.dashboard.service.VaccinationsReportsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class VaccinationsReportController {
 
-    private final VaccinationsReports generator;
+    private final VaccinationsReportsService generator;
 
     @GetMapping("vaccinations/by-period")
     @PreAuthorize("hasRole('ADMIN')")
