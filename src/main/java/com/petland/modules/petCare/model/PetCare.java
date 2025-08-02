@@ -12,24 +12,26 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_baths")
+@Table(name = "tb_petcare_services")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Bath extends BaseEntity {
+@AllArgsConstructor
+public class PetCare extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -37,19 +39,16 @@ public class Bath extends BaseEntity {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @Column(nullable = false)
-    private int bathQuantity;
+    @OneToMany(mappedBy = "petCare", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PetCareDetails> petCareDetails = new ArrayList<>();
 
     @Column(nullable = false)
-    private BigDecimal priceCost;
+    private BigDecimal totalRevenue;
 
     @Column(nullable = false)
-    private BigDecimal totalCost;
+    private BigDecimal totalProfit;
 
-    @Column(nullable = false)
-    private LocalDateTime bathMoment;
-
-    private String bathNotes;
+    private LocalDateTime serviceDate;
 
     @Embedded
     private Address location;

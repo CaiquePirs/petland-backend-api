@@ -5,6 +5,7 @@ import com.petland.common.entity.Address;
 import com.petland.common.entity.enums.Roles;
 import com.petland.modules.attendance.model.Attendance;
 import com.petland.modules.pet.model.Pet;
+import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.sale.model.Sale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,10 +47,13 @@ public class Customer extends BaseEntity {
     private List<Pet> myPets;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Attendance> serviceHistory;
+    private List<Attendance> attendancesHistory = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Sale> salesHistory;
+    private List<PetCare> servicesHistory = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Sale> salesHistory = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Roles role;

@@ -5,6 +5,7 @@ import com.petland.modules.attendance.model.Attendance;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.pet.enums.PetGender;
 import com.petland.modules.pet.enums.PetSpecies;
+import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.vaccination.module.Vaccination;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,8 +56,11 @@ public class Pet extends BaseEntity {
     private Customer owner;
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
-    private List<Attendance> serviceHistory;
+    private List<Attendance> attendancesHistory = new ArrayList<>();
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
-    private List<Vaccination> vaccinationsHistory;
+    private List<PetCare> servicesHistory = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+    private List<Vaccination> vaccinationsHistory = new ArrayList<>();
 }

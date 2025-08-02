@@ -1,0 +1,37 @@
+package com.petland.modules.petCare.utils;
+
+import com.petland.modules.petCare.model.PetCareDetails;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Component
+public class PetCareServiceCalculator {
+
+    public BigDecimal calculateTotalRevenue(int quantityService, BigDecimal costService){
+        BigDecimal quantity = BigDecimal.valueOf(quantityService);
+        return costService.multiply(quantity);
+    }
+
+    public BigDecimal calculateTotalProfit(BigDecimal totalService, BigDecimal operatingCost){
+        if(totalService == null || operatingCost == null){
+            return BigDecimal.ZERO;
+        }
+        return totalService.subtract(operatingCost);
+    }
+
+    public BigDecimal calculateTotalRevenueByServiceList(List<PetCareDetails> petCareDetailsList){
+        return petCareDetailsList.stream()
+                .map(PetCareDetails::getTotalByService)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
+
+    public BigDecimal calculateTotalProfitByServiceList(List<PetCareDetails> petCareDetailsList){
+        return petCareDetailsList.stream()
+                .map(PetCareDetails::getProfitByService)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
+}
