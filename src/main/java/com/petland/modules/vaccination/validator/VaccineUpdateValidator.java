@@ -1,4 +1,4 @@
-package com.petland.modules.vaccination.util;
+package com.petland.modules.vaccination.validator;
 
 import com.petland.modules.vaccination.dto.VaccineUpdateDTO;
 import com.petland.modules.vaccination.module.Vaccine;

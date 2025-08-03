@@ -11,7 +11,7 @@ import com.petland.modules.vaccination.mappers.VaccineMapper;
 import com.petland.modules.vaccination.module.Vaccine;
 import com.petland.modules.vaccination.repository.VaccineRepository;
 import com.petland.modules.vaccination.specifications.VaccineSpecification;
-import com.petland.modules.vaccination.util.VaccineUpdateValidator;
+import com.petland.modules.vaccination.validator.VaccineUpdateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
