@@ -11,9 +11,11 @@ import com.petland.modules.pet.service.PetService;
 import com.petland.modules.pet.service.PetValidator;
 import com.petland.modules.petCare.dtos.PetCareHistoryResponseDTO;
 import com.petland.modules.petCare.dtos.PetCareRequestDTO;
+import com.petland.modules.petCare.dtos.PetCareResponseDTO;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
 import com.petland.modules.petCare.repositories.PetCareRepository;
+import com.petland.modules.petCare.specifications.PetCareSpecification;
 import com.petland.modules.petCare.utils.GeneratePetCareResponse;
 import com.petland.modules.petCare.utils.PetCareServiceCalculator;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +41,7 @@ public class PetCareService {
     private final PetCareServiceCalculator calculator;
     private final PetCareRepository petCareRepository;
     private final PetCareDetailsService petCareDetailsService;
-    private final GeneratePetCareResponse generate;
+    private final GeneratePetCareResponse generateResponse;
 
     @Transactional
     public PetCare register(PetCareRequestDTO requestDTO) {
@@ -75,7 +77,7 @@ public class PetCareService {
         if(petCareList.getContent().isEmpty()){
             throw new NotFoundException("Customer service history list not found");
         }
-        List<PetCareHistoryResponseDTO> serviceHistoryList = generate.mapToCustomerServiceHistory(petCareList.getContent());
+        List<PetCareHistoryResponseDTO> serviceHistoryList = generateResponse.mapToCustomerServiceHistory(petCareList.getContent());
 
         return new PageImpl<>(serviceHistoryList, pageable, serviceHistoryList.size());
     }
@@ -97,4 +99,27 @@ public class PetCareService {
         petCare.setStatus(StatusEntity.DELETED);
         petCareRepository.save(petCare);
     }
+
+    public Page<PetCareResponseDTO> findAllByFilter(UUID petId, UUID customerId, UUID employeeId,
+                                                    BigDecimal minRevenue, BigDecimal maxCostOperating,
+                                                    BigDecimal minProfit, BigDecimal maxProfit,
+                                                    LocalDateTime startDate, LocalDateTime endDate, Pageable pageable){
+
+        List<PetCareResponseDTO> listServices = petCareRepository.findAll(PetCareSpecification.specification(
+                 petId, customerId, employeeId, minRevenue, maxCostOperating,
+                 minProfit, maxProfit, startDate, endDate), pageable)
+                .getContent()
+                .stream()
+                .map(generateResponse::generate)
+                .toList();
+
+        return new PageImpl<>(listServices, pageable, listServices.size());
+    }
+
+
+
+
+
+
+
 }
