@@ -73,7 +73,7 @@ public class CustomerProfileController {
             @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
             @RequestParam(value = "size", defaultValue = "10") @Min(1) int size){
 
-        Page<PetCareHistoryResponseDTO> servicesHistoryList = petCareService.findAllServicesByCustomerId(
+        Page<PetCareHistoryResponseDTO> servicesHistoryList = petCareService.findAllByCustomerId(
                 accessValidator.getLoggedInUser(), PageRequest.of(page, size)
         );
 

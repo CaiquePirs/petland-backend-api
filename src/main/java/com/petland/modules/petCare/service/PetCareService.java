@@ -42,7 +42,7 @@ public class PetCareService {
     private final GeneratePetCareResponse generate;
 
     @Transactional
-    public PetCare create(PetCareRequestDTO requestDTO) {
+    public PetCare register(PetCareRequestDTO requestDTO) {
         Customer customer = customerService.findById(requestDTO.customerId());
         Pet pet = petService.findById(requestDTO.petId());
         Employee employee = employeeService.findById(requestDTO.employeeId());
@@ -69,7 +69,7 @@ public class PetCareService {
         return petCareRepository.save(petCare);
     }
 
-    public Page<PetCareHistoryResponseDTO> findAllServicesByCustomerId(UUID customerId, Pageable pageable){
+    public Page<PetCareHistoryResponseDTO> findAllByCustomerId(UUID customerId, Pageable pageable){
         Page<PetCare> petCareList = petCareRepository.findByCustomerId(customerId, pageable);
 
         if(petCareList.getContent().isEmpty()){
@@ -80,10 +80,21 @@ public class PetCareService {
         return new PageImpl<>(serviceHistoryList, pageable, serviceHistoryList.size());
     }
 
-    public PetCare findServiceById(UUID petCareId){
+    public PetCare findById(UUID petCareId){
         return petCareRepository.findById(petCareId)
                 .filter(p -> !p.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("PetCare ID not found"));
     }
 
+    public void deactivateById(UUID petCareID){
+        PetCare petCare = findById(petCareID);
+
+        if(!petCare.getPetCareDetails().isEmpty()){
+            for(PetCareDetails details : petCare.getPetCareDetails()){
+                details.setStatus(StatusEntity.DELETED);
+            }
+        }
+        petCare.setStatus(StatusEntity.DELETED);
+        petCareRepository.save(petCare);
+    }
 }

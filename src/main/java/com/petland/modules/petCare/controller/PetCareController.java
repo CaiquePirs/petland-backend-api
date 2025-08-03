@@ -24,15 +24,22 @@ public class PetCareController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PetCareResponseDTO> createService(@RequestBody @Valid PetCareRequestDTO requestDTO){
-        PetCare petCare = petCareService.create(requestDTO);
+        PetCare petCare = petCareService.register(requestDTO);
         return ResponseEntity.ok().body(petCareResponse.generate(petCare));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PetCareResponseDTO> findServiceById(@PathVariable(name = "id") UUID petCareID){
-        PetCare petCare = petCareService.findServiceById(petCareID);
+        PetCare petCare = petCareService.findById(petCareID);
         return ResponseEntity.ok().body(petCareResponse.generate(petCare));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<PetCareResponseDTO> deactivateServiceById(@PathVariable(name = "id") UUID petCareID){
+        petCareService.deactivateById(petCareID);
+        return ResponseEntity.noContent().build();
     }
 
 }
