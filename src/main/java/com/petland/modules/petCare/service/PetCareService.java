@@ -1,5 +1,6 @@
 package com.petland.modules.petCare.service;
 
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.common.exception.NotFoundException;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
@@ -78,4 +79,11 @@ public class PetCareService {
 
         return new PageImpl<>(serviceHistoryList, pageable, serviceHistoryList.size());
     }
+
+    public PetCare findServiceById(UUID petCareId){
+        return petCareRepository.findById(petCareId)
+                .filter(p -> !p.getStatus().equals(StatusEntity.DELETED))
+                .orElseThrow(() -> new NotFoundException("PetCare ID not found"));
+    }
+
 }

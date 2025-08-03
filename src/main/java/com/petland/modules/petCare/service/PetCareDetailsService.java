@@ -23,12 +23,10 @@ public class PetCareDetailsService {
                 .map(dto -> {
                     BigDecimal totalRevenue = calculator.calculateTotalRevenue(dto.quantityService(), dto.unitPrice());
                     BigDecimal totalProfit = calculator.calculateTotalProfit(totalRevenue, dto.operatingCost());
-
                     PetCareDetails petCareDetails = mapper.toEntity(dto);
                     petCareDetails.setTotalByService(totalRevenue);
                     petCareDetails.setProfitByService(totalProfit);
                     petCareDetails.setPetCare(petCare);
-
                     return petCareDetails;
                 }).toList();
     }

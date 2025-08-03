@@ -9,10 +9,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/petcare/services")
@@ -28,4 +27,12 @@ public class PetCareController {
         PetCare petCare = petCareService.create(requestDTO);
         return ResponseEntity.ok().body(petCareResponse.generate(petCare));
     }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<PetCareResponseDTO> findServiceById(@PathVariable(name = "id") UUID petCareID){
+        PetCare petCare = petCareService.findServiceById(petCareID);
+        return ResponseEntity.ok().body(petCareResponse.generate(petCare));
+    }
+
 }
