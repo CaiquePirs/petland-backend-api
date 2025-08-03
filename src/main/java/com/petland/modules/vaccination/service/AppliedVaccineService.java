@@ -20,7 +20,7 @@ public class AppliedVaccineService {
         List<AppliedVaccine> listVaccineApplied = listAppliedVaccineRequest.stream()
                 .map(appliedVaccineRequest -> {
                     AppliedVaccine appliedVaccine = new AppliedVaccine();
-                    Vaccine vaccine = vaccineService.updateVaccineStock(appliedVaccineRequest.quantityUsed(), appliedVaccineRequest.vaccineId());
+                    Vaccine vaccine = vaccineService.updateStock(appliedVaccineRequest.quantityUsed(), appliedVaccineRequest.vaccineId());
                         appliedVaccine.setVaccination(vaccination);
                         vaccination.getAppliedVaccines().add(appliedVaccine);
                         appliedVaccine.setVaccine(vaccine);

@@ -41,7 +41,7 @@ public class VaccineService {
                 .orElseThrow(() -> new NotFoundException("Vaccine ID not found"));
     }
 
-    public Vaccine updateVaccineStock(int stockUsed, UUID vaccineId){
+    public Vaccine updateStock(int stockUsed, UUID vaccineId){
         Vaccine vaccine = findById(vaccineId);
 
         if(vaccine.getStockQuantity() <= 0 || stockUsed > vaccine.getStockQuantity()){
@@ -53,7 +53,7 @@ public class VaccineService {
         return vaccineRepository.save(vaccine);
     }
 
-    public void deleteById(UUID vaccineId){
+    public void deactivateById(UUID vaccineId){
         Vaccine vaccine = findById(vaccineId);
         vaccine.setStatus(StatusEntity.DELETED);
         vaccineRepository.save(vaccine);
@@ -78,7 +78,7 @@ public class VaccineService {
         return new PageImpl<>(listVaccines, pageable, listVaccines.size());
     }
 
-    public Vaccine updateVaccineById(UUID vaccineId, VaccineUpdateDTO dto){
+    public Vaccine updateById(UUID vaccineId, VaccineUpdateDTO dto){
         Vaccine vaccine = findById(vaccineId);
         vaccine = validator.validate(vaccine, dto);
         return vaccineRepository.save(vaccine);

@@ -36,15 +36,15 @@ public class EmployeeController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<EmployeeResponseDTO> findById(@PathVariable(name = "id") UUID employeeId){
+    public ResponseEntity<EmployeeResponseDTO> findEmployeeById(@PathVariable(name = "id") UUID employeeId){
         Employee employee = employeeService.findById(employeeId);
         return ResponseEntity.ok().body(employeeMapper.toDTO(employee));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") UUID customerId){
-        employeeService.deleteById(customerId);
+    public ResponseEntity<Void> deactivateEmployeeById(@PathVariable(name = "id") UUID customerId){
+        employeeService.deactivateById(customerId);
         return ResponseEntity.noContent().build();
     }
 
@@ -59,15 +59,15 @@ public class EmployeeController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
-        Page<EmployeeResponseDTO> employeeList = employeeService.listAllEmployee(name, email, phone, department, status, PageRequest.of(page, size));
+        Page<EmployeeResponseDTO> employeeList = employeeService.listAllByFilter(name, email, phone, department, status, PageRequest.of(page, size));
         return ResponseEntity.ok().body(employeeList);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<EmployeeResponseDTO> updateEmployee(@PathVariable(name = "id") UUID employeeId,
+    public ResponseEntity<EmployeeResponseDTO> updateEmployeeById(@PathVariable(name = "id") UUID employeeId,
                                                               @RequestBody @Valid EmployeeUpdateDTO employeeDTO) {
-        EmployeeResponseDTO employeeResponse = employeeService.updateEmployee(employeeId, employeeDTO);
+        EmployeeResponseDTO employeeResponse = employeeService.updateById(employeeId, employeeDTO);
         return ResponseEntity.ok().body(employeeResponse);
     }
 

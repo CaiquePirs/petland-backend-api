@@ -54,8 +54,8 @@ public class VaccinationService {
     @Transactional
     public Vaccination register(VaccinationRequestDTO vaccinationRequestDTO){
         Vaccination vaccination = new Vaccination();
-        Pet pet = petService.findPetById(vaccinationRequestDTO.petId());
-        Customer customer = customerService.findCustomerById(vaccinationRequestDTO.customerId());
+        Pet pet = petService.findById(vaccinationRequestDTO.petId());
+        Customer customer = customerService.findById(vaccinationRequestDTO.customerId());
         Employee veterinarian = employeeService.findById(vaccinationRequestDTO.veterinarianId());
 
         petValidator.isPetOwner(pet, customer);
@@ -90,7 +90,7 @@ public class VaccinationService {
     }
 
     @Transactional
-    public void deleteById(UUID vaccinationId){
+    public void deactivateById(UUID vaccinationId){
         Vaccination vaccination = findById(vaccinationId);
 
         if(!vaccination.getAppliedVaccines().isEmpty()){
@@ -103,7 +103,7 @@ public class VaccinationService {
         vaccinationRepository.save(vaccination);
     }
 
-    public Vaccination updateVaccination(VaccinationUpdateDTO dto, UUID vaccinationId){
+    public Vaccination updateById(VaccinationUpdateDTO dto, UUID vaccinationId){
        Vaccination vaccination = findById(vaccinationId);
        return validator.validate(vaccination, dto);
     }

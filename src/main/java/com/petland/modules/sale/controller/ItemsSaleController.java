@@ -21,7 +21,7 @@ public class ItemsSaleController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ItemsSaleResponseDTO> findById(@PathVariable(name = "saleId") UUID saleId,
+    public ResponseEntity<ItemsSaleResponseDTO> findItemById(@PathVariable(name = "saleId") UUID saleId,
                                                                  @PathVariable(name = "id") UUID itemSaleId){
         ItemsSale itemsSale = itemsSaleService.findActiveItemInActiveSale(saleId, itemSaleId);
         return ResponseEntity.ok().body(itemSaleMapper.toDTO(itemsSale));
@@ -29,9 +29,9 @@ public class ItemsSaleController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteById(@PathVariable(name = "saleId") UUID saleId,
+    public ResponseEntity<Void> deactivateItemById(@PathVariable(name = "saleId") UUID saleId,
                                                    @PathVariable(name = "id") UUID itemSaleId){
-        itemsSaleService.deleteActiveItemInActiveSale(saleId, itemSaleId);
+        itemsSaleService.deactivateActiveItemInActiveSale(saleId, itemSaleId);
         return ResponseEntity.noContent().build();
     }
 }

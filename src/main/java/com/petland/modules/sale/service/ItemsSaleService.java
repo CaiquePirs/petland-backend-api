@@ -30,7 +30,7 @@ public class ItemsSaleService {
     public List<ItemsSale> createItems(Sale sale, List<ItemsSaleRequestDTO> itemsSaleRequestDTO) {
         List<ItemsSale> listItemsSale = itemsSaleRequestDTO.stream().map(itemsSaleRequest -> {
             Product product = productService.findById(itemsSaleRequest.productId());
-            productService.updateProductStock(itemsSaleRequest.productQuantity(), product.getId());
+            productService.updateStock(itemsSaleRequest.productQuantity(), product.getId());
 
             BigDecimal totalItemsSale = saleCalculator.calculateTotalSale(itemsSaleRequest.productQuantity(), product.getCostSale());
             BigDecimal profitByItemSale = productService.calculateProfitByProduct(product);
@@ -58,7 +58,7 @@ public class ItemsSaleService {
                 .orElseThrow(() -> new NotFoundException("ItemSale with ID " + itemId + " not found in Sale " + saleId));
     }
 
-    public void deleteItemsList(List<ItemsSale> itemsSalesList){
+    public void deactivateItemsList(List<ItemsSale> itemsSalesList){
         if(!itemsSalesList.isEmpty()){
            for(ItemsSale itemsSale : itemsSalesList){
                itemsSale.setStatus(StatusEntity.DELETED);
@@ -67,7 +67,7 @@ public class ItemsSaleService {
         }
     }
 
-    public void deleteActiveItemInActiveSale(UUID saleId, UUID itemId){
+    public void deactivateActiveItemInActiveSale(UUID saleId, UUID itemId){
         ItemsSale item = findActiveItemInActiveSale(saleId, itemId);
         item.setStatus(StatusEntity.DELETED);
         itemsSaleRepository.save(item);

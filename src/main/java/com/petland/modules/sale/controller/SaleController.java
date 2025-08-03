@@ -35,7 +35,7 @@ public class SaleController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<SaleResponseDTO> findById(@PathVariable(name = "id") UUID saleId){
+    public ResponseEntity<SaleResponseDTO> findSaleById(@PathVariable(name = "id") UUID saleId){
         Sale sale = saleService.findSaleById(saleId);
         SaleResponseDTO saleResponse = generateSaleResponse.generateSaleResponse(sale);
         return ResponseEntity.ok().body(saleResponse);
@@ -43,7 +43,7 @@ public class SaleController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") UUID saleId){
+    public ResponseEntity<Void> deactivateSaleById(@PathVariable(name = "id") UUID saleId){
         saleService.deleteSaleById(saleId);
         return ResponseEntity.noContent().build();
     }

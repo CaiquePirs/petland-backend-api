@@ -34,7 +34,7 @@ public class PetService {
     @Transactional
     public Pet create(PetRequestDTO petRequestDTO) {
         Customer customer = customerService
-                .findCustomerById(petRequestDTO.customerId());
+                .findById(petRequestDTO.customerId());
 
         Pet pet = petMapper.toEntity(petRequestDTO);
         pet.setOwner(customer);
@@ -42,34 +42,34 @@ public class PetService {
         return petRepository.save(pet);
     }
 
-    public Pet findPetById(UUID petId) {
+    public Pet findById(UUID petId) {
        return petRepository.findById(petId)
                 .filter(p -> !p.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Pet not found"));
     }
 
-    public void deletePetById(UUID petId) {
-        Pet pet = findPetById(petId);
+    public void deactivateById(UUID petId) {
+        Pet pet = findById(petId);
         accessValidator.isOwnerOrAdmin(pet.getOwner().getId());
         pet.setStatus(StatusEntity.DELETED);
         petRepository.save(pet);
     }
 
     public List<Pet> getPetsByCustomerId(UUID customerId){
-       customerService.findCustomerById(customerId);
+       customerService.findById(customerId);
        return petRepository.findPetByOwnerId(customerId)
                 .stream()
                 .filter(pet -> !pet.getStatus().equals(StatusEntity.DELETED))
                 .toList();
     }
 
-    public Page<PetResponseDTO> listAllPets(String name, String specie, String gender, String breed, StatusEntity status, Pageable pageable){
+    public Page<PetResponseDTO> listAllByFilter(String name, String specie, String gender, String breed, StatusEntity status, Pageable pageable){
       Page<Pet> petsByFilter = petRepository.findAll(PetSpecification.filterBy(name, specie, gender, breed,status), pageable);
       return petsByFilter.map(petMapper::toDTO);
     }
 
-    public Pet updatePetById(UUID petId, PetUpdateDTO petUpdate){
-        Pet pet = findPetById(petId);
+    public Pet updateById(UUID petId, PetUpdateDTO petUpdate){
+        Pet pet = findById(petId);
         accessValidator.isOwnerOrAdmin(pet.getOwner().getId());
         pet = petUpdateValidator.validate(petUpdate, pet);
         return petRepository.save(pet);

@@ -47,15 +47,15 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer findCustomerById(UUID customerId){
+    public Customer findById(UUID customerId){
         return customerRepository.findById(customerId)
                 .filter(c -> !c.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     @Transactional
-    public void deleteById(UUID customerId) {
-        Customer customer = findCustomerById(customerId);
+    public void deactivateById(UUID customerId) {
+        Customer customer = findById(customerId);
         customer.setStatus(StatusEntity.DELETED);
 
         List<Pet> petByCustomer = Optional.ofNullable(customer.getMyPets())
@@ -70,14 +70,14 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public Page<CustomerResponseDTO> listAllCustomerByFilter(String name, String email, String phone, StatusEntity status, Pageable pageable){
+    public Page<CustomerResponseDTO> listAllByFilter(String name, String email, String phone, StatusEntity status, Pageable pageable){
      Specification<Customer>  filterCustomers = CustomerSpecification.filterBy(name, email, phone, status);
      Page<Customer> customers = customerRepository.findAll(filterCustomers, pageable);
      return customers.map(customerMapper::toDTO);
     }
 
-    public Customer updateCustomerById(UUID customerId, UpdateCustomerDTO updateCustomerDTO){
-        Customer customer = findCustomerById(customerId);
+    public Customer updateById(UUID customerId, UpdateCustomerDTO updateCustomerDTO){
+        Customer customer = findById(customerId);
         customer = updateValidator.validate(customer, updateCustomerDTO);
         return customerRepository.save(customer);
     }

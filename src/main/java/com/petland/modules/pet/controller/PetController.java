@@ -38,15 +38,15 @@ public class PetController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
     public ResponseEntity<PetResponseDTO> findPetById(@PathVariable(name = "id") UUID petId){
-        Pet pet = petService.findPetById(petId);
+        Pet pet = petService.findById(petId);
         accessValidator.isOwnerOrAdmin(pet.getOwner().getId());
         return ResponseEntity.ok().body(petMapper.toDTO(pet));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
-    public ResponseEntity<Void> deletePetById(@PathVariable(name = "id") UUID petId){
-        petService.deletePetById(petId);
+    public ResponseEntity<Void> deactivatePetById(@PathVariable(name = "id") UUID petId){
+        petService.deactivateById(petId);
         return ResponseEntity.noContent().build();
     }
 
@@ -61,7 +61,7 @@ public class PetController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
-      Page<PetResponseDTO> petsByFilters = petService.listAllPets(name, species, gender, breed, status, PageRequest.of(page, size));
+      Page<PetResponseDTO> petsByFilters = petService.listAllByFilter(name, species, gender, breed, status, PageRequest.of(page, size));
       return ResponseEntity.ok().body(petsByFilters);
     }
 
@@ -69,7 +69,7 @@ public class PetController {
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
     public ResponseEntity<PetResponseDTO> updatePetById(@RequestBody PetUpdateDTO petUpdateDTO,
                                                         @PathVariable(name = "id") UUID petId){
-        Pet pet = petService.updatePetById(petId, petUpdateDTO);
+        Pet pet = petService.updateById(petId, petUpdateDTO);
         return ResponseEntity.ok(petMapper.toDTO(pet));
     }
 

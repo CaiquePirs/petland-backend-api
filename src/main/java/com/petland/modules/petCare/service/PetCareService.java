@@ -43,8 +43,8 @@ public class PetCareService {
 
     @Transactional
     public PetCare create(PetCareRequestDTO requestDTO) {
-        Customer customer = customerService.findCustomerById(requestDTO.customerId());
-        Pet pet = petService.findPetById(requestDTO.petId());
+        Customer customer = customerService.findById(requestDTO.customerId());
+        Pet pet = petService.findById(requestDTO.petId());
         Employee employee = employeeService.findById(requestDTO.employeeId());
         petValidator.isPetOwner(pet, customer);
 

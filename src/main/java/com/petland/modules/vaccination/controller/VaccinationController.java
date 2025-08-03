@@ -37,7 +37,7 @@ public class VaccinationController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<VaccinationResponseDTO> getById(@PathVariable(name = "id") UUID vaccinationId){
+    public ResponseEntity<VaccinationResponseDTO> findVaccinationById(@PathVariable(name = "id") UUID vaccinationId){
         Vaccination vaccination = vaccinationService.findById(vaccinationId);
         VaccinationResponseDTO vaccinationResponse = generateVaccinationResponse.generate(vaccination);
         return ResponseEntity.ok().body(vaccinationResponse);
@@ -45,17 +45,17 @@ public class VaccinationController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") UUID vaccinationId){
-     vaccinationService.deleteById(vaccinationId);
+    public ResponseEntity<Void> deactivateVaccinationById(@PathVariable(name = "id") UUID vaccinationId){
+     vaccinationService.deactivateById(vaccinationId);
      return ResponseEntity.noContent().build();
     }
 
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<VaccinationResponseDTO> updateById(@RequestBody @Valid VaccinationUpdateDTO dto,
+    public ResponseEntity<VaccinationResponseDTO> updateVaccinationById(@RequestBody @Valid VaccinationUpdateDTO dto,
                                                              @PathVariable(name = "id") UUID vaccinationId){
-        Vaccination vaccination = vaccinationService.updateVaccination(dto, vaccinationId);
+        Vaccination vaccination = vaccinationService.updateById(dto, vaccinationId);
         return ResponseEntity.ok().body(generateVaccinationResponse.generate(vaccination));
     }
 

@@ -29,21 +29,21 @@ public class CustomerController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CustomerResponseDTO> findCustomerById(@PathVariable(name = "id") UUID customerId){
-        Customer customer = customerService.findCustomerById(customerId);
+        Customer customer = customerService.findById(customerId);
         return ResponseEntity.ok().body(customerMapper.toDTO(customer));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
-    public ResponseEntity<Void> deleteCustomerById(@PathVariable(name = "id") UUID customerId){
+    public ResponseEntity<Void> deactivateCustomerById(@PathVariable(name = "id") UUID customerId){
         accessValidator.isOwnerOrAdmin(customerId);
-        customerService.deleteById(customerId);
+        customerService.deactivateById(customerId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<CustomerResponseDTO>> listAllCustomers(
+    public ResponseEntity<Page<CustomerResponseDTO>> listAllCustomersByFilter(
             @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "phone", required = false) String phone,
@@ -51,7 +51,7 @@ public class CustomerController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
-        Page<CustomerResponseDTO> customersResponseDTO = customerService.listAllCustomerByFilter(
+        Page<CustomerResponseDTO> customersResponseDTO = customerService.listAllByFilter(
                 name, email, phone, status, PageRequest.of(page, size)
         );
         return ResponseEntity.ok().body(customersResponseDTO);
@@ -59,10 +59,10 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
-    public ResponseEntity<CustomerResponseDTO> updateCustomer(@PathVariable(name = "id") UUID customerId,
+    public ResponseEntity<CustomerResponseDTO> updateCustomerById(@PathVariable(name = "id") UUID customerId,
                                                               @RequestBody @Valid UpdateCustomerDTO updateCustomerDTO){
         accessValidator.isOwnerOrAdmin(customerId);
-        Customer customer = customerService.updateCustomerById(customerId, updateCustomerDTO);
+        Customer customer = customerService.updateById(customerId, updateCustomerDTO);
         return ResponseEntity.ok().body(customerMapper.toDTO(customer));
     }
 }

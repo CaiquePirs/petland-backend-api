@@ -48,7 +48,7 @@ public class SaleService {
         Sale sale = new Sale();
         UUID employeeId = accessValidator.getLoggedInUser();
         Employee employee = employeeService.findById(employeeId);
-        Customer customer = customerService.findCustomerById(saleRequestDTO.customerId());
+        Customer customer = customerService.findById(saleRequestDTO.customerId());
 
         List<ItemsSale> listItemsSale = itemsSaleService.createItems(sale, saleRequestDTO.itemsSaleRequestDTO());
         BigDecimal totalSale = calculator.calculateTotalItemsSale(listItemsSale);
@@ -76,13 +76,13 @@ public class SaleService {
     @Transactional
     public void deleteSaleById(UUID saleId){
         Sale sale = findSaleById(saleId);
-        itemsSaleService.deleteItemsList(sale.getItemsSale());
+        itemsSaleService.deactivateItemsList(sale.getItemsSale());
         sale.setStatus(StatusEntity.DELETED);
         saleRepository.save(sale);
     }
 
     public Page<SaleResponseDTO> findSalesByCustomerId(UUID customerId, Pageable pageable) {
-        Customer customer = customerService.findCustomerById(customerId);
+        Customer customer = customerService.findById(customerId);
         Page<Sale> listSales = saleRepository.findByCustomerId(customer.getId(), pageable);
 
         if(listSales.isEmpty()){

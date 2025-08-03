@@ -41,7 +41,7 @@ public class CustomerProfileController {
     @GetMapping
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<CustomerResponseDTO> getMyProfile(){
-        Customer customer = customerService.findCustomerById(accessValidator.getLoggedInUser());
+        Customer customer = customerService.findById(accessValidator.getLoggedInUser());
         return ResponseEntity.ok().body(customerMapper.toDTO(customer));
     }
 

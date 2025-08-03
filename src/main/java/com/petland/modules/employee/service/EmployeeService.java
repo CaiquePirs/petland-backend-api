@@ -48,19 +48,19 @@ public class EmployeeService {
                 .orElseThrow(() -> new NotFoundException("Employer not found"));
     }
 
-    public void deleteById(UUID employeeId) {
+    public void deactivateById(UUID employeeId) {
        Employee employee = findById(employeeId);
        employee.setStatus(StatusEntity.DELETED);
        employeeRepository.save(employee);
     }
 
-    public Page<EmployeeResponseDTO> listAllEmployee(String name, String email, String phone, String department, StatusEntity status, Pageable pageable){
+    public Page<EmployeeResponseDTO> listAllByFilter(String name, String email, String phone, String department, StatusEntity status, Pageable pageable){
          return employeeRepository
                  .findAll(EmployeeSpecification.Specification(name, email, phone, department, status), pageable)
                  .map(employeeMapper::toDTO);
     }
 
-    public EmployeeResponseDTO updateEmployee(UUID employeeId, EmployeeUpdateDTO dto){
+    public EmployeeResponseDTO updateById(UUID employeeId, EmployeeUpdateDTO dto){
         Employee employee = findById(employeeId);
         employee = updateValidator.validator(employee, dto);
         employeeRepository.save(employee);

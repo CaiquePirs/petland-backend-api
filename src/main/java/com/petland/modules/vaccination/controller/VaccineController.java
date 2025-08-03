@@ -38,21 +38,21 @@ public class VaccineController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<VaccineResponseDTO> findById(@PathVariable(name = "id") UUID vaccineId){
+    public ResponseEntity<VaccineResponseDTO> findVaccineById(@PathVariable(name = "id") UUID vaccineId){
         Vaccine vaccine = vaccineService.findById(vaccineId);
         return ResponseEntity.ok().body(vaccineMapper.toDTO(vaccine));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") UUID vaccineId){
-        vaccineService.deleteById(vaccineId);
+    public ResponseEntity<Void> deactivateVaccineById(@PathVariable(name = "id") UUID vaccineId){
+        vaccineService.deactivateById(vaccineId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<VaccineResponseDTO>> getVaccines(@RequestParam(required = false) String lotNumber,
+    public ResponseEntity<Page<VaccineResponseDTO>> findAllVaccinesByFilter(@RequestParam(required = false) String lotNumber,
                                                                 @RequestParam(required = false) String supplierName,
                                                                 @RequestParam(required = false) VaccineType vaccineType,
                                                                 @RequestParam(required = false) BigDecimal minPurchasePrice,
@@ -78,7 +78,7 @@ public class VaccineController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VaccineResponseDTO> updateVaccineByID(@PathVariable(name = "id") UUID vaccineId,
                                                                 @RequestBody VaccineUpdateDTO dto){
-        Vaccine vaccine = vaccineService.updateVaccineById(vaccineId, dto);
+        Vaccine vaccine = vaccineService.updateById(vaccineId, dto);
         return ResponseEntity.ok().body(vaccineMapper.toDTO(vaccine));
     }
 }

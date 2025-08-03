@@ -41,21 +41,21 @@ public class ProductController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProductResponseDTO> findById(@PathVariable(name = "id") UUID productId){
+    public ResponseEntity<ProductResponseDTO> findProductById(@PathVariable(name = "id") UUID productId){
         Product product = productService.findById(productId);
         return ResponseEntity.ok().body(productMapper.toDTO(product));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") UUID productId){
+    public ResponseEntity<Void> deactivateProductById(@PathVariable(name = "id") UUID productId){
         productService.deleteById(productId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<ProductResponseDTO>> searchProducts(
+    public ResponseEntity<Page<ProductResponseDTO>> findAllProductsByFilter(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String brand,
             @RequestParam(required = false) ProductType productType,
@@ -77,9 +77,9 @@ public class ProductController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable(name = "id") UUID productId,
+    public ResponseEntity<ProductResponseDTO> updateProductById(@PathVariable(name = "id") UUID productId,
                                                             @RequestBody ProductUpdateDTO productDTO){
-        ProductResponseDTO productUpdated = productService.updateProduct(productId, productDTO);
+        ProductResponseDTO productUpdated = productService.updateById(productId, productDTO);
         return ResponseEntity.ok().body(productUpdated);
     }
 

@@ -49,7 +49,7 @@ public class ProductService {
                 .orElseThrow(() -> new NotFoundException("Product not found"));
     }
 
-    public void updateProductStock(int stockUsed, UUID productId){
+    public void updateStock(int stockUsed, UUID productId){
         Product product = findById(productId);
 
         if(product.getStockQuantity() <= 0 || stockUsed > product.getStockQuantity()){
@@ -81,7 +81,7 @@ public class ProductService {
         return new PageImpl<>(productList, pageable, productList.size());
     }
 
-    public ProductResponseDTO updateProduct(UUID productId, ProductUpdateDTO dto){
+    public ProductResponseDTO updateById(UUID productId, ProductUpdateDTO dto){
         Product product = findById(productId);
         product = validator.validate(dto, product);
         productRepository.save(product);
