@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,5 +64,24 @@ public class PetCareSpecification {
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         });
+    }
+
+    public static Specification<PetCare> reportSpecification(LocalDate dateMin, LocalDate dateMax){
+        return (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (dateMin != null && dateMax != null) {
+                predicates.add(cb.between(root.get("serviceDate"), dateMin, dateMax));
+
+            } else if (dateMin != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("serviceDate"), dateMin));
+
+            } else if (dateMax != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("serviceDate"), dateMax));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
     }
 }

@@ -1,5 +1,6 @@
 package com.petland.modules.petCare.utils;
 
+import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,27 @@ public class PetCareServiceCalculator {
     public BigDecimal calculateTotalRevenue(int quantityService, BigDecimal costService){
         BigDecimal quantity = BigDecimal.valueOf(quantityService);
         return costService.multiply(quantity);
+    }
+
+    public BigDecimal calculateTotalRevenueByPetCareList(List<PetCare> petCareList){
+        return petCareList.stream()
+                .map(PetCare::getTotalRevenue)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
+
+    public BigDecimal calculateTotalCostOperatingByPetCareList(List<PetCare> petCareList){
+        return petCareList.stream()
+                .map(PetCare::getTotalCostOperating)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
+
+    public BigDecimal calculateTotalProfitByPetCareList(List<PetCare> petCareList){
+        return petCareList.stream()
+                .map(PetCare::getTotalProfit)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
     }
 
     public BigDecimal calculateTotalProfit(BigDecimal totalService, BigDecimal operatingCost){
@@ -40,5 +62,11 @@ public class PetCareServiceCalculator {
                 .map(PetCareDetails::getOperatingCost)
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
+    }
+
+    public Integer sumAllItemsSold(List<PetCare> petCareList){
+        return petCareList.stream()
+                .mapToInt(details -> details.getPetCareDetails().size())
+                .sum();
     }
 }

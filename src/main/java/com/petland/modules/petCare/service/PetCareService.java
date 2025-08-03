@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -116,6 +117,9 @@ public class PetCareService {
         return new PageImpl<>(listServices, pageable, listServices.size());
     }
 
+    public List<PetCare> findAllByPeriod(LocalDate dateMin, LocalDate dateMax){
+        return petCareRepository.findAll(PetCareSpecification.reportSpecification(dateMin, dateMax));
+    }
 
 
 
