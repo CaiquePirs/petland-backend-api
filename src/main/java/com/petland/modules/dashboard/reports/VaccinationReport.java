@@ -21,8 +21,8 @@ public class VaccinationReport {
         Integer sumTotalVaccinations = calculator.sumTotalVaccinationsApplied(vaccinationList);
 
         return Report.builder()
-                .totalSales(totalBilled)
-                .profitMargin(totalProfit)
+                .totalRevenue(totalBilled)
+                .totalProfit(totalProfit)
                 .itemsQuantity(sumTotalVaccinations)
                 .build();
     }

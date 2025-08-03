@@ -23,8 +23,8 @@ public class SaleReport {
 
         return Report.builder()
                 .itemsQuantity(sumItems)
-                .totalSales(totalSales)
-                .profitMargin(totalProfit)
+                .totalRevenue(totalSales)
+                .totalProfit(totalProfit)
                 .build();
     }
 
@@ -34,8 +34,8 @@ public class SaleReport {
 
         return Report.builder()
                 .itemsQuantity(itemsSaleList.size())
-                .totalSales(totalSales)
-                .profitMargin(totalProfit)
+                .totalRevenue(totalSales)
+                .totalProfit(totalProfit)
                 .build();
     }
 

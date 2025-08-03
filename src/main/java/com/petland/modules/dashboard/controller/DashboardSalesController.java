@@ -12,13 +12,13 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/dashboard/reports")
+@RequestMapping("/dashboard/reports/sales")
 @RequiredArgsConstructor
-public class SalesReportController {
+public class DashboardSalesController {
 
     private final SalesReportsService saleReport;
 
-    @GetMapping("/sales/by-period")
+    @GetMapping("/by-period")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> salesReportByPeriod(
             @RequestParam(value = "dateMin", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMin,
@@ -28,7 +28,7 @@ public class SalesReportController {
         return ResponseEntity.ok().body(salesReport);
     }
 
-    @GetMapping("/sales/by-product/{id}")
+    @GetMapping("/by-product/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> salesReportsByProduct(@PathVariable(name = "id") UUID productId){
         Report salesReport = saleReport.totalSalesByProductId(productId);

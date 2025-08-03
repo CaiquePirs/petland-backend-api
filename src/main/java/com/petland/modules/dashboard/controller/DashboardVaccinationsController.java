@@ -11,13 +11,13 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/dashboard/reports")
+@RequestMapping("/dashboard/reports/vaccinations")
 @RequiredArgsConstructor
-public class VaccinationsReportController {
+public class DashboardVaccinationsController {
 
     private final VaccinationsReportsService generator;
 
-    @GetMapping("vaccinations/by-period")
+    @GetMapping("/by-period")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> vaccinationsReportByPeriod(@RequestParam(required = false) LocalDate dateMin,
                                                              @RequestParam(required = false) LocalDate dateMax){
@@ -25,7 +25,7 @@ public class VaccinationsReportController {
         return ResponseEntity.ok(reports);
     }
 
-    @GetMapping("vaccinations/by-vaccine/{id}")
+    @GetMapping("/by-vaccine/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> vaccinationsReportByVaccine(@PathVariable(name = "id") UUID vaccineId){
         var reports = generator.totalBilledByVaccine(vaccineId);

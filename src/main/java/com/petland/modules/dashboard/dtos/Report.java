@@ -4,7 +4,8 @@ import lombok.Builder;
 import java.math.BigDecimal;
 
 @Builder
-public record Report(BigDecimal totalSales,
+public record Report(BigDecimal totalRevenue,
                      Integer itemsQuantity,
-                     BigDecimal profitMargin){}
+                     BigDecimal operatingCost,
+                     BigDecimal totalProfit){}
 
