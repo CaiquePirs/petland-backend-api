@@ -69,4 +69,10 @@ public class PetCareServiceCalculator {
                 .mapToInt(details -> details.getPetCareDetails().size())
                 .sum();
     }
+
+    public Integer sumAllItemsSoldByServiceList(List<PetCareDetails> petCareDetails){
+        return petCareDetails.stream()
+                .mapToInt(PetCareDetails::getQuantityService)
+                .sum();
+    }
 }

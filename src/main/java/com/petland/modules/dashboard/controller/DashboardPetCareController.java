@@ -1,5 +1,6 @@
 package com.petland.modules.dashboard.controller;
 
+import com.petland.common.exception.ErrorProcessingRequestException;
 import com.petland.modules.dashboard.dtos.Report;
 import com.petland.modules.dashboard.service.PetCareReportsService;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,17 @@ public class DashboardPetCareController {
 
         Report report = reportsService.totalByPeriod(dateMin, dateMax);
         return ResponseEntity.ok().body(report);
+    }
+
+    @GetMapping("/by-service-type")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Report> findTotalByServiceType(@RequestParam(value = "type", required = false) String serviceType){
+        try {
+            Report report = reportsService.totalByService(serviceType.toUpperCase());
+            return ResponseEntity.ok().body(report);
+
+        }catch (IllegalArgumentException e){
+            throw new ErrorProcessingRequestException("Error processing request. Try entering a valid service type");
+        }
     }
 }

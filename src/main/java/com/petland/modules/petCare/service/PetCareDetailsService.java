@@ -1,9 +1,11 @@
 package com.petland.modules.petCare.service;
 
 import com.petland.modules.petCare.dtos.PetCareDetailsRequestDTO;
+import com.petland.modules.petCare.enums.PetCareType;
 import com.petland.modules.petCare.mappers.PetCareDetailsMapper;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
+import com.petland.modules.petCare.repositories.PetCareDetailsRepository;
 import com.petland.modules.petCare.utils.PetCareServiceCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ public class PetCareDetailsService {
 
     private final PetCareServiceCalculator calculator;
     private final PetCareDetailsMapper mapper;
+    private final PetCareDetailsRepository repository;
 
     public List<PetCareDetails> createService(PetCare petCare, List<PetCareDetailsRequestDTO> dtoList){
         return dtoList.stream()
@@ -29,5 +32,9 @@ public class PetCareDetailsService {
                     petCareDetails.setPetCare(petCare);
                     return petCareDetails;
                 }).toList();
+    }
+
+    public List<PetCareDetails> findAllByServiceType(PetCareType petCareType) {
+        return repository.findByPetCareType(petCareType);
     }
 }

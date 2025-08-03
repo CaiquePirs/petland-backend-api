@@ -79,7 +79,6 @@ public class PetCareService {
             throw new NotFoundException("Customer service history list not found");
         }
         List<PetCareHistoryResponseDTO> serviceHistoryList = generateResponse.mapToCustomerServiceHistory(petCareList.getContent());
-
         return new PageImpl<>(serviceHistoryList, pageable, serviceHistoryList.size());
     }
 
@@ -113,17 +112,10 @@ public class PetCareService {
                 .stream()
                 .map(generateResponse::generate)
                 .toList();
-
         return new PageImpl<>(listServices, pageable, listServices.size());
     }
 
     public List<PetCare> findAllByPeriod(LocalDate dateMin, LocalDate dateMax){
         return petCareRepository.findAll(PetCareSpecification.reportSpecification(dateMin, dateMax));
     }
-
-
-
-
-
-
 }

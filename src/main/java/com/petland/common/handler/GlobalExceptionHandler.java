@@ -2,11 +2,7 @@ package com.petland.common.handler;
 
 import com.petland.common.error.ErrorMessageDTO;
 import com.petland.common.error.ErrorResponseDTO;
-import com.petland.common.exception.EmailFoundException;
-import com.petland.common.exception.InvalidCredentialsException;
-import com.petland.common.exception.UnauthorizedException;
-import com.petland.common.exception.NotFoundException;
-import com.petland.common.exception.InsufficientStockException;
+import com.petland.common.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,7 +39,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.CONFLICT.value(),
                 e.getMessage(),
                 List.of(errorMessage));
-
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
@@ -55,7 +50,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.FORBIDDEN.value(),
                 e.getMessage(),
                 List.of(errorMessage));
-
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
@@ -67,7 +61,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage(),
                 List.of(errorMessageDTO));
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
@@ -79,7 +72,6 @@ public class GlobalExceptionHandler {
                 HttpStatus.UNAUTHORIZED.value(),
                 e.getMessage(),
                 List.of(errorMessage));
-
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 
@@ -91,8 +83,18 @@ public class GlobalExceptionHandler {
                 HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 e.getMessage(),
                 List.of(errorMessage));
-
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);
+    }
+
+    @ExceptionHandler(ErrorProcessingRequestException.class)
+    public ResponseEntity<ErrorResponseDTO> handleRunTimeException(ErrorProcessingRequestException e){
+        ErrorMessageDTO error = new ErrorMessageDTO("Error", e.getMessage());
+
+        ErrorResponseDTO responseDTO = new ErrorResponseDTO(
+                HttpStatus.BAD_REQUEST.value(),
+                e.getMessage(),
+                List.of(error));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
     }
 
 }
