@@ -25,7 +25,7 @@ public class SalesReportsService {
     private final ProductService productService;
     private final SaleReport report;
 
-    public Report totalSalesByPeriod(LocalDate dateMin, LocalDate dateMax) {
+    public Report totalByPeriod(LocalDate dateMin, LocalDate dateMax) {
         List<Sale> salesList = saleService.findAllSalesByPeriod(dateMin, dateMax);
 
         if (salesList.isEmpty()) {
@@ -34,7 +34,7 @@ public class SalesReportsService {
         return report.generateBySaleList(salesList);
     }
 
-    public Report totalSalesByProductId(UUID productId) {
+    public Report totalByProductId(UUID productId) {
         Product product = productService.findById(productId);
         List<ItemsSale> itemsSaleList = itemsSaleService.findAllItemsSaleByProductId(product.getId());
 

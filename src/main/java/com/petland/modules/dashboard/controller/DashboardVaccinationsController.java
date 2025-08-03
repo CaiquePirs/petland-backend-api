@@ -21,7 +21,7 @@ public class DashboardVaccinationsController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> vaccinationsReportByPeriod(@RequestParam(required = false) LocalDate dateMin,
                                                              @RequestParam(required = false) LocalDate dateMax){
-        var reports = generator.totalBilledPerPeriod(dateMin, dateMax);
+        var reports = generator.totalBilledByPeriod(dateMin, dateMax);
         return ResponseEntity.ok(reports);
     }
 

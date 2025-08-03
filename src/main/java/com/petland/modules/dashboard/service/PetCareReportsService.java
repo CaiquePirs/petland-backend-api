@@ -18,7 +18,7 @@ public class PetCareReportsService {
     private final PetCareService service;
     private final PetCareReport report;
 
-    public Report totalServicesByPeriod(LocalDate dateMin, LocalDate dateMax){
+    public Report totalByPeriod(LocalDate dateMin, LocalDate dateMax){
         List<PetCare> petCareServices = service.findAllByPeriod(dateMin, dateMax);
 
         if(petCareServices.isEmpty()){

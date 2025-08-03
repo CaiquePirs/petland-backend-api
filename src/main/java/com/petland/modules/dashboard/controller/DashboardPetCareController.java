@@ -26,7 +26,7 @@ public class DashboardPetCareController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMin,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMax){
 
-        Report report = reportsService.totalServicesByPeriod(dateMin, dateMax);
+        Report report = reportsService.totalByPeriod(dateMin, dateMax);
         return ResponseEntity.ok().body(report);
     }
 }
