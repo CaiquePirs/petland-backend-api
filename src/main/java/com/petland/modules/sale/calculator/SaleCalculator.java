@@ -17,6 +17,16 @@ public class SaleCalculator {
         return BigDecimal.valueOf(quantity).multiply(value);
     }
 
+    public BigDecimal calculateProfitByItemSale(Product product, int qtdItems){
+        try {
+            BigDecimal profitByProduct = product.getCostSale().subtract(product.getCostPrice());
+            return profitByProduct.multiply(BigDecimal.valueOf(qtdItems));
+
+        }catch (Exception e){
+            throw new RuntimeException("Error performing calculation");
+        }
+    }
+
     public BigDecimal calculateTotalItemsSale(List<ItemsSale> listItemsSale){
         if (listItemsSale == null || listItemsSale.isEmpty()) {
             throw new IllegalArgumentException("Items list cannot be null or empty.");

@@ -33,7 +33,7 @@ public class ItemsSaleService {
             productService.updateStock(itemsSaleRequest.productQuantity(), product.getId());
 
             BigDecimal totalItemsSale = saleCalculator.calculateTotalSale(itemsSaleRequest.productQuantity(), product.getCostSale());
-            BigDecimal profitByItemSale = productService.calculateProfitByProduct(product);
+            BigDecimal profitByItemSale = saleCalculator.calculateProfitByItemSale(product, itemsSaleRequest.productQuantity());
 
             return ItemsSale.builder()
                     .sale(sale)

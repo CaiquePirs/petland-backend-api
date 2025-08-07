@@ -88,11 +88,4 @@ public class ProductService {
         productRepository.save(product);
         return productMapper.toDTO(product);
     }
-
-    public BigDecimal calculateProfitByProduct(Product product){
-        if(product.getCostSale() == null || product.getCostPrice() == null){
-            return BigDecimal.ZERO;
-        }
-        return product.getCostSale().subtract(product.getCostPrice());
-    }
 }
