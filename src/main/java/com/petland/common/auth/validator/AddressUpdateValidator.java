@@ -1,4 +1,4 @@
-package com.petland.utils;
+package com.petland.common.auth.validator;
 
 import com.petland.common.entity.Address;
 import com.petland.common.entity.dto.UpdateAddressDTO;

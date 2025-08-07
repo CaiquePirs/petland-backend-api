@@ -1,4 +1,4 @@
-package com.petland.common.auth;
+package com.petland.common.auth.validator;
 
 import com.petland.common.exception.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;

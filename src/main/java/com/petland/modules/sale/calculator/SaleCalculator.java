@@ -1,4 +1,4 @@
-package com.petland.modules.sale.util;
+package com.petland.modules.sale.calculator;
 
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;

@@ -6,7 +6,7 @@ import com.petland.modules.petCare.mappers.PetCareDetailsMapper;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
 import com.petland.modules.petCare.repositories.PetCareDetailsRepository;
-import com.petland.modules.petCare.utils.PetCareServiceCalculator;
+import com.petland.modules.petCare.calculator.PetCareServiceCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

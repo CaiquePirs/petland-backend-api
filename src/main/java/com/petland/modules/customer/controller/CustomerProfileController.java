@@ -1,6 +1,6 @@
 package com.petland.modules.customer.controller;
 
-import com.petland.common.auth.AccessValidator;
+import com.petland.common.auth.validator.AccessValidator;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;

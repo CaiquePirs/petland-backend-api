@@ -6,7 +6,7 @@ import com.petland.modules.customer.dto.CustomerRequestDTO;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;
-import com.petland.modules.customer.service.AuthCustomerUseCase;
+import com.petland.modules.customer.usecases.AuthCustomerUseCase;
 import com.petland.modules.customer.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

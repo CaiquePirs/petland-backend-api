@@ -1,4 +1,4 @@
-package com.petland.modules.vaccination.util;
+package com.petland.modules.vaccination.calculator;
 
 import com.petland.modules.vaccination.module.AppliedVaccine;
 import com.petland.modules.vaccination.module.Vaccination;

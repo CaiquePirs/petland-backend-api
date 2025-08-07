@@ -1,6 +1,6 @@
 package com.petland.modules.pet.service;
 
-import com.petland.common.auth.AccessValidator;
+import com.petland.common.auth.validator.AccessValidator;
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
@@ -12,6 +12,7 @@ import com.petland.modules.pet.mapper.PetMapper;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.repository.PetRepository;
 import com.petland.modules.pet.specifications.PetSpecification;
+import com.petland.modules.pet.validator.PetUpdateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

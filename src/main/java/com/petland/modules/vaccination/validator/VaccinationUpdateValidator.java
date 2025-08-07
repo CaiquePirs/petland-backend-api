@@ -3,7 +3,7 @@ package com.petland.modules.vaccination.validator;
 import com.petland.common.entity.Address;
 import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
 import com.petland.modules.vaccination.module.Vaccination;
-import com.petland.utils.AddressUpdateValidator;
+import com.petland.common.auth.validator.AddressUpdateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

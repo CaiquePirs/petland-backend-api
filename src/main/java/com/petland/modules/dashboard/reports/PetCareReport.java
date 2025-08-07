@@ -3,7 +3,7 @@ package com.petland.modules.dashboard.reports;
 import com.petland.modules.dashboard.dtos.Report;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
-import com.petland.modules.petCare.utils.PetCareServiceCalculator;
+import com.petland.modules.petCare.calculator.PetCareServiceCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

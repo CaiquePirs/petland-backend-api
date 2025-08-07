@@ -1,4 +1,4 @@
-package com.petland.utils;
+package com.petland.common.auth.validator;
 
 import com.petland.common.exception.EmailFoundException;
 import com.petland.common.entity.enums.StatusEntity;

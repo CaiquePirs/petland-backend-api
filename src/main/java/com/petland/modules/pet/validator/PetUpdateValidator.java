@@ -1,4 +1,4 @@
-package com.petland.modules.pet.service;
+package com.petland.modules.pet.validator;
 
 import com.petland.modules.pet.dto.PetUpdateDTO;
 import com.petland.modules.pet.model.Pet;

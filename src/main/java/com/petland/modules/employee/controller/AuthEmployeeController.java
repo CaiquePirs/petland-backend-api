@@ -6,7 +6,7 @@ import com.petland.modules.employee.dto.EmployeeRequestDTO;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
 import com.petland.modules.employee.model.Employee;
-import com.petland.modules.employee.service.AuthEmployeeUseCase;
+import com.petland.modules.employee.usecases.AuthEmployeeUseCase;
 import com.petland.modules.employee.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

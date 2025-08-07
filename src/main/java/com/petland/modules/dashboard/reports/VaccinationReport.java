@@ -2,7 +2,7 @@ package com.petland.modules.dashboard.reports;
 
 import com.petland.modules.dashboard.dtos.Report;
 import com.petland.modules.vaccination.module.Vaccination;
-import com.petland.modules.vaccination.util.VaccinationCalculator;
+import com.petland.modules.vaccination.calculator.VaccinationCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

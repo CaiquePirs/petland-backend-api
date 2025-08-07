@@ -1,6 +1,6 @@
 package com.petland.modules.sale.service;
 
-import com.petland.common.auth.AccessValidator;
+import com.petland.common.auth.validator.AccessValidator;
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.attendance.enums.PaymentType;
@@ -16,7 +16,7 @@ import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.SaleRepository;
 import com.petland.modules.sale.specifications.SaleSpecifications;
 import com.petland.modules.sale.util.GenerateSaleResponse;
-import com.petland.modules.sale.util.SaleCalculator;
+import com.petland.modules.sale.calculator.SaleCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

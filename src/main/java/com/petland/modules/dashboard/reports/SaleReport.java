@@ -3,7 +3,7 @@ package com.petland.modules.dashboard.reports;
 import com.petland.modules.dashboard.dtos.Report;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
-import com.petland.modules.sale.util.SaleCalculator;
+import com.petland.modules.sale.calculator.SaleCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

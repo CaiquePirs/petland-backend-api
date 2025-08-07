@@ -9,7 +9,7 @@ import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.ItemsSaleRepository;
 import com.petland.modules.sale.repositories.SaleRepository;
-import com.petland.modules.sale.util.SaleCalculator;
+import com.petland.modules.sale.calculator.SaleCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

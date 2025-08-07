@@ -1,4 +1,4 @@
-package com.petland.modules.product.service;
+package com.petland.modules.product.validator;
 
 import com.petland.modules.product.dto.ProductUpdateDTO;
 import com.petland.modules.product.model.Product;

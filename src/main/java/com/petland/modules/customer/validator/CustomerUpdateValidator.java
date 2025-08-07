@@ -1,10 +1,10 @@
-package com.petland.modules.customer.service;
+package com.petland.modules.customer.validator;
 
 import com.petland.common.entity.Address;
 import com.petland.modules.customer.dto.UpdateCustomerDTO;
 import com.petland.modules.customer.model.Customer;
-import com.petland.utils.EmailValidator;
-import com.petland.utils.AddressUpdateValidator;
+import com.petland.common.auth.validator.EmailValidator;
+import com.petland.common.auth.validator.AddressUpdateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

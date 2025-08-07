@@ -13,6 +13,7 @@ import com.petland.modules.product.model.Product;
 import com.petland.modules.product.repository.ProductRepository;
 import com.petland.common.exception.InsufficientStockException;
 import com.petland.modules.product.specifications.ProductSpecification;
+import com.petland.modules.product.validator.ProductUpdateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -1,5 +1,6 @@
 package com.petland.common.auth;
 
+import com.petland.common.auth.validator.AccessValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;

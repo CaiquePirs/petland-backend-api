@@ -1,4 +1,4 @@
-package com.petland.modules.petCare.utils;
+package com.petland.modules.petCare.calculator;
 
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
