@@ -36,7 +36,7 @@ public class ProductUpdateValidator {
             product.setCostSale(dto.costSale());
         }
         if (dto.stockQuantity() != null) {
-            product.setStockQuantity(dto.stockQuantity());
+            product.setStockQuantity(product.getStockQuantity() + dto.stockQuantity());
         }
         return product;
     }
