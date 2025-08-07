@@ -31,7 +31,7 @@ public class PetCareReportsService {
         return report.generateByPetCare(petCareServices);
     }
 
-    public Report totalByService(String petCareType){
+    public Report totalByServiceType(String petCareType){
         List<PetCareDetails> petCareDetails = petCareDetailsService.findAllByServiceType(PetCareType.valueOf(petCareType));
 
         if(petCareDetails.isEmpty()){

@@ -19,7 +19,7 @@ public class VaccinationsReportsService {
     private final VaccinationService vaccinationService;
     private final VaccinationReport report;
 
-    public Report totalBilledByPeriod(LocalDate dateMin, LocalDate dateMax){
+    public Report totalByPeriod(LocalDate dateMin, LocalDate dateMax){
         List<Vaccination> vaccinationsList = vaccinationService.findAllVaccinationsByPeriod(dateMin, dateMax);
 
         if(vaccinationsList.isEmpty()){
@@ -27,7 +27,7 @@ public class VaccinationsReportsService {
         }
         return report.generate(vaccinationsList);
     }
-    public Report totalBilledByVaccine(UUID vaccineId){
+    public Report totalByVaccine(UUID vaccineId){
         List<Vaccination> vaccinationsList = vaccinationService.findAllVaccinationsByVaccine(vaccineId);
 
         if(vaccinationsList.isEmpty()){

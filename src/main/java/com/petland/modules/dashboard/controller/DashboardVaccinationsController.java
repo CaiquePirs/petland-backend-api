@@ -21,14 +21,14 @@ public class DashboardVaccinationsController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> vaccinationsReportByPeriod(@RequestParam(required = false) LocalDate dateMin,
                                                              @RequestParam(required = false) LocalDate dateMax){
-        var reports = generator.totalBilledByPeriod(dateMin, dateMax);
+        var reports = generator.totalByPeriod(dateMin, dateMax);
         return ResponseEntity.ok(reports);
     }
 
     @GetMapping("/by-vaccine/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> vaccinationsReportByVaccine(@PathVariable(name = "id") UUID vaccineId){
-        var reports = generator.totalBilledByVaccine(vaccineId);
+        var reports = generator.totalByVaccine(vaccineId);
         return ResponseEntity.ok(reports);
     }
 }

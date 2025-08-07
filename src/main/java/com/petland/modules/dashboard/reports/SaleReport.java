@@ -16,7 +16,7 @@ public class SaleReport {
 
     private final SaleCalculator saleCalculator;
 
-    public Report generateBySaleList(List<Sale> salesList){
+    public Report generateBySales(List<Sale> salesList){
         BigDecimal totalSales = saleCalculator.calculateTotalListSales(salesList);
         BigDecimal totalProfit = saleCalculator.calculateProfitBySales(salesList);
         Integer sumItems = saleCalculator.sumTotalItemsSale(salesList);
@@ -28,7 +28,7 @@ public class SaleReport {
                 .build();
     }
 
-    public Report generateByItemsSaleList(List<ItemsSale> itemsSaleList){
+    public Report generateByItemsSale(List<ItemsSale> itemsSaleList){
         BigDecimal totalSales = saleCalculator.calculateTotalItemsSale(itemsSaleList);
         BigDecimal totalProfit = saleCalculator.calculateProfitByItemsSale(itemsSaleList);
 

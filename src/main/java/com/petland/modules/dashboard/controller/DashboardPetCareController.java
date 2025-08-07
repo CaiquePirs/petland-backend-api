@@ -35,7 +35,7 @@ public class DashboardPetCareController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> findTotalByServiceType(@RequestParam(value = "type", required = false) String serviceType){
         try {
-            Report report = reportsService.totalByService(serviceType.toUpperCase());
+            Report report = reportsService.totalByServiceType(serviceType.toUpperCase());
             return ResponseEntity.ok().body(report);
 
         }catch (IllegalArgumentException e){

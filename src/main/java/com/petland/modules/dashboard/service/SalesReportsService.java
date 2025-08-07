@@ -31,7 +31,7 @@ public class SalesReportsService {
         if (salesList.isEmpty()) {
             throw new NotFoundException("Sales reports not found");
         }
-        return report.generateBySaleList(salesList);
+        return report.generateBySales(salesList);
     }
 
     public Report totalByProductId(UUID productId) {
@@ -41,6 +41,6 @@ public class SalesReportsService {
         if (itemsSaleList.isEmpty()) {
             throw new NotFoundException("Sales reports not found");
         }
-        return report.generateByItemsSaleList(itemsSaleList);
+        return report.generateByItemsSale(itemsSaleList);
     }
 }
