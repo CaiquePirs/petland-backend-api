@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Component
-public class PetCareServiceCalculator {
+public class PetCareCalculator {
 
     public BigDecimal calculateTotalRevenue(int quantityService, BigDecimal costService){
         BigDecimal quantity = BigDecimal.valueOf(quantityService);
