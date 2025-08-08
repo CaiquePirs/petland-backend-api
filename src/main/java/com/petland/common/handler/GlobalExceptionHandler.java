@@ -8,8 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -95,6 +98,21 @@ public class GlobalExceptionHandler {
                 e.getMessage(),
                 List.of(error));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponseDTO> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException e){
+        ErrorMessageDTO error = new ErrorMessageDTO("Error", "Invalid value for parameter");
+
+        if(e.getRequiredType() != null && e.getRequiredType().equals(LocalDate.class)) {
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                    "Invalid date for parameter: (" + e.getName() + ") Use YYYY-MM-DD format (example: 2024-05-02)",
+                    List.of(error)));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                "Invalid value for " + e.getName(), List.of(error)));
     }
 
 }

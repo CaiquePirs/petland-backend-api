@@ -1,6 +1,5 @@
-package com.petland.common.auth.validator;
+package com.petland.common.entity;
 
-import com.petland.common.entity.Address;
 import com.petland.common.entity.dto.UpdateAddressDTO;
 import org.springframework.stereotype.Component;
 
