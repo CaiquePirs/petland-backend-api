@@ -3,6 +3,7 @@ package com.petland.modules.dashboard.controller;
 import com.petland.modules.dashboard.dtos.Report;
 import com.petland.modules.dashboard.service.VaccinationsReportsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,10 @@ public class DashboardVaccinationsController {
 
     @GetMapping("/by-period")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Report> vaccinationsReportByPeriod(@RequestParam(required = false) LocalDate dateMin,
-                                                             @RequestParam(required = false) LocalDate dateMax){
+    public ResponseEntity<Report> vaccinationsReportByPeriod(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMin,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMax){
+
         var reports = generator.totalByPeriod(dateMin, dateMax);
         return ResponseEntity.ok(reports);
     }

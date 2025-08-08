@@ -1,9 +1,9 @@
 package com.petland.modules.dashboard.reports;
 
 import com.petland.modules.dashboard.dtos.Report;
+import com.petland.modules.petCare.calculator.PetCareCalculator;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
-import com.petland.modules.petCare.calculator.PetCareServiceCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PetCareReport {
 
-    private final PetCareServiceCalculator calculator;
+    private final PetCareCalculator calculator;
 
     public Report generateByPetCare(List<PetCare> petCareList){
         BigDecimal totaRevenue = calculator.calculateTotalRevenueByPetCareList(petCareList);

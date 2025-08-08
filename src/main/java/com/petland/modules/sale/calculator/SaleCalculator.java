@@ -28,19 +28,19 @@ public class SaleCalculator {
         }
     }
 
-    public BigDecimal calculateTotalItemsSale(List<ItemsSale> listItemsSale){
+    public BigDecimal calculateTotalBilledByItemsSale(List<ItemsSale> listItemsSale){
         return listItemsSale.stream()
                 .map(ItemsSale::getItemsSaleTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public BigDecimal calculateTotalListSales(List<Sale> listSales){
+    public BigDecimal calculateTotalBilledBySaleList(List<Sale> listSales){
         return listSales.stream()
                 .map(Sale::getTotalSales)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public Integer sumTotalItemsSale(List<Sale> sales) {
+    public Integer sumQuantityItemsSale(List<Sale> sales) {
         return sales.stream()
                 .mapToInt(sale -> sale.getItemsSale().size())
                 .sum();
@@ -55,7 +55,13 @@ public class SaleCalculator {
     public BigDecimal calculateProfitBySales(List<Sale> listSales) {
         return listSales.stream()
                 .map(Sale::getProfitSale)
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
+                .reduce(BigDecimal.ZERO ,BigDecimal::add);
+    }
+
+    public BigDecimal calculateTotalCostProducts(List<Sale> sales){
+        return sales.stream()
+                .flatMap(s -> s.getItemsSale().stream())
+                .map(item -> item.getProduct().getCostPrice().multiply(BigDecimal.valueOf(item.getProductQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

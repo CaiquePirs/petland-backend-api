@@ -51,7 +51,7 @@ public class SaleService {
         Customer customer = customerService.findById(saleRequestDTO.customerId());
 
         List<ItemsSale> listItemsSale = itemsSaleService.createItems(sale, saleRequestDTO.itemsSaleRequestDTO());
-        BigDecimal totalSale = calculator.calculateTotalItemsSale(listItemsSale);
+        BigDecimal totalSale = calculator.calculateTotalBilledByItemsSale(listItemsSale);
         BigDecimal profitSale = calculator.calculateProfitByItemsSale(listItemsSale);
 
         sale.setItemsSale(listItemsSale);

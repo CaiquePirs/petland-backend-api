@@ -61,4 +61,11 @@ public class VaccinationCalculator {
                 .mapToInt(vaccination -> vaccination.getAppliedVaccines().size())
                 .sum();
     }
+
+    public BigDecimal calculateTotalCostVaccine(List<Vaccination> vaccinations) {
+     return vaccinations.stream()
+             .flatMap(vaccination -> vaccination.getAppliedVaccines().stream())
+             .map(a -> a.getVaccine().getPurchasePrice().multiply(BigDecimal.valueOf(a.getQuantityUsed())))
+             .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 }
