@@ -32,25 +32,25 @@ public class IssueReportPDF {
                 content.setFont(PDType1Font.HELVETICA_BOLD, 25);
                 content.setNonStrokingColor(Color.BLACK);
                 content.newLine(); content.newLine();
-                content.showText("PetShop Relatório de Faturamento"); content.newLine();
+                content.showText("PetShop Billing Report"); content.newLine();
 
                 content.setFont(PDType1Font.HELVETICA, 15);
-                content.showText("Total Faturado: R$" + report.totalRevenue()); content.newLine();
-                content.showText("Quantidade de items e serviços vendidos: " + report.itemsQuantity()); content.newLine();
-                content.showText("Total de custos operacionais: R$" + report.operatingCost()); content.newLine();
-                content.showText("Total de lucro R$" + report.totalProfit()); content.newLine(); content.newLine();
+                content.showText("Total Revenue: R$" + report.totalRevenue()); content.newLine();
+                content.showText("Quantity of items and services sold: " + report.itemsQuantity()); content.newLine();
+                content.showText("Total Operating Costs: R$" + report.operatingCost()); content.newLine();
+                content.showText("Total Profit: R$" + report.totalProfit()); content.newLine(); content.newLine();
 
                 content.setFont(PDType1Font.HELVETICA_BOLD, 18);
-                content.showText("Emitido pelo funcionário: "); content.newLine();
+                content.showText("Issued by employee: "); content.newLine();
 
                 content.setFont(PDType1Font.HELVETICA, 15);
                 content.showText("ID: " + report.employee().id()); content.newLine();
-                content.showText("Nome: " + report.employee().name()); content.newLine();
-                content.showText("Departmento: " + report.employee().department()); content.newLine();
-                content.showText("Data de emissão do relatório: " + report.issueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+                content.showText("Name: " + report.employee().name()); content.newLine();
+                content.showText("Department: " + report.employee().department()); content.newLine();
+                content.showText("Report issue date: " + report.issueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
                 content.newLine(); content.newLine(); content.newLine();
 
-                content.showText("Petland Reports © 2025 - Documento Confidencial");
+                content.showText("Petland Reports © 2025 - Confidential Document");
                 content.endText();
             }
 
