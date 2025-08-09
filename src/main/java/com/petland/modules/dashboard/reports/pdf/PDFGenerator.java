@@ -1,4 +1,4 @@
-package com.petland.modules.dashboard.interfaces;
+package com.petland.modules.dashboard.reports.pdf;
 
 public interface PDFGenerator<T> {
     byte[] generate(T report);

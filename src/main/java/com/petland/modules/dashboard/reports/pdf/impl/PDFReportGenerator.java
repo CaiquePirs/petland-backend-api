@@ -1,8 +1,8 @@
-package com.petland.modules.dashboard.impl;
+package com.petland.modules.dashboard.reports.pdf.impl;
 
 import com.petland.modules.dashboard.dtos.Report;
-import com.petland.modules.dashboard.generator.IssueReportPDF;
-import com.petland.modules.dashboard.interfaces.PDFGenerator;
+import com.petland.modules.dashboard.reports.pdf.IssueReportPDF;
+import com.petland.modules.dashboard.reports.pdf.PDFGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

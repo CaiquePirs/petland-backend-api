@@ -1,7 +1,6 @@
-package com.petland.modules.dashboard.generator;
+package com.petland.modules.dashboard.reports.pdf;
 
 import com.petland.common.exception.FailedToGeneratePdfException;
-import com.petland.common.utils.PdfStyleGenerator;
 import com.petland.modules.dashboard.dtos.Report;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -19,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 @RequiredArgsConstructor
 public class IssueReportPDF {
 
-    private final PdfStyleGenerator pdfStyler;
+    private final PDFStyleGenerator pdfStyler;
 
     public byte[] generateReport(Report report) {
         try (PDDocument document = new PDDocument();

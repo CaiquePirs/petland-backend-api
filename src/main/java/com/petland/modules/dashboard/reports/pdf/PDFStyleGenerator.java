@@ -1,4 +1,4 @@
-package com.petland.common.utils;
+package com.petland.modules.dashboard.reports.pdf;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Component
-public class PdfStyleGenerator {
+public class PDFStyleGenerator {
 
     public PDPage createStyledPage(PDDocument document) throws IOException {
         PDPage page = new PDPage(PDRectangle.A4);
