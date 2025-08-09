@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Component
-public class PDFStyleGenerator {
+public class PDFStyle {
 
     public PDPage createStyledPage(PDDocument document) throws IOException {
         PDPage page = new PDPage(PDRectangle.A4);

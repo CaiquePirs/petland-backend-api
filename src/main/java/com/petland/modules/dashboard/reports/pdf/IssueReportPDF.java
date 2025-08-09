@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 @RequiredArgsConstructor
 public class IssueReportPDF {
 
-    private final PDFStyleGenerator pdfStyler;
+    private final PDFStyle pdfStyler;
 
     public byte[] generateReport(Report report) {
         try (PDDocument document = new PDDocument();
