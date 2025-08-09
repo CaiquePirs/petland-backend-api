@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -27,6 +28,7 @@ public class PetCareReport {
                 .totalProfit(totalProfit)
                 .operatingCost(totalCostOperating)
                 .itemsQuantity(totalItems)
+                .issueDate(LocalDateTime.now())
                 .build();
     }
 

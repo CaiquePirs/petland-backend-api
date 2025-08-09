@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -24,6 +25,7 @@ public class VaccinationReport {
                 .totalRevenue(totalBilled)
                 .totalProfit(totalProfit)
                 .itemsQuantity(sumTotalVaccinations)
+                .issueDate(LocalDateTime.now())
                 .build();
     }
 

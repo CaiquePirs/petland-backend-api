@@ -1,5 +1,5 @@
 package com.petland.modules.dashboard.interfaces;
 
-public interface PPDFGenerator<T> {
+public interface PDFGenerator<T> {
     byte[] generate(T report);
 }
