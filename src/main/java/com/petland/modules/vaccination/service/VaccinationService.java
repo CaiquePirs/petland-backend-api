@@ -7,7 +7,6 @@ import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
-import com.petland.modules.pet.repository.PetRepository;
 import com.petland.modules.pet.service.PetService;
 import com.petland.modules.pet.validator.PetValidator;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
@@ -47,7 +46,6 @@ public class VaccinationService {
     private final VaccinationRepository vaccinationRepository;
     private final VaccinationUpdateValidator validator;
     private final GenerateVaccinationResponse generateResponse;
-    private final PetRepository petRepository;
     private final VaccineService vaccineService;
     private final PetValidator petValidator;
 
@@ -75,7 +73,6 @@ public class VaccinationService {
         vaccination.setProfitByVaccination(totalProfit);
 
         pet.getVaccinationsHistory().add(vaccination);
-        petRepository.save(pet);
         return vaccinationRepository.save(vaccination);
     }
 
