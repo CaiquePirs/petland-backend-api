@@ -3,7 +3,7 @@ package com.petland.modules.customer.model;
 import com.petland.common.entity.BaseEntity;
 import com.petland.common.entity.Address;
 import com.petland.common.entity.enums.Roles;
-import com.petland.modules.attendance.model.Attendance;
+import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.sale.model.Sale;
@@ -44,10 +44,10 @@ public class Customer extends BaseEntity {
     private LocalDate dateBirth;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Pet> myPets;
+    private List<Pet> myPets = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Attendance> attendancesHistory = new ArrayList<>();
+    private List<Consultation> consultationsHistory = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<PetCare> servicesHistory = new ArrayList<>();

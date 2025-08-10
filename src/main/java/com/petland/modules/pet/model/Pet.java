@@ -1,7 +1,7 @@
 package com.petland.modules.pet.model;
 
 import com.petland.common.entity.BaseEntity;
-import com.petland.modules.attendance.model.Attendance;
+import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.pet.enums.PetGender;
 import com.petland.modules.pet.enums.PetSpecies;
@@ -56,7 +56,7 @@ public class Pet extends BaseEntity {
     private Customer owner;
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
-    private List<Attendance> attendancesHistory = new ArrayList<>();
+    private List<Consultation> consultationsHistory = new ArrayList<>();
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
     private List<PetCare> servicesHistory = new ArrayList<>();
