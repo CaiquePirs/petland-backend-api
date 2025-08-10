@@ -1,6 +1,6 @@
 package com.petland.modules.sale.dtos;
 
-import com.petland.modules.attendance.enums.PaymentType;
+import com.petland.modules.consultation.enums.PaymentType;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;

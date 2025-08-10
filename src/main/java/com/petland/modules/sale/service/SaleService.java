@@ -3,9 +3,8 @@ package com.petland.modules.sale.service;
 import com.petland.common.auth.validator.AccessValidator;
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.attendance.enums.PaymentType;
+import com.petland.modules.consultation.enums.PaymentType;
 import com.petland.modules.customer.model.Customer;
-import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
@@ -35,7 +34,6 @@ import java.util.UUID;
 public class SaleService {
 
     private final EmployeeService employeeService;
-    private final CustomerRepository customerRepository;
     private final CustomerService customerService;
     private final ItemsSaleService itemsSaleService;
     private final AccessValidator accessValidator;
@@ -63,7 +61,6 @@ public class SaleService {
         sale.setCreateAt(LocalDateTime.now());
 
         customer.getSalesHistory().add(sale);
-        customerRepository.save(customer);
         return saleRepository.save(sale);
     }
 

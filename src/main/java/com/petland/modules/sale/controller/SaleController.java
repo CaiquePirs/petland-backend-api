@@ -1,7 +1,7 @@
 package com.petland.modules.sale.controller;
 
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.attendance.enums.PaymentType;
+import com.petland.modules.consultation.enums.PaymentType;
 import com.petland.modules.sale.dtos.SaleRequestDTO;
 import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.Sale;

@@ -1,7 +1,7 @@
 package com.petland.modules.sale.specifications;
 
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.attendance.enums.PaymentType;
+import com.petland.modules.consultation.enums.PaymentType;
 import com.petland.modules.sale.model.Sale;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;

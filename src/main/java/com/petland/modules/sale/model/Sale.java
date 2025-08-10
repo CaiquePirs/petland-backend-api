@@ -1,16 +1,14 @@
 package com.petland.modules.sale.model;
 
 import com.petland.common.entity.BaseEntity;
-import com.petland.modules.attendance.enums.PaymentType;
+import com.petland.modules.consultation.enums.PaymentType;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.employee.model.Employee;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +33,7 @@ public class Sale extends BaseEntity {
     private Customer customer;
 
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
-    private List<ItemsSale> itemsSale;
+    private List<ItemsSale> itemsSale = new ArrayList<>();
 
     private BigDecimal totalSales;
 
