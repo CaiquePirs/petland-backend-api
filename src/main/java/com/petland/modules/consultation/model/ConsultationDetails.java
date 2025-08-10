@@ -27,10 +27,12 @@ public class ConsultationDetails {
     @NotNull(message = "Service Type is required")
     private ServiceType type;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull(message = "Service priority is required")
     private ConsultationPriority priority;
 
+    @Enumerated(EnumType.STRING)
     @NotNull(message = "Payment Type is required")
     private PaymentType paymentType;
 
