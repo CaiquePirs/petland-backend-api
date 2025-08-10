@@ -2,7 +2,7 @@ package com.petland.modules.consultation.controller;
 
 import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
-import com.petland.modules.consultation.generare.GenerateConsultationResponseDTO;
+import com.petland.modules.consultation.generate.GenerateConsultationResponse;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.service.ConsultationService;
 import jakarta.validation.Valid;
@@ -19,13 +19,13 @@ import java.util.UUID;
 public class ConsultationController {
 
     private final ConsultationService service;
-    private final GenerateConsultationResponseDTO generate;
+    private final GenerateConsultationResponse generate;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ConsultationResponseDTO> registerConsultation(@RequestBody @Valid ConsultationRequestDTO requestDTO){
         Consultation consultation = service.registerConsultation(requestDTO);
-        ConsultationResponseDTO responseDTO = generate.generate(consultation);
+        ConsultationResponseDTO responseDTO = generate.generateResponse(consultation);
         return ResponseEntity.ok().body(responseDTO);
     }
 
@@ -33,7 +33,7 @@ public class ConsultationController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ConsultationResponseDTO> findConsultationById(@PathVariable(name = "id") UUID consultationId){
         Consultation consultation = service.findById(consultationId);
-        return ResponseEntity.ok().body(generate.generate(consultation));
+        return ResponseEntity.ok().body(generate.generateResponse(consultation));
     }
 
 }

@@ -4,7 +4,9 @@ import com.petland.common.auth.validator.AccessValidator;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.common.exception.NotFoundException;
 import com.petland.modules.consultation.calculator.ConsultationCalculator;
+import com.petland.modules.consultation.dtos.ConsultationHistoryResponseDTO;
 import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
+import com.petland.modules.consultation.generate.GenerateConsultationResponse;
 import com.petland.modules.consultation.mappers.ConsultationMapper;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.repositories.ConsultationRepository;
@@ -17,9 +19,13 @@ import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,6 +41,7 @@ public class ConsultationService {
     private final CustomerService customerService;
     private final EmployeeService employeeService;
     private final AccessValidator accessValidator;
+    private final GenerateConsultationResponse generateResponse;
 
     @Transactional
     public Consultation registerConsultation(ConsultationRequestDTO requestDTO) {
@@ -66,5 +73,13 @@ public class ConsultationService {
                 .filter(c -> !c.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Consultation ID not found"));
 
+    }
+
+    public Page<ConsultationHistoryResponseDTO> listAllConsultationsByClientId(UUID customerId, Pageable pageable){
+        List<ConsultationHistoryResponseDTO> consultationHistory = repository.findAllByCustomerId(customerId, pageable)
+                .map(generateResponse::mapToCustomerHistory)
+                .toList();
+
+        return new PageImpl<>(consultationHistory, pageable, consultationHistory.size());
     }
 }
