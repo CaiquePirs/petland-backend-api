@@ -1,6 +1,8 @@
 package com.petland.modules.consultation.service;
 
 import com.petland.common.auth.validator.AccessValidator;
+import com.petland.common.entity.enums.StatusEntity;
+import com.petland.common.exception.NotFoundException;
 import com.petland.modules.consultation.calculator.ConsultationCalculator;
 import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.mappers.ConsultationMapper;
@@ -17,6 +19,8 @@ import com.petland.modules.pet.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -55,5 +59,12 @@ public class ConsultationService {
         consultation.getCustomer().getConsultationsHistory().add(consultation);
         consultation.getPet().getConsultationsHistory().add(consultation);
         return repository.save(consultation);
+    }
+
+    public Consultation findById(UUID consultationId){
+        return repository.findById(consultationId)
+                .filter(c -> !c.getStatus().equals(StatusEntity.DELETED))
+                .orElseThrow(() -> new NotFoundException("Consultation ID not found"));
+
     }
 }
