@@ -1,4 +1,4 @@
-package com.petland.modules.attendance.enums;
+package com.petland.modules.consultation.enums;
 
 public enum ServiceType {
     PET_CARE,
