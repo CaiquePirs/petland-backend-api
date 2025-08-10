@@ -54,7 +54,22 @@ public class GeneratePetCareResponse {
                 .toList();
     }
 
-    public List<PetCareHistoryResponseDTO> mapToCustomerServiceHistory(List<PetCare> petCareList) {
+    public PetCareHistoryResponseDTO mapToCustomerServiceHistory(PetCare petCare){
+        List<PetCareDetailsHistoryResponseDTO> serviceDetails = mapServiceDetails(petCare.getPetCareDetails());
+
+        return PetCareHistoryResponseDTO.builder()
+                .id(petCare.getId())
+                .petId(petCare.getPet().getId())
+                .employeeId(petCare.getEmployee().getId())
+                .customerId(petCare.getCustomer().getId())
+                .location(petCare.getLocation())
+                .detailsResponseDTO(serviceDetails)
+                .serviceDate(petCare.getServiceDate())
+                .totalService(petCare.getTotalRevenue())
+                .build();
+    }
+
+    public List<PetCareHistoryResponseDTO> mapToListCustomerServiceHistory(List<PetCare> petCareList) {
         return petCareList.stream().map(petCare -> {
             List<PetCareDetailsHistoryResponseDTO> serviceDetails = mapServiceDetails(petCare.getPetCareDetails());
 
