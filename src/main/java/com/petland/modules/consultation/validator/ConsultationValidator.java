@@ -16,21 +16,22 @@ public class ConsultationValidator {
 
     private final PetValidator petValidator;
 
-    public void validateIfItIsTheSameCustomer(ConsultationRequestDTO attendanceRequest, Customer customer, Pet pet) {
+    public void validateIfItIsTheSameCustomer(ConsultationRequestDTO consultationRequest, Customer customer, Pet pet) {
         petValidator.isPetOwner(pet, customer);
 
         boolean itsTheSameCustomer =
-                Optional.ofNullable(attendanceRequest.saleRequestDTO())
-                        .map(sale -> sale.customerId().equals(attendanceRequest.customerId()))
+                Optional.ofNullable(consultationRequest.saleRequestDTO())
+                        .map(sale -> sale.customerId().equals(consultationRequest.customerId()))
                         .orElse(false)
                 ||
-                Optional.ofNullable(attendanceRequest.vaccinationRequestDTO())
-                        .map(vaccination -> vaccination.customerId().equals(attendanceRequest.customerId()))
+                Optional.ofNullable(consultationRequest.vaccinationRequestDTO())
+                        .map(vaccination -> vaccination.customerId().equals(consultationRequest.customerId()))
                         .orElse(false)
                 ||
-                Optional.ofNullable(attendanceRequest.petCareRequestDTO())
-                        .map(petCare -> petCare.customerId().equals(attendanceRequest.customerId()))
+                Optional.ofNullable(consultationRequest.petCareRequestDTO())
+                        .map(petCare -> petCare.customerId().equals(consultationRequest.customerId()))
                         .orElse(false);
+
         if (!itsTheSameCustomer) {
             throw new UnauthorizedException("The sale must be registered to the same customer as the one associated with the consultation.");
         }
