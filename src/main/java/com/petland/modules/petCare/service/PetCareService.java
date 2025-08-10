@@ -78,7 +78,7 @@ public class PetCareService {
         if(petCareList.getContent().isEmpty()){
             throw new NotFoundException("Customer service history list not found");
         }
-        List<PetCareHistoryResponseDTO> serviceHistoryList = generateResponse.mapToCustomerServiceHistory(petCareList.getContent());
+        List<PetCareHistoryResponseDTO> serviceHistoryList = generateResponse.mapToListCustomerServiceHistory(petCareList.getContent());
         return new PageImpl<>(serviceHistoryList, pageable, serviceHistoryList.size());
     }
 

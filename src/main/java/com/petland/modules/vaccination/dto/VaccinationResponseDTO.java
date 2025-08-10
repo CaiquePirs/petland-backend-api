@@ -23,5 +23,4 @@ public class VaccinationResponseDTO {
     private Address location;
     private String clinicalNotes;
     private BigDecimal totaByVaccination;
-    private BigDecimal profitByVaccination;
 }

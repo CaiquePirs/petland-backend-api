@@ -28,7 +28,6 @@ public class GenerateVaccinationResponse {
                 .nextDoseDate(vaccination.getNextDoseDate())
                 .clinicalNotes(vaccination.getClinicalNotes())
                 .totaByVaccination(vaccination.getTotalByVaccination())
-                .profitByVaccination(vaccination.getProfitByVaccination())
                 .build();
         return responseDTO;
     }
