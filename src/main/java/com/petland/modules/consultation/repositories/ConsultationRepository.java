@@ -4,9 +4,10 @@ import com.petland.modules.consultation.model.Consultation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.UUID;
 
-public interface ConsultationRepository extends JpaRepository<Consultation, UUID> {
+public interface ConsultationRepository extends JpaRepository<Consultation, UUID>, JpaSpecificationExecutor<Consultation> {
     Page<Consultation> findAllByCustomerId(UUID customerId, Pageable pageable);
 }

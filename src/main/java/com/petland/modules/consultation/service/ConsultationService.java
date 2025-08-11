@@ -4,12 +4,15 @@ import com.petland.common.auth.validator.AccessValidator;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.common.exception.NotFoundException;
 import com.petland.modules.consultation.calculator.ConsultationCalculator;
+import com.petland.modules.consultation.builder.ConsultationFilter;
 import com.petland.modules.consultation.dtos.ConsultationHistoryResponseDTO;
 import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
+import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
 import com.petland.modules.consultation.generate.GenerateConsultationResponse;
 import com.petland.modules.consultation.mappers.ConsultationMapper;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.repositories.ConsultationRepository;
+import com.petland.modules.consultation.specifications.ConsultationSpecification;
 import com.petland.modules.consultation.strategy.factory.ConsultationFactory;
 import com.petland.modules.consultation.validator.ConsultationValidator;
 import com.petland.modules.customer.model.Customer;
@@ -79,7 +82,16 @@ public class ConsultationService {
         List<ConsultationHistoryResponseDTO> consultationHistory = repository.findAllByCustomerId(customerId, pageable)
                 .map(generateResponse::mapToCustomerHistory)
                 .toList();
-
         return new PageImpl<>(consultationHistory, pageable, consultationHistory.size());
+    }
+
+
+    public Page<ConsultationResponseDTO> listAllConsultationsByFilter(ConsultationFilter filter, Pageable pageable){
+        List<ConsultationResponseDTO> consultationsListByFilter = repository.findAll(
+                ConsultationSpecification.filter(filter), pageable)
+                .filter(c -> !c.getStatus().equals(StatusEntity.DELETED))
+                .map(generateResponse::generateResponse)
+                .toList();
+        return new PageImpl<>(consultationsListByFilter, pageable, consultationsListByFilter.size());
     }
 }

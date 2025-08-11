@@ -1,12 +1,16 @@
 package com.petland.modules.consultation.controller;
 
+import com.petland.modules.consultation.builder.ConsultationFilter;
 import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
 import com.petland.modules.consultation.generate.GenerateConsultationResponse;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.service.ConsultationService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +38,19 @@ public class ConsultationController {
     public ResponseEntity<ConsultationResponseDTO> findConsultationById(@PathVariable(name = "id") UUID consultationId){
         Consultation consultation = service.findById(consultationId);
         return ResponseEntity.ok().body(generate.generateResponse(consultation));
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Page<ConsultationResponseDTO>> findAllConsultationsByFilter(
+            @ModelAttribute ConsultationFilter filter,
+            @RequestParam(required = false, defaultValue = "0") @Min(0) int page,
+            @RequestParam(required = false, defaultValue = "10") @Min(1) int size){
+
+        Page<ConsultationResponseDTO> consultationResponseList = service.listAllConsultationsByFilter(
+                filter, PageRequest.of(page, size));
+
+        return ResponseEntity.ok().body(consultationResponseList);
     }
 
 }
