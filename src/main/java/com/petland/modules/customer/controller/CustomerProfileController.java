@@ -1,6 +1,8 @@
 package com.petland.modules.customer.controller;
 
 import com.petland.common.auth.validator.AccessValidator;
+import com.petland.modules.appointment.dtos.AppointmentResponseDTO;
+import com.petland.modules.appointment.service.AppointmentService;
 import com.petland.modules.consultation.dtos.ConsultationHistoryResponseDTO;
 import com.petland.modules.consultation.service.ConsultationService;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
@@ -40,6 +42,7 @@ public class CustomerProfileController {
     private final SaleService saleService;
     private final PetCareService petCareService;
     private final ConsultationService consultationService;
+    private final AppointmentService appointmentService;
 
     @GetMapping
     @PreAuthorize("hasRole('CUSTOMER')")
@@ -93,9 +96,18 @@ public class CustomerProfileController {
         Page<ConsultationHistoryResponseDTO> consultationsHistory = consultationService.listAllConsultationsByClientId(
                 accessValidator.getLoggedInUser(), PageRequest.of(page, size)
         );
-
         return ResponseEntity.ok().body(consultationsHistory);
     }
 
+    @GetMapping("/appointments/history")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<Page<AppointmentResponseDTO>> getMyAppointmentsHistory(
+            @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
+            @RequestParam(value = "size", defaultValue = "10") @Min(1) int size){
 
+        Page<AppointmentResponseDTO> appointmentsHistory = appointmentService.listAllAppointmentsByCustomerId(
+                accessValidator.getLoggedInUser(), PageRequest.of(page, size)
+        );
+        return ResponseEntity.ok().body(appointmentsHistory);
+    }
 }

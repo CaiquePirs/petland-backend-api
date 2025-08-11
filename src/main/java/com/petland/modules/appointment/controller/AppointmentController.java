@@ -1,5 +1,6 @@
 package com.petland.modules.appointment.controller;
 
+import com.petland.modules.appointment.builder.AppointmentFilter;
 import com.petland.modules.appointment.dtos.AppointmentRequestDTO;
 import com.petland.modules.appointment.dtos.AppointmentResponseDTO;
 import com.petland.modules.appointment.dtos.AppointmentUpdateDTO;
@@ -8,7 +9,10 @@ import com.petland.modules.appointment.model.Appointment;
 import com.petland.modules.appointment.service.AppointmentService;
 import com.petland.modules.appointment.generate.impl.AppointmentGeneratorPDF;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -72,5 +76,18 @@ public class AppointmentController {
                                                             @RequestParam(name = "status") String status){
         service.toggleStatusAppointment(appointmentId, status.toUpperCase());
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Page<AppointmentResponseDTO>> listAllAppointments(
+            @ModelAttribute AppointmentFilter filter,
+            @RequestParam(name = "page", defaultValue = "0") @Min(0) int page,
+            @RequestParam(name = "size", defaultValue = "10") @Min(10) int size){
+
+        Page<AppointmentResponseDTO> listAppointments = service.listAllAppointmentsByFilter(
+                filter, PageRequest.of(page, size)
+        );
+        return ResponseEntity.ok(listAppointments);
     }
 }
