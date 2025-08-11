@@ -1,4 +1,4 @@
-package com.petland.common.auth;
+package com.petland.common.auth.impl;
 
 import com.petland.common.auth.validator.AccessValidator;
 import lombok.RequiredArgsConstructor;
