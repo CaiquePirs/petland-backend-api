@@ -53,4 +53,10 @@ public class ConsultationController {
         return ResponseEntity.ok().body(consultationResponseList);
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deactivateConsultationById(@PathVariable(name = "id") UUID consultationId){
+        service.deactivateConsultationById(consultationId);
+        return ResponseEntity.noContent().build();
+    }
 }

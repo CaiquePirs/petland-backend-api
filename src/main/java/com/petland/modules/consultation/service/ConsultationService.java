@@ -21,6 +21,9 @@ import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
+import com.petland.modules.petCare.service.PetCareService;
+import com.petland.modules.sale.service.SaleService;
+import com.petland.modules.vaccination.service.VaccinationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -45,6 +48,9 @@ public class ConsultationService {
     private final EmployeeService employeeService;
     private final AccessValidator accessValidator;
     private final GenerateConsultationResponse generateResponse;
+    private final SaleService saleService;
+    private final VaccinationService vaccinationService;
+    private final PetCareService petCareService;
 
     @Transactional
     public Consultation registerConsultation(ConsultationRequestDTO requestDTO) {
@@ -80,6 +86,7 @@ public class ConsultationService {
 
     public Page<ConsultationHistoryResponseDTO> listAllConsultationsByClientId(UUID customerId, Pageable pageable){
         List<ConsultationHistoryResponseDTO> consultationHistory = repository.findAllByCustomerId(customerId, pageable)
+                .filter(c -> !c.getStatus().equals(StatusEntity.DELETED))
                 .map(generateResponse::mapToCustomerHistory)
                 .toList();
         return new PageImpl<>(consultationHistory, pageable, consultationHistory.size());
@@ -93,5 +100,22 @@ public class ConsultationService {
                 .map(generateResponse::generateResponse)
                 .toList();
         return new PageImpl<>(consultationsListByFilter, pageable, consultationsListByFilter.size());
+    }
+
+    public void deactivateConsultationById(UUID consultationId){
+        Consultation consultation = findById(consultationId);
+
+        if(consultation.getSales() != null){
+            saleService.deleteSaleById(consultation.getSales().getId());
+        }
+        if(consultation.getVaccination() != null){
+            vaccinationService.deactivateById(consultation.getVaccination().getId());
+        }
+        if(consultation.getService() != null){
+            petCareService.deactivateById(consultation.getService().getId());
+        }
+
+        consultation.setStatus(StatusEntity.DELETED);
+        repository.save(consultation);
     }
 }
