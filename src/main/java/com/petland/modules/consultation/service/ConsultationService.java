@@ -8,6 +8,7 @@ import com.petland.modules.consultation.builder.ConsultationFilter;
 import com.petland.modules.consultation.dtos.ConsultationHistoryResponseDTO;
 import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
+import com.petland.modules.consultation.enums.ConsultationStatus;
 import com.petland.modules.consultation.generate.GenerateConsultationResponse;
 import com.petland.modules.consultation.mappers.ConsultationMapper;
 import com.petland.modules.consultation.model.Consultation;
@@ -117,5 +118,10 @@ public class ConsultationService {
 
         consultation.setStatus(StatusEntity.DELETED);
         repository.save(consultation);
+    }
+
+    public void toggleStatusConsultation(UUID consultationId, ConsultationStatus status){
+        Consultation consultation = findById(consultationId);
+        consultation.getDetails().setConsultationStatus(status);
     }
 }

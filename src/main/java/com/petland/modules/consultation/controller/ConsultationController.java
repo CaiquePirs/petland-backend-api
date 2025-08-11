@@ -3,6 +3,7 @@ package com.petland.modules.consultation.controller;
 import com.petland.modules.consultation.builder.ConsultationFilter;
 import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
+import com.petland.modules.consultation.enums.ConsultationStatus;
 import com.petland.modules.consultation.generate.GenerateConsultationResponse;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.service.ConsultationService;
@@ -58,5 +59,18 @@ public class ConsultationController {
     public ResponseEntity<Void> deactivateConsultationById(@PathVariable(name = "id") UUID consultationId){
         service.deactivateConsultationById(consultationId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> toggleStatusConsultation(@PathVariable(name = "id") UUID consultationId,
+                                                         @RequestParam(name = "status") ConsultationStatus status){
+        try {
+            service.toggleStatusConsultation(consultationId, status);
+            return ResponseEntity.noContent().build();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
