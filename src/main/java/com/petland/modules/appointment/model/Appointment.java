@@ -38,7 +38,7 @@ public class Appointment extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private AppointmentStatus status;
+    private AppointmentStatus appointmentStatus;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

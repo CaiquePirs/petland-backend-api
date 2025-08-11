@@ -13,5 +13,5 @@ public record AppointmentResponseDTO(UUID id,
                                      LocalDate appointmentDate,
                                      LocalTime appointmentHour,
                                      ServiceType appointmentType,
-                                     AppointmentStatus status) {
+                                     AppointmentStatus appointmentStatus) {
 }

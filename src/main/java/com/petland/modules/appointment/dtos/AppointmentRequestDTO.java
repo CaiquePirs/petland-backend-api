@@ -25,5 +25,5 @@ public record AppointmentRequestDTO(@NotNull(message = "Customer ID is required"
                                     @NotNull(message = "Appointment type is required")
                                     ServiceType appointmentType,
 
-                                    AppointmentStatus status) {
+                                    AppointmentStatus appointmentStatus) {
 }
