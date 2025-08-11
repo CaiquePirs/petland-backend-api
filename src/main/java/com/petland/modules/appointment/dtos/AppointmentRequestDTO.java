@@ -1,6 +1,6 @@
 package com.petland.modules.appointment.dtos;
 
-import com.petland.modules.appointment.model.AppointmentStatus;
+import com.petland.modules.appointment.model.enums.AppointmentStatus;
 import com.petland.modules.consultation.enums.ServiceType;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;

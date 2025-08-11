@@ -1,4 +1,4 @@
-package com.petland.modules.appointment.model;
+package com.petland.modules.appointment.model.enums;
 
 public enum AppointmentStatus {
     SCHEDULED,

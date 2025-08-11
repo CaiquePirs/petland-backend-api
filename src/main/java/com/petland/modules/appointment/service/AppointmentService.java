@@ -4,7 +4,7 @@ import com.petland.common.auth.validator.AccessValidator;
 import com.petland.modules.appointment.dtos.AppointmentRequestDTO;
 import com.petland.modules.appointment.mapper.AppointmentMapper;
 import com.petland.modules.appointment.model.Appointment;
-import com.petland.modules.appointment.model.AppointmentStatus;
+import com.petland.modules.appointment.model.enums.AppointmentStatus;
 import com.petland.modules.appointment.repository.AppointmentRepository;
 import com.petland.modules.appointment.validator.AppointmentValidator;
 import com.petland.modules.customer.model.Customer;
