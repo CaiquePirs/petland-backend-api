@@ -75,4 +75,15 @@ public class AppointmentService {
         repository.save(appointment);
     }
 
+    public void toggleStatusAppointment(UUID appointmentId, String status){
+        Appointment appointment = findAppointmentById(appointmentId);
+
+        if(status.equals(AppointmentStatus.CANCELED.toString())){
+            cancelAppointment(appointmentId);
+        }
+
+        appointment.setAppointmentStatus(AppointmentStatus.valueOf(status));
+        repository.save(appointment);
+    }
+
 }

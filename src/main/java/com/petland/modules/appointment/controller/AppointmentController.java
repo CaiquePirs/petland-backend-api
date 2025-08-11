@@ -65,4 +65,12 @@ public class AppointmentController {
         service.cancelAppointment(appointmentId);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/toggle-status")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
+    public ResponseEntity<Void> toggleStatusAppointmentById(@PathVariable(name = "id") UUID appointmentId,
+                                                            @RequestParam(name = "status") String status){
+        service.toggleStatusAppointment(appointmentId, status.toUpperCase());
+        return ResponseEntity.noContent().build();
+    }
 }
