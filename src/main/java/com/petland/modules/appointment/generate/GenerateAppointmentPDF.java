@@ -33,6 +33,7 @@ public class GenerateAppointmentPDF {
                 content.showText("Appointment successfully scheduled");content.newLine();
 
                 content.setFont(PDType1Font.HELVETICA, 15);
+                content.showText("ID: " + appointment.getId()); content.newLine();
                 content.showText("Date: " + appointment.getAppointmentDate()); content.newLine();
                 content.showText("Time: " + appointment.getAppointmentHour());content.newLine();
                 content.showText("Status: " + appointment.getAppointmentStatus());content.newLine();

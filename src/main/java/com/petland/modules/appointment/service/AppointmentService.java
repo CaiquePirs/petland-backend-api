@@ -1,6 +1,8 @@
 package com.petland.modules.appointment.service;
 
 import com.petland.common.auth.validator.AccessValidator;
+import com.petland.common.entity.enums.StatusEntity;
+import com.petland.common.exception.NotFoundException;
 import com.petland.modules.appointment.dtos.AppointmentRequestDTO;
 import com.petland.modules.appointment.mapper.AppointmentMapper;
 import com.petland.modules.appointment.model.Appointment;
@@ -14,6 +16,10 @@ import com.petland.modules.pet.service.PetService;
 import com.petland.modules.pet.validator.PetValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +37,7 @@ public class AppointmentService {
         Pet pet = petService.findById(requestDTO.petId());
         Customer customer = customerService.findById(requestDTO.customerId());
 
-        validator.validateAppointmentTimeWindow(requestDTO);
+        validator.validateAppointmentTimeWindow(requestDTO.appointmentDate(), requestDTO.appointmentHour());
         petValidator.isPetOwner(pet, customer);
         accessValidator.isOwnerOrAdmin(requestDTO.customerId());
 
@@ -41,4 +47,22 @@ public class AppointmentService {
         appointment.setPet(pet);
         return repository.save(appointment);
     }
+
+    public Appointment findAppointmentById(UUID appointmentId){
+        return repository.findById(appointmentId)
+                .filter(a -> !a.getStatus().equals(StatusEntity.DELETED))
+                .orElseThrow(() -> new NotFoundException("Appointment ID not found"));
+    }
+
+    public Appointment rescheduleAppointment(UUID appointmentId, LocalDate appointmentDate, LocalTime appointmentHour){
+      Appointment appointment = findAppointmentById(appointmentId);
+
+      validator.validateAppointmentTimeWindow(appointmentDate, appointmentHour);
+      accessValidator.isOwnerOrAdmin(appointment.getCustomer().getId());
+
+      appointment.setAppointmentDate(appointmentDate);
+      appointment.setAppointmentHour(appointmentHour);
+      return repository.save(appointment);
+    }
+
 }
