@@ -5,6 +5,7 @@ import com.petland.common.error.ErrorResponseDTO;
 import com.petland.common.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +14,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -38,7 +38,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailFoundException.class)
     public ResponseEntity<ErrorResponseDTO> handleEmailFound(EmailFoundException e){
         ErrorMessageDTO errorMessage = new ErrorMessageDTO("Email", e.getMessage());
-
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 HttpStatus.CONFLICT.value(),
                 e.getMessage(),
@@ -49,7 +48,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ErrorResponseDTO> handleInvalidCredentials(InvalidCredentialsException e){
         ErrorMessageDTO errorMessage = new ErrorMessageDTO("Credentials", e.getMessage());
-
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 HttpStatus.FORBIDDEN.value(),
                 e.getMessage(),
@@ -60,7 +58,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> handleUserNotFound(NotFoundException e){
         ErrorMessageDTO errorMessageDTO = new ErrorMessageDTO("Not found", e.getMessage());
-
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage(),
@@ -71,7 +68,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ErrorResponseDTO> handleUnauthorized(UnauthorizedException e){
         ErrorMessageDTO errorMessage = new ErrorMessageDTO("Unauthorized", e.getMessage());
-
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 HttpStatus.UNAUTHORIZED.value(),
                 e.getMessage(),
@@ -82,7 +78,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InsufficientStockException.class)
     public ResponseEntity<ErrorResponseDTO> handleInsufficientStock(InsufficientStockException e){
         ErrorMessageDTO errorMessage = new ErrorMessageDTO("Stock", e.getMessage());
-
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 e.getMessage(),
@@ -93,7 +88,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ErrorProcessingRequestException.class)
     public ResponseEntity<ErrorResponseDTO> handleRunTimeException(ErrorProcessingRequestException e){
         ErrorMessageDTO error = new ErrorMessageDTO("Error", e.getMessage());
-
         ErrorResponseDTO responseDTO = new ErrorResponseDTO(
                 HttpStatus.BAD_REQUEST.value(),
                 e.getMessage(),
@@ -119,7 +113,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidAppointmentTimeException.class)
     public ResponseEntity<ErrorResponseDTO> handleInvalidAppointmentTime(InvalidAppointmentTimeException e){
         ErrorMessageDTO errorMessageDTO = new ErrorMessageDTO("Invalid Date", e.getMessage());
-
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage(),
@@ -146,7 +139,17 @@ public class GlobalExceptionHandler {
                 "An unexpected error occurred",
                 List.of(error));
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-
     }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<ErrorResponseDTO> handleAuthorizationDenied(AuthorizationDeniedException e) {
+        ErrorMessageDTO error = new ErrorMessageDTO("Access", e.getMessage());
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+                HttpStatus.UNAUTHORIZED.value(),
+                "You do not have permission to access this resource.",
+                List.of(error));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+
 
 }
