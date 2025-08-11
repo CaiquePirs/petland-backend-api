@@ -58,4 +58,11 @@ public class AppointmentController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=appointment.pdf")
                 .body(appointmentScheduledPDF);
     }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
+    public ResponseEntity<Void> cancelAppointmentById(@PathVariable(name = "id") UUID appointmentId){
+        service.cancelAppointment(appointmentId);
+        return ResponseEntity.noContent().build();
+    }
 }

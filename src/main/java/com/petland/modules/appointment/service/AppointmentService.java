@@ -60,9 +60,19 @@ public class AppointmentService {
       validator.validateAppointmentTimeWindow(appointmentDate, appointmentHour);
       accessValidator.isOwnerOrAdmin(appointment.getCustomer().getId());
 
+      appointment.setAppointmentStatus(AppointmentStatus.RESCHEDULED);
       appointment.setAppointmentDate(appointmentDate);
       appointment.setAppointmentHour(appointmentHour);
       return repository.save(appointment);
+    }
+
+    public void cancelAppointment(UUID appointmentId){
+        Appointment appointment = findAppointmentById(appointmentId);
+        accessValidator.isOwnerOrAdmin(appointment.getCustomer().getId());
+
+        appointment.setAppointmentStatus(AppointmentStatus.CANCELED);
+        appointment.setStatus(StatusEntity.DELETED);
+        repository.save(appointment);
     }
 
 }
