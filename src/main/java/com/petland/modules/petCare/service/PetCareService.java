@@ -13,6 +13,7 @@ import com.petland.modules.petCare.calculator.PetCareCalculator;
 import com.petland.modules.petCare.dtos.PetCareHistoryResponseDTO;
 import com.petland.modules.petCare.dtos.PetCareRequestDTO;
 import com.petland.modules.petCare.dtos.PetCareResponseDTO;
+import com.petland.modules.petCare.enums.PetCareType;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
 import com.petland.modules.petCare.repositories.PetCareRepository;
@@ -29,6 +30,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -40,7 +42,7 @@ public class PetCareService {
     private final EmployeeService employeeService;
     private final PetValidator petValidator;
     private final PetCareCalculator calculator;
-    private final PetCareRepository petCareRepository;
+    private final PetCareRepository repository;
     private final PetCareDetailsService petCareDetailsService;
     private final GeneratePetCareResponse generateResponse;
 
@@ -69,11 +71,11 @@ public class PetCareService {
 
         customer.getServicesHistory().add(petCare);
         pet.getServicesHistory().add(petCare);
-        return petCareRepository.save(petCare);
+        return repository.save(petCare);
     }
 
     public Page<PetCareHistoryResponseDTO> findAllByCustomerId(UUID customerId, Pageable pageable){
-        Page<PetCare> petCareList = petCareRepository.findByCustomerId(customerId, pageable);
+        Page<PetCare> petCareList = repository.findByCustomerId(customerId, pageable);
 
         if(petCareList.getContent().isEmpty()){
             throw new NotFoundException("Customer service history list not found");
@@ -83,7 +85,7 @@ public class PetCareService {
     }
 
     public PetCare findById(UUID petCareId){
-        return petCareRepository.findById(petCareId)
+        return repository.findById(petCareId)
                 .filter(p -> !p.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("PetCare ID not found"));
     }
@@ -97,7 +99,7 @@ public class PetCareService {
             }
         }
         petCare.setStatus(StatusEntity.DELETED);
-        petCareRepository.save(petCare);
+        repository.save(petCare);
     }
 
     public Page<PetCareResponseDTO> findAllByFilter(UUID petId, UUID customerId, UUID employeeId,
@@ -105,7 +107,7 @@ public class PetCareService {
                                                     BigDecimal minProfit, BigDecimal maxProfit,
                                                     LocalDateTime startDate, LocalDateTime endDate, Pageable pageable){
 
-        List<PetCareResponseDTO> listServices = petCareRepository.findAll(PetCareSpecification.specification(
+        List<PetCareResponseDTO> listServices = repository.findAll(PetCareSpecification.specification(
                  petId, customerId, employeeId, minRevenue, maxCostOperating,
                  minProfit, maxProfit, startDate, endDate), pageable)
                 .getContent()
@@ -116,6 +118,12 @@ public class PetCareService {
     }
 
     public List<PetCare> findAllByPeriod(LocalDate dateMin, LocalDate dateMax){
-        return petCareRepository.findAll(PetCareSpecification.reportSpecification(dateMin, dateMax));
+        return repository.findAll(PetCareSpecification.reportSpecification(dateMin, dateMax)).stream()
+                        .filter(p -> !p.getStatus().equals(StatusEntity.DELETED)).toList();
+    }
+
+    public List<PetCare> findAllByPetCareType(PetCareType petCareType){
+        return repository.findAll(PetCareSpecification.findByServiceType(petCareType)).stream()
+                        .filter(p -> !p.getStatus().equals(StatusEntity.DELETED)).toList();
     }
 }

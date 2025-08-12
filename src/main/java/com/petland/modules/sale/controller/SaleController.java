@@ -44,7 +44,7 @@ public class SaleController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deactivateSaleById(@PathVariable(name = "id") UUID saleId){
-        saleService.deleteSaleById(saleId);
+        saleService.deactivateSaleById(saleId);
         return ResponseEntity.noContent().build();
     }
 

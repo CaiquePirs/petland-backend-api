@@ -105,20 +105,6 @@ public class VaccinationService {
        return validator.validate(vaccination, dto);
     }
 
-    public List<Vaccination> findAllVaccinationsByPeriod(LocalDate dateMin, LocalDate dateMax) {
-        return vaccinationRepository.findAll(VaccinationSpecification.findByPeriod(dateMin, dateMax));
-    }
-
-    public List<Vaccination> findAllVaccinationsByVaccine(UUID vaccineId){
-        Vaccine vaccine = vaccineService.findById(vaccineId);
-        return vaccinationRepository.findAll()
-                .stream()
-                .filter(vaccination -> vaccination.getAppliedVaccines()
-                        .stream()
-                        .anyMatch(appliedVaccine -> appliedVaccine.getVaccine().equals(vaccine)))
-                .toList();
-    }
-
     public Page<VaccinationResponseDTO> listAllVaccinationsByFilter(UUID petId, UUID customerId, UUID veterinarianId, LocalDate vaccinationDate,
                                                          LocalDate nextDoseBefore, StatusEntity status, Pageable pageable){
 
@@ -126,6 +112,17 @@ public class VaccinationService {
                 petId, customerId, veterinarianId, vaccinationDate, nextDoseBefore, status), pageable).map(generateResponse::generate).toList();
 
         return new PageImpl<>(vaccinationsList, pageable, vaccinationsList.size());
+    }
+
+    public List<Vaccination> findAllVaccinationsByPeriod(LocalDate dateMin, LocalDate dateMax) {
+        return vaccinationRepository.findAll(VaccinationSpecification.findByPeriod(dateMin, dateMax))
+                .stream().filter(v -> !v.getStatus().equals(StatusEntity.DELETED)).toList();
+    }
+
+    public List<Vaccination> findAllVaccinationsByVaccine(UUID vaccineId){
+        Vaccine vaccine = vaccineService.findById(vaccineId);
+        return vaccinationRepository.findAll(VaccinationSpecification.findByVaccine(vaccine))
+                .stream().filter(v -> !v.getStatus().equals(StatusEntity.DELETED)).toList();
     }
 
 }

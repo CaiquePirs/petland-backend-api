@@ -1,6 +1,9 @@
 package com.petland.modules.petCare.specifications;
 
+import com.petland.modules.petCare.enums.PetCareType;
 import com.petland.modules.petCare.model.PetCare;
+import com.petland.modules.petCare.model.PetCareDetails;
+import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -83,5 +86,12 @@ public class PetCareSpecification {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
 
+    }
+
+    public static Specification<PetCare> findByServiceType(PetCareType petCareType) {
+        return (root, query, cb) -> {
+            Join<PetCare, PetCareDetails> detailsJoin = root.join("petCareDetails");
+            return cb.equal(detailsJoin.get("petCareType"), petCareType);
+        };
     }
 }

@@ -1,7 +1,10 @@
 package com.petland.modules.vaccination.specifications;
 
 import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.vaccination.module.AppliedVaccine;
 import com.petland.modules.vaccination.module.Vaccination;
+import com.petland.modules.vaccination.module.Vaccine;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -49,6 +52,13 @@ public class VaccinationSpecification {
                 predicates.add(cb.between(root.get("vaccinationDate"), dateMin, dateMax));
             }
             return cb.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+
+    public static Specification<Vaccination> findByVaccine(Vaccine vaccine){
+        return (root, query, cb) -> {
+            Join<Vaccination, AppliedVaccine> join = root.join("appliedVaccines");
+            return cb.equal(join.get("vaccine").get("id"), vaccine.getId());
         };
     }
 }

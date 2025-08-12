@@ -72,8 +72,4 @@ public class ItemsSaleService {
         item.setStatus(StatusEntity.DELETED);
         itemsSaleRepository.save(item);
     }
-
-    public List<ItemsSale> findAllItemsSaleByProductId(UUID productId){
-        return itemsSaleRepository.findByProductId(productId);
-    }
 }

@@ -107,7 +107,7 @@ public class ConsultationService {
         Consultation consultation = findById(consultationId);
 
         if(consultation.getSales() != null){
-            saleService.deleteSaleById(consultation.getSales().getId());
+            saleService.deactivateSaleById(consultation.getSales().getId());
         }
         if(consultation.getVaccination() != null){
             vaccinationService.deactivateById(consultation.getVaccination().getId());

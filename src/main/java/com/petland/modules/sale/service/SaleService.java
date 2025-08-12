@@ -8,6 +8,8 @@ import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
+import com.petland.modules.product.model.Product;
+import com.petland.modules.product.service.ProductService;
 import com.petland.modules.sale.dtos.SaleRequestDTO;
 import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.ItemsSale;
@@ -35,6 +37,7 @@ public class SaleService {
 
     private final EmployeeService employeeService;
     private final CustomerService customerService;
+    private final ProductService productService;
     private final ItemsSaleService itemsSaleService;
     private final AccessValidator accessValidator;
     private final SaleRepository saleRepository;
@@ -71,7 +74,7 @@ public class SaleService {
     }
 
     @Transactional
-    public void deleteSaleById(UUID saleId){
+    public void deactivateSaleById(UUID saleId){
         Sale sale = findSaleById(saleId);
         itemsSaleService.deactivateItemsList(sale.getItemsSale());
         sale.setStatus(StatusEntity.DELETED);
@@ -104,7 +107,13 @@ public class SaleService {
     }
 
     public List<Sale> findAllSalesByPeriod(LocalDate dateMin, LocalDate dateMax){
-        return saleRepository.findAll(SaleSpecifications.findByPeriod(dateMin, dateMax));
+        return saleRepository.findAll(SaleSpecifications.findByPeriod(dateMin, dateMax))
+                .stream().filter(s -> !s.getStatus().equals(StatusEntity.DELETED)).toList();
     }
 
+    public List<Sale> findAllSalesByProductId(UUID productId){
+        Product product = productService.findById(productId);
+        return saleRepository.findAll(SaleSpecifications.findByProductId(product))
+                .stream().filter(s -> !s.getStatus().equals(StatusEntity.DELETED)).toList();
+    }
 }

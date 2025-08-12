@@ -2,7 +2,10 @@ package com.petland.modules.sale.specifications;
 
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.consultation.enums.PaymentType;
+import com.petland.modules.product.model.Product;
+import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -57,4 +60,10 @@ public class SaleSpecifications {
         };
     }
 
+    public static Specification<Sale> findByProductId(Product product){
+        return (root, query, cb) -> {
+            Join<Sale, ItemsSale> saleJoin = root.join("itemsSale");
+            return cb.equal(saleJoin.get("product"), product);
+        };
+    }
 }
