@@ -1,8 +1,8 @@
-package com.petland.modules.appointment.generate;
+package com.petland.modules.appointment.strategy.generate;
 
 import com.petland.common.exception.FailedToGeneratePdfException;
 import com.petland.modules.appointment.model.Appointment;
-import com.petland.modules.dashboard.reports.pdf.PDFStyle;
+import com.petland.common.utils.PDFStyle;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;

@@ -7,7 +7,7 @@ import com.petland.modules.appointment.dtos.AppointmentUpdateDTO;
 import com.petland.modules.appointment.mapper.AppointmentMapper;
 import com.petland.modules.appointment.model.Appointment;
 import com.petland.modules.appointment.service.AppointmentService;
-import com.petland.modules.appointment.generate.impl.AppointmentGeneratorPDF;
+import com.petland.modules.appointment.strategy.impl.SendAppointmentViaPDF;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ import java.util.UUID;
 public class AppointmentController {
 
     private final AppointmentService service;
-    private final AppointmentGeneratorPDF generatorPDF;
+    private final SendAppointmentViaPDF generatorPDF;
     private final AppointmentMapper mapper;
 
     @PostMapping

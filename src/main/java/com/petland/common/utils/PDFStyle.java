@@ -1,4 +1,4 @@
-package com.petland.modules.dashboard.reports.pdf;
+package com.petland.common.utils;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
