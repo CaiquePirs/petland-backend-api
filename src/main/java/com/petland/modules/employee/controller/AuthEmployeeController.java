@@ -10,6 +10,7 @@ import com.petland.modules.employee.usecases.AuthEmployeeUseCase;
 import com.petland.modules.employee.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,15 +28,15 @@ public class AuthEmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login (@RequestBody @Valid AuthRequestDTO authRequestDTO){
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid AuthRequestDTO authRequestDTO){
        AuthResponseDTO authResponseDTO = authEmployeeUseCase.execute(authRequestDTO);
        return ResponseEntity.ok(authResponseDTO);
     }
 
     @PostMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<EmployeeResponseDTO> register (@RequestBody @Valid EmployeeRequestDTO employeeRequestDTO){
+    public ResponseEntity<EmployeeResponseDTO> register(@RequestBody @Valid EmployeeRequestDTO employeeRequestDTO){
         Employee employee = employeeService.register(employeeRequestDTO);
-        return ResponseEntity.ok(employeeMapper.toDTO(employee));
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeMapper.toDTO(employee));
     }
 }

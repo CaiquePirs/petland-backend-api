@@ -30,7 +30,7 @@ public class DashboardBillingController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMax) {
 
         Report report = billingReport.generate(dateMin, dateMax);
-        return ResponseEntity.ok().body(report);
+        return ResponseEntity.ok(report);
     }
 
     @GetMapping("/by-pdf")

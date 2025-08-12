@@ -10,6 +10,7 @@ import com.petland.modules.customer.usecases.AuthCustomerUseCase;
 import com.petland.modules.customer.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,13 +29,13 @@ public class AuthCustomerController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO authRequestDTO){
         AuthResponseDTO authResponse = authCustomerUseCase.execute(authRequestDTO);
-        return ResponseEntity.ok().body(authResponse);
+        return ResponseEntity.ok(authResponse);
     }
 
     @PostMapping("/register")
     public ResponseEntity<CustomerResponseDTO> register(@RequestBody @Valid CustomerRequestDTO customerRequestDTO){
         Customer customer = customerService.register(customerRequestDTO);
         CustomerResponseDTO customerResponseDTO = customerMapper.toDTO(customer);
-        return ResponseEntity.ok().body(customerResponseDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerResponseDTO);
     }
 }

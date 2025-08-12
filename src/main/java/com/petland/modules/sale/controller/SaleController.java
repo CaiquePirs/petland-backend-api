@@ -10,6 +10,7 @@ import com.petland.modules.sale.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class SaleController {
     public ResponseEntity<SaleResponseDTO> create(@RequestBody SaleRequestDTO saleRequestDTO){
         Sale sale = saleService.registerSale(saleRequestDTO);
         SaleResponseDTO saleResponseDTO = generateSaleResponse.generateSaleResponse(sale);
-        return ResponseEntity.ok().body(saleResponseDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saleResponseDTO);
     }
 
     @GetMapping("/{id}")
@@ -38,7 +39,7 @@ public class SaleController {
     public ResponseEntity<SaleResponseDTO> findSaleById(@PathVariable(name = "id") UUID saleId){
         Sale sale = saleService.findSaleById(saleId);
         SaleResponseDTO saleResponse = generateSaleResponse.generateSaleResponse(sale);
-        return ResponseEntity.ok().body(saleResponse);
+        return ResponseEntity.ok(saleResponse);
     }
 
     @DeleteMapping("/{id}")
@@ -59,7 +60,7 @@ public class SaleController {
                 customerId, PageRequest.of(page, size)
         );
 
-        return ResponseEntity.ok().body(salesList);
+        return ResponseEntity.ok(salesList);
     }
 
     @GetMapping
@@ -77,7 +78,7 @@ public class SaleController {
         Page<SaleResponseDTO> salesList = saleService.findAllSalesByFilter(employeeId, customerId, paymentType, totalSalesMin,
                 totalSalesMax, status ,PageRequest.of(page, size)
         );
-        return ResponseEntity.ok().body(salesList);
+        return ResponseEntity.ok(salesList);
     }
 
 }

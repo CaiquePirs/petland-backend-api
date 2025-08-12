@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,14 +32,14 @@ public class ConsultationController {
     public ResponseEntity<ConsultationResponseDTO> registerConsultation(@RequestBody @Valid ConsultationRequestDTO requestDTO){
         Consultation consultation = service.registerConsultation(requestDTO);
         ConsultationResponseDTO responseDTO = generate.generateResponse(consultation);
-        return ResponseEntity.ok().body(responseDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ConsultationResponseDTO> findConsultationById(@PathVariable(name = "id") UUID consultationId){
         Consultation consultation = service.findById(consultationId);
-        return ResponseEntity.ok().body(generate.generateResponse(consultation));
+        return ResponseEntity.ok(generate.generateResponse(consultation));
     }
 
     @GetMapping
@@ -51,7 +52,7 @@ public class ConsultationController {
         Page<ConsultationResponseDTO> consultationResponseList = service.listAllConsultationsByFilter(
                 filter, PageRequest.of(page, size));
 
-        return ResponseEntity.ok().body(consultationResponseList);
+        return ResponseEntity.ok(consultationResponseList);
     }
 
     @DeleteMapping("/{id}")

@@ -24,7 +24,7 @@ public class ItemsSaleController {
     public ResponseEntity<ItemsSaleResponseDTO> findItemById(@PathVariable(name = "saleId") UUID saleId,
                                                                  @PathVariable(name = "id") UUID itemSaleId){
         ItemsSale itemsSale = itemsSaleService.findActiveItemInActiveSale(saleId, itemSaleId);
-        return ResponseEntity.ok().body(itemSaleMapper.toDTO(itemsSale));
+        return ResponseEntity.ok(itemSaleMapper.toDTO(itemsSale));
     }
 
     @DeleteMapping("/{id}")

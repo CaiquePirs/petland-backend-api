@@ -38,7 +38,7 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EmployeeResponseDTO> findEmployeeById(@PathVariable(name = "id") UUID employeeId){
         Employee employee = employeeService.findById(employeeId);
-        return ResponseEntity.ok().body(employeeMapper.toDTO(employee));
+        return ResponseEntity.ok(employeeMapper.toDTO(employee));
     }
 
     @DeleteMapping("/{id}")
@@ -60,7 +60,7 @@ public class EmployeeController {
             @RequestParam(value = "size", defaultValue = "10") int size){
 
         Page<EmployeeResponseDTO> employeeList = employeeService.listAllByFilter(name, email, phone, department, status, PageRequest.of(page, size));
-        return ResponseEntity.ok().body(employeeList);
+        return ResponseEntity.ok(employeeList);
     }
 
     @PutMapping("/{id}")
@@ -68,10 +68,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeResponseDTO> updateEmployeeById(@PathVariable(name = "id") UUID employeeId,
                                                               @RequestBody @Valid EmployeeUpdateDTO employeeDTO) {
         EmployeeResponseDTO employeeResponse = employeeService.updateById(employeeId, employeeDTO);
-        return ResponseEntity.ok().body(employeeResponse);
+        return ResponseEntity.ok(employeeResponse);
     }
-
-
-
 
 }

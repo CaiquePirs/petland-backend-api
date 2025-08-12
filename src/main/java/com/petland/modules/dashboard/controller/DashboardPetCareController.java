@@ -28,7 +28,7 @@ public class DashboardPetCareController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMax){
 
         Report report = reportsService.totalByPeriod(dateMin, dateMax);
-        return ResponseEntity.ok().body(report);
+        return ResponseEntity.ok(report);
     }
 
     @GetMapping("/by-service-type")
@@ -36,7 +36,7 @@ public class DashboardPetCareController {
     public ResponseEntity<Report> generateServiceReportByType(@RequestParam(value = "type", required = false) String serviceType){
         try {
             Report report = reportsService.totalByServiceType(serviceType.toUpperCase());
-            return ResponseEntity.ok().body(report);
+            return ResponseEntity.ok(report);
 
         }catch (IllegalArgumentException e){
             throw new ErrorProcessingRequestException("Error processing request. Try entering a valid service type");

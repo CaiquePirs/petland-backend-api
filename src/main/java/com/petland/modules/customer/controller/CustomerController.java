@@ -30,7 +30,7 @@ public class CustomerController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CustomerResponseDTO> findCustomerById(@PathVariable(name = "id") UUID customerId){
         Customer customer = customerService.findById(customerId);
-        return ResponseEntity.ok().body(customerMapper.toDTO(customer));
+        return ResponseEntity.ok(customerMapper.toDTO(customer));
     }
 
     @DeleteMapping("/{id}")
@@ -54,7 +54,7 @@ public class CustomerController {
         Page<CustomerResponseDTO> customersResponseDTO = customerService.listAllByFilter(
                 name, email, phone, status, PageRequest.of(page, size)
         );
-        return ResponseEntity.ok().body(customersResponseDTO);
+        return ResponseEntity.ok(customersResponseDTO);
     }
 
     @PutMapping("/{id}")
@@ -63,6 +63,6 @@ public class CustomerController {
                                                               @RequestBody @Valid UpdateCustomerDTO updateCustomerDTO){
         accessValidator.isOwnerOrAdmin(customerId);
         Customer customer = customerService.updateById(customerId, updateCustomerDTO);
-        return ResponseEntity.ok().body(customerMapper.toDTO(customer));
+        return ResponseEntity.ok(customerMapper.toDTO(customer));
     }
 }

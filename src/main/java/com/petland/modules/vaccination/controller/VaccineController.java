@@ -13,12 +13,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -33,14 +35,14 @@ public class VaccineController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VaccineResponseDTO> create(@RequestBody @Valid VaccineRequestDTO vaccineRequestDTO){
         Vaccine vaccine = vaccineService.create(vaccineRequestDTO);
-        return ResponseEntity.ok().body(vaccineMapper.toDTO(vaccine));
+        return ResponseEntity.status(HttpStatus.CREATED).body(vaccineMapper.toDTO(vaccine));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VaccineResponseDTO> findVaccineById(@PathVariable(name = "id") UUID vaccineId){
         Vaccine vaccine = vaccineService.findById(vaccineId);
-        return ResponseEntity.ok().body(vaccineMapper.toDTO(vaccine));
+        return ResponseEntity.ok(vaccineMapper.toDTO(vaccine));
     }
 
     @DeleteMapping("/{id}")
@@ -52,26 +54,28 @@ public class VaccineController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Page<VaccineResponseDTO>> findAllVaccinesByFilter(@RequestParam(required = false) String lotNumber,
-                                                                @RequestParam(required = false) String supplierName,
-                                                                @RequestParam(required = false) VaccineType vaccineType,
-                                                                @RequestParam(required = false) BigDecimal minPurchasePrice,
-                                                                @RequestParam(required = false) BigDecimal maxPurchasePrice,
-                                                                @RequestParam(required = false) BigDecimal minPriceSale,
-                                                                @RequestParam(required = false) BigDecimal maxPriceSale,
-                                                                @RequestParam(required = false) Integer minStockQuantity,
-                                                                @RequestParam(required = false) Integer maxStockQuantity,
-                                                                @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate manufactureAfter,
-                                                                @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate expirationBefore,
-                                                                @RequestParam(required = false, defaultValue = "ACTIVE") StatusEntity status,
-                                                                @RequestParam(required = false, defaultValue = "0") int page,
-                                                                @RequestParam(required = false, defaultValue = "10") int size) {
-        var vaccinesListPage = vaccineService.filterAllVaccinesByFilter(
+    public ResponseEntity<Page<VaccineResponseDTO>> findAllVaccinesByFilter(
+            @RequestParam(required = false) String lotNumber,
+            @RequestParam(required = false) String supplierName,
+            @RequestParam(required = false) VaccineType vaccineType,
+            @RequestParam(required = false) BigDecimal minPurchasePrice,
+            @RequestParam(required = false) BigDecimal maxPurchasePrice,
+            @RequestParam(required = false) BigDecimal minPriceSale,
+            @RequestParam(required = false) BigDecimal maxPriceSale,
+            @RequestParam(required = false) Integer minStockQuantity,
+            @RequestParam(required = false) Integer maxStockQuantity,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate manufactureAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate expirationBefore,
+            @RequestParam(required = false, defaultValue = "ACTIVE") StatusEntity status,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
+
+        Page<VaccineResponseDTO> vaccinesListPage = vaccineService.filterAllVaccinesByFilter(
                 lotNumber, supplierName, vaccineType, minPurchasePrice,
                 maxPurchasePrice, minPriceSale, maxPriceSale, minStockQuantity,
                 maxStockQuantity, manufactureAfter, expirationBefore, status, PageRequest.of(page, size)
         );
-        return ResponseEntity.ok().body(vaccinesListPage);
+        return ResponseEntity.ok(vaccinesListPage);
     }
 
     @PutMapping("/{id}")
@@ -79,6 +83,6 @@ public class VaccineController {
     public ResponseEntity<VaccineResponseDTO> updateVaccineByID(@PathVariable(name = "id") UUID vaccineId,
                                                                 @RequestBody VaccineUpdateDTO dto){
         Vaccine vaccine = vaccineService.updateById(vaccineId, dto);
-        return ResponseEntity.ok().body(vaccineMapper.toDTO(vaccine));
+        return ResponseEntity.ok(vaccineMapper.toDTO(vaccine));
     }
 }

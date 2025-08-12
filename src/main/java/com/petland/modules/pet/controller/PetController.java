@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class PetController {
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
     public ResponseEntity<PetResponseDTO> create(@RequestBody @Valid PetRequestDTO petRequestDTO) {
         Pet pet = petService.create(petRequestDTO);
-        return ResponseEntity.ok().body(petMapper.toDTO(pet));
+        return ResponseEntity.status(HttpStatus.CREATED).body(petMapper.toDTO(pet));
     }
 
     @GetMapping("/{id}")
@@ -40,7 +41,7 @@ public class PetController {
     public ResponseEntity<PetResponseDTO> findPetById(@PathVariable(name = "id") UUID petId){
         Pet pet = petService.findById(petId);
         accessValidator.isOwnerOrAdmin(pet.getOwner().getId());
-        return ResponseEntity.ok().body(petMapper.toDTO(pet));
+        return ResponseEntity.ok(petMapper.toDTO(pet));
     }
 
     @DeleteMapping("/{id}")
@@ -62,7 +63,7 @@ public class PetController {
             @RequestParam(value = "size", defaultValue = "10") int size){
 
       Page<PetResponseDTO> petsByFilters = petService.listAllByFilter(name, species, gender, breed, status, PageRequest.of(page, size));
-      return ResponseEntity.ok().body(petsByFilters);
+      return ResponseEntity.ok(petsByFilters);
     }
 
     @PutMapping("/{id}")

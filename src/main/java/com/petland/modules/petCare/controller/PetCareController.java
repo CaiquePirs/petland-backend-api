@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,14 +32,14 @@ public class PetCareController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PetCareResponseDTO> createService(@RequestBody @Valid PetCareRequestDTO requestDTO){
         PetCare petCare = petCareService.register(requestDTO);
-        return ResponseEntity.ok().body(petCareResponse.generate(petCare));
+        return ResponseEntity.status(HttpStatus.CREATED).body(petCareResponse.generate(petCare));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PetCareResponseDTO> findServiceById(@PathVariable(name = "id") UUID petCareID){
         PetCare petCare = petCareService.findById(petCareID);
-        return ResponseEntity.ok().body(petCareResponse.generate(petCare));
+        return ResponseEntity.ok(petCareResponse.generate(petCare));
     }
 
     @DeleteMapping("/{id}")
@@ -67,7 +68,7 @@ public class PetCareController {
                 minRevenue, maxCostOperating, minProfit,
                 maxProfit, startDate, endDate, PageRequest.of(page, size));
 
-        return ResponseEntity.ok().body(listServices);
+        return ResponseEntity.ok(listServices);
     }
 
 }

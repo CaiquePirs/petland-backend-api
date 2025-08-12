@@ -24,13 +24,13 @@ public class DashboardSalesController {
             @RequestParam(value = "dateMin", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMin,
             @RequestParam(value = "dateMax", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMax){
         Report report = saleReport.totalByPeriod(dateMin, dateMax);
-        return ResponseEntity.ok().body(report);
+        return ResponseEntity.ok(report);
     }
 
     @GetMapping("/by-product/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> generateSalesReportByProduct(@PathVariable(name = "id") UUID productId){
         Report report = saleReport.totalByProductId(productId);
-        return ResponseEntity.ok().body(report);
+        return ResponseEntity.ok(report);
     }
 }

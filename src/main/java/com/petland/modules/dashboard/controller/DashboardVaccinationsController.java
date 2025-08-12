@@ -4,6 +4,7 @@ import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.VaccinationsReportsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,6 @@ public class DashboardVaccinationsController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> generateReportVaccinationsByVaccine(@PathVariable(name = "id") UUID vaccineId) {
         Report report = generator.totalByVaccine(vaccineId);
-        return ResponseEntity.ok(report);
+        return ResponseEntity.ok((report));
     }
 }

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,14 +37,14 @@ public class ProductController {
     public ResponseEntity<ProductResponseDTO> register(@RequestBody @Valid ProductRequestDTO productRequestDTO){
         String employeeId = request.getAttribute("id").toString();
         Product product = productService.register(UUID.fromString(employeeId), productRequestDTO);
-        return ResponseEntity.ok().body(productMapper.toDTO(product));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(product));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductResponseDTO> findProductById(@PathVariable(name = "id") UUID productId){
         Product product = productService.findById(productId);
-        return ResponseEntity.ok().body(productMapper.toDTO(product));
+        return ResponseEntity.ok(productMapper.toDTO(product));
     }
 
     @DeleteMapping("/{id}")
@@ -72,7 +73,7 @@ public class ProductController {
                 expirationDateMax, costSaleMin, stockMin,  status, PageRequest.of(page, size)
         );
 
-        return ResponseEntity.ok().body(productList);
+        return ResponseEntity.ok(productList);
     }
 
     @PutMapping("/{id}")
@@ -80,7 +81,7 @@ public class ProductController {
     public ResponseEntity<ProductResponseDTO> updateProductById(@PathVariable(name = "id") UUID productId,
                                                             @RequestBody ProductUpdateDTO productDTO){
         ProductResponseDTO productUpdated = productService.updateById(productId, productDTO);
-        return ResponseEntity.ok().body(productUpdated);
+        return ResponseEntity.ok(productUpdated);
     }
 
 }

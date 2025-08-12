@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class AppointmentController {
         Appointment appointment = service.scheduleAppointment(dto);
         byte[] appointmentScheduledPDF = generatorPDF.generate(appointment);
 
-        return ResponseEntity.ok()
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .header(HttpHeaders.CONTENT_TYPE, "application/pdf")
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=appointment.pdf")
                 .body(appointmentScheduledPDF);
@@ -45,7 +46,7 @@ public class AppointmentController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AppointmentResponseDTO> findAppointmentById(@PathVariable(name = "id") UUID appointmentId){
         Appointment appointment = service.findAppointmentById(appointmentId);
-        return ResponseEntity.ok().body(mapper.toDTO(appointment));
+        return ResponseEntity.ok(mapper.toDTO(appointment));
     }
 
     @PutMapping("/{id}")

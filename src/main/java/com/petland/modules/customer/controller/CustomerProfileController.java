@@ -48,7 +48,7 @@ public class CustomerProfileController {
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<CustomerResponseDTO> getMyProfile(){
         Customer customer = customerService.findById(accessValidator.getLoggedInUser());
-        return ResponseEntity.ok().body(customerMapper.toDTO(customer));
+        return ResponseEntity.ok(customerMapper.toDTO(customer));
     }
 
     @GetMapping("/pets")
@@ -57,7 +57,7 @@ public class CustomerProfileController {
         List<PetResponseDTO> myPets = petService.getPetsByCustomerId(accessValidator.getLoggedInUser())
                 .stream()
                 .map(petMapper::toDTO).toList();
-        return ResponseEntity.ok().body(myPets);
+        return ResponseEntity.ok(myPets);
     }
 
     @GetMapping("/sales/history")
@@ -70,7 +70,7 @@ public class CustomerProfileController {
                 accessValidator.getLoggedInUser(), PageRequest.of(page, size)
         );
 
-        return ResponseEntity.ok().body(salesList);
+        return ResponseEntity.ok(salesList);
     }
 
     @GetMapping("/pet-care/history")
@@ -83,7 +83,7 @@ public class CustomerProfileController {
                 accessValidator.getLoggedInUser(), PageRequest.of(page, size)
         );
 
-        return ResponseEntity.ok().body(servicesHistoryList);
+        return ResponseEntity.ok(servicesHistoryList);
     }
 
 
@@ -96,7 +96,7 @@ public class CustomerProfileController {
         Page<ConsultationHistoryResponseDTO> consultationsHistory = consultationService.listAllConsultationsByClientId(
                 accessValidator.getLoggedInUser(), PageRequest.of(page, size)
         );
-        return ResponseEntity.ok().body(consultationsHistory);
+        return ResponseEntity.ok(consultationsHistory);
     }
 
     @GetMapping("/appointments/history")
@@ -108,6 +108,6 @@ public class CustomerProfileController {
         Page<AppointmentResponseDTO> appointmentsHistory = appointmentService.listAllAppointmentsByCustomerId(
                 accessValidator.getLoggedInUser(), PageRequest.of(page, size)
         );
-        return ResponseEntity.ok().body(appointmentsHistory);
+        return ResponseEntity.ok(appointmentsHistory);
     }
 }

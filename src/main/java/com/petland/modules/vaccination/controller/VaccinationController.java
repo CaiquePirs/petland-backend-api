@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class VaccinationController {
     public ResponseEntity<VaccinationResponseDTO> register(@RequestBody VaccinationRequestDTO vaccinationRequestDTO){
         Vaccination vaccination = vaccinationService.register(vaccinationRequestDTO);
         VaccinationResponseDTO vaccinationResponseDTO = generateVaccinationResponse.generate(vaccination);
-        return ResponseEntity.ok().body(vaccinationResponseDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(vaccinationResponseDTO);
     }
 
     @GetMapping("/{id}")
@@ -40,7 +41,7 @@ public class VaccinationController {
     public ResponseEntity<VaccinationResponseDTO> findVaccinationById(@PathVariable(name = "id") UUID vaccinationId){
         Vaccination vaccination = vaccinationService.findById(vaccinationId);
         VaccinationResponseDTO vaccinationResponse = generateVaccinationResponse.generate(vaccination);
-        return ResponseEntity.ok().body(vaccinationResponse);
+        return ResponseEntity.ok(vaccinationResponse);
     }
 
     @DeleteMapping("/{id}")
@@ -53,25 +54,29 @@ public class VaccinationController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<VaccinationResponseDTO> updateVaccinationById(@RequestBody @Valid VaccinationUpdateDTO dto,
-                                                             @PathVariable(name = "id") UUID vaccinationId){
+    public ResponseEntity<VaccinationResponseDTO> updateVaccinationById(
+            @RequestBody @Valid VaccinationUpdateDTO dto,
+            @PathVariable(name = "id") UUID vaccinationId){
+
         Vaccination vaccination = vaccinationService.updateById(dto, vaccinationId);
-        return ResponseEntity.ok().body(generateVaccinationResponse.generate(vaccination));
+        return ResponseEntity.ok(generateVaccinationResponse.generate(vaccination));
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<VaccinationResponseDTO>> listAllVaccinationsByFilter(
-                                                                              @RequestParam(required = false) UUID petId, @RequestParam(required = false) UUID customerId,
-                                                                              @RequestParam(required = false) UUID veterinarianId,
-                                                                              @RequestParam(required = false, defaultValue = "ACTIVE") StatusEntity status,
-                                                                              @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate vaccinationDate,
-                                                                              @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate nextDoseBefore,
-                                                                              @RequestParam(required = false, defaultValue = "0") int page,
-                                                                              @RequestParam(required = false, defaultValue = "10") int size){
+            @RequestParam(required = false) UUID petId, @RequestParam(required = false) UUID customerId,
+            @RequestParam(required = false) UUID veterinarianId,
+            @RequestParam(required = false, defaultValue = "ACTIVE") StatusEntity status,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate vaccinationDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate nextDoseBefore,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size){
+
         Page<VaccinationResponseDTO> vaccinationList = vaccinationService.listAllVaccinationsByFilter(
-                petId, customerId, veterinarianId, vaccinationDate, nextDoseBefore, status, PageRequest.of(page, size));
-        return ResponseEntity.ok().body(vaccinationList);
+                petId, customerId, veterinarianId, vaccinationDate, nextDoseBefore, status, PageRequest.of(page, size)
+        );
+        return ResponseEntity.ok(vaccinationList);
     }
 
 }
