@@ -1,4 +1,4 @@
-package com.petland.modules.dashboard.strategies;
+package com.petland.modules.dashboard.strategy;
 
 import com.petland.modules.dashboard.model.Report;
 

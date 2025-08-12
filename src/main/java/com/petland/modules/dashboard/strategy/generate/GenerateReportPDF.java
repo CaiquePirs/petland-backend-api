@@ -1,4 +1,4 @@
-package com.petland.modules.dashboard.strategies.generate;
+package com.petland.modules.dashboard.strategy.generate;
 
 import com.petland.common.exception.FailedToGeneratePdfException;
 import com.petland.modules.dashboard.model.Report;

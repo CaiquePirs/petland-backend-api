@@ -2,7 +2,7 @@ package com.petland.modules.dashboard.controller;
 
 import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.BillingReportsService;
-import com.petland.modules.dashboard.strategies.impl.SendReportViaPDF;
+import com.petland.modules.dashboard.strategy.impl.SendReportViaPDF;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
