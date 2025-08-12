@@ -53,22 +53,24 @@ public class PetCareService {
         Employee employee = employeeService.findById(requestDTO.employeeId());
         petValidator.isPetOwner(pet, customer);
 
-        PetCare petCare = new PetCare();
-        List<PetCareDetails> listServices = petCareDetailsService.createService(petCare, requestDTO.serviceDetailsList());
+        List<PetCareDetails> listServices = petCareDetailsService.createService(requestDTO.serviceDetailsList());
         BigDecimal totalRevenue = calculator.calculateTotalRevenueByServiceList(listServices);
         BigDecimal totalProfit = calculator.calculateTotalProfitByServiceList(listServices);
         BigDecimal totalCostOperating = calculator.calculateTotalCostOperatingByServiceList(listServices);
 
-        petCare.setPetCareDetails(listServices);
-        petCare.setTotalRevenue(totalRevenue);
-        petCare.setTotalProfit(totalProfit);
-        petCare.setTotalCostOperating(totalCostOperating);
-        petCare.setLocation(requestDTO.location());
-        petCare.setServiceDate(LocalDateTime.now());
-        petCare.setPet(pet);
-        petCare.setCustomer(customer);
-        petCare.setEmployee(employee);
+        PetCare petCare = PetCare.builder()
+                .petCareDetails(listServices)
+                .totalRevenue(totalRevenue)
+                .totalProfit(totalProfit)
+                .totalCostOperating(totalCostOperating)
+                .location(requestDTO.location())
+                .serviceDate(LocalDateTime.now())
+                .pet(pet)
+                .employee(employee)
+                .customer(customer)
+                .build();
 
+        listServices.forEach(d -> d.setPetCare(petCare));
         customer.getServicesHistory().add(petCare);
         pet.getServicesHistory().add(petCare);
         return repository.save(petCare);
@@ -80,8 +82,7 @@ public class PetCareService {
         if(petCareList.getContent().isEmpty()){
             throw new NotFoundException("Customer service history list not found");
         }
-        List<PetCareHistoryResponseDTO> serviceHistoryList = generateResponse.mapToListCustomerServiceHistory(petCareList.getContent());
-        return new PageImpl<>(serviceHistoryList, pageable, serviceHistoryList.size());
+        return petCareList.map(generateResponse::mapToCustomerServiceHistory);
     }
 
     public PetCare findById(UUID petCareId){
@@ -107,14 +108,10 @@ public class PetCareService {
                                                     BigDecimal minProfit, BigDecimal maxProfit,
                                                     LocalDateTime startDate, LocalDateTime endDate, Pageable pageable){
 
-        List<PetCareResponseDTO> listServices = repository.findAll(PetCareSpecification.specification(
+        return repository.findAll(PetCareSpecification.specification(
                  petId, customerId, employeeId, minRevenue, maxCostOperating,
                  minProfit, maxProfit, startDate, endDate), pageable)
-                .getContent()
-                .stream()
-                .map(generateResponse::generate)
-                .toList();
-        return new PageImpl<>(listServices, pageable, listServices.size());
+                .map(generateResponse::generate);
     }
 
     public List<PetCare> findAllByPeriod(LocalDate dateMin, LocalDate dateMax){

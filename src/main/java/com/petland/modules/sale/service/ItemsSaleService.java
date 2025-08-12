@@ -27,24 +27,22 @@ public class ItemsSaleService {
     private final SaleRepository saleRepository;
     private final SaleCalculator saleCalculator;
 
-    public List<ItemsSale> createItems(Sale sale, List<ItemsSaleRequestDTO> itemsSaleRequestDTO) {
-        List<ItemsSale> listItemsSale = itemsSaleRequestDTO.stream().map(itemsSaleRequest -> {
-            Product product = productService.findById(itemsSaleRequest.productId());
-            productService.updateStock(itemsSaleRequest.productQuantity(), product.getId());
+    public List<ItemsSale> createItems(List<ItemsSaleRequestDTO> itemsDTO) {
+        return itemsDTO.stream().map(dto -> {
+            Product product = productService.findById(dto.productId());
+            productService.updateStock(dto.productQuantity(), product.getId());
 
-            BigDecimal totalItemsSale = saleCalculator.calculateTotalSale(itemsSaleRequest.productQuantity(), product.getCostSale());
-            BigDecimal profitByItemSale = saleCalculator.calculateProfitByItemSale(product, itemsSaleRequest.productQuantity());
+            BigDecimal totalItemsSale = saleCalculator.calculateTotalSale(dto.productQuantity(), product.getCostSale());
+            BigDecimal profitByItemSale = saleCalculator.calculateProfitByItemSale(product, dto.productQuantity());
 
             return ItemsSale.builder()
-                    .sale(sale)
                     .product(product)
                     .productPrice(product.getCostSale())
-                    .productQuantity(itemsSaleRequest.productQuantity())
+                    .productQuantity(dto.productQuantity())
                     .itemsSaleTotal(totalItemsSale)
                     .profit(profitByItemSale)
                     .build();
         }).collect(Collectors.toList());
-        return listItemsSale;
     }
 
     public ItemsSale findActiveItemInActiveSale(UUID saleId, UUID itemId){

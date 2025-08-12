@@ -7,6 +7,7 @@ import com.petland.modules.pet.model.Pet;
 import com.petland.common.entity.Address;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Builder
 @Table(name = "tb_vaccinations")
 @AllArgsConstructor
 @NoArgsConstructor

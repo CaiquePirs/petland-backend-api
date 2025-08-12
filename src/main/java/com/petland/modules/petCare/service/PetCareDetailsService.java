@@ -18,7 +18,7 @@ public class PetCareDetailsService {
     private final PetCareCalculator calculator;
     private final PetCareDetailsMapper mapper;
 
-    public List<PetCareDetails> createService(PetCare petCare, List<PetCareDetailsRequestDTO> dtoList){
+    public List<PetCareDetails> createService(List<PetCareDetailsRequestDTO> dtoList){
         return dtoList.stream()
                 .map(dto -> {
                     BigDecimal totalRevenue = calculator.calculateTotalRevenue(dto.quantityService(), dto.unitPrice());
@@ -26,7 +26,6 @@ public class PetCareDetailsService {
                     PetCareDetails petCareDetails = mapper.toEntity(dto);
                     petCareDetails.setTotalByService(totalRevenue);
                     petCareDetails.setProfitByService(totalProfit);
-                    petCareDetails.setPetCare(petCare);
                     return petCareDetails;
                 }).toList();
     }

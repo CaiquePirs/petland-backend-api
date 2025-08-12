@@ -20,14 +20,12 @@ import com.petland.modules.sale.util.GenerateSaleResponse;
 import com.petland.modules.sale.calculator.SaleCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,36 +37,34 @@ public class SaleService {
     private final CustomerService customerService;
     private final ProductService productService;
     private final ItemsSaleService itemsSaleService;
-    private final AccessValidator accessValidator;
-    private final SaleRepository saleRepository;
+    private final AccessValidator access;
+    private final SaleRepository repository;
     private final SaleCalculator calculator;
-    private final GenerateSaleResponse generateSaleResponse;
+    private final GenerateSaleResponse generate;
 
     @Transactional
-    public Sale registerSale(SaleRequestDTO saleRequestDTO){
-        Sale sale = new Sale();
-        UUID employeeId = accessValidator.getLoggedInUser();
-        Employee employee = employeeService.findById(employeeId);
-        Customer customer = customerService.findById(saleRequestDTO.customerId());
+    public Sale registerSale(SaleRequestDTO dto){
+        Customer customer = customerService.findById(dto.customerId());
+        List<ItemsSale> itemsSale = itemsSaleService.createItems(dto.itemsSaleRequestDTO());
+        BigDecimal totalSale = calculator.calculateTotalBilledByItemsSale(itemsSale);
+        BigDecimal profitSale = calculator.calculateProfitByItemsSale(itemsSale);
 
-        List<ItemsSale> listItemsSale = itemsSaleService.createItems(sale, saleRequestDTO.itemsSaleRequestDTO());
-        BigDecimal totalSale = calculator.calculateTotalBilledByItemsSale(listItemsSale);
-        BigDecimal profitSale = calculator.calculateProfitByItemsSale(listItemsSale);
+        Sale sale = Sale.builder()
+                .itemsSale(itemsSale)
+                .totalSales(totalSale)
+                .profitSale(profitSale)
+                .employee(access.getEmployeeLogged())
+                .customer(customer)
+                .paymentType(dto.paymentType())
+                .build();
 
-        sale.setItemsSale(listItemsSale);
-        sale.setEmployee(employee);
-        sale.setTotalSales(totalSale);
-        sale.setCustomer(customer);
-        sale.setPaymentType(saleRequestDTO.paymentType());
-        sale.setProfitSale(profitSale);
-        sale.setCreateAt(LocalDateTime.now());
-
+        itemsSale.forEach(i -> i.setSale(sale));
         customer.getSalesHistory().add(sale);
-        return saleRepository.save(sale);
+        return repository.save(sale);
     }
 
     public Sale findSaleById(UUID saleId){
-     return saleRepository.findById(saleId)
+     return repository.findById(saleId)
                 .filter(s -> !s.getStatus().equals(StatusEntity.DELETED))
                 .orElseThrow(() -> new NotFoundException("Sale not found"));
     }
@@ -78,42 +74,36 @@ public class SaleService {
         Sale sale = findSaleById(saleId);
         itemsSaleService.deactivateItemsList(sale.getItemsSale());
         sale.setStatus(StatusEntity.DELETED);
-        saleRepository.save(sale);
+        repository.save(sale);
     }
 
     public Page<SaleResponseDTO> findSalesByCustomerId(UUID customerId, Pageable pageable) {
         Customer customer = customerService.findById(customerId);
-        Page<Sale> listSales = saleRepository.findByCustomerId(customer.getId(), pageable);
+        Page<Sale> sales = repository.findByCustomerId(customer.getId(), pageable);
 
-        if(listSales.isEmpty()){
+        if(sales.isEmpty()){
             throw new NotFoundException("Sales by customer ID not found");
         }
-
-        List<SaleResponseDTO> listSaleResponse = generateSaleResponse.generateListSaleResponse(
-                listSales.getContent()
-        );
-        return new PageImpl<>(listSaleResponse, pageable, listSales.getSize());
+        return sales.map(generate::generateSaleResponse);
     }
 
 
     public Page<SaleResponseDTO> findAllSalesByFilter(UUID employeeId, UUID customerId, PaymentType paymentType, BigDecimal totalSalesMin,
                                                       BigDecimal totalSalesMax, StatusEntity status , Pageable pageable){
-        List<SaleResponseDTO> salesList = saleRepository.findAll(SaleSpecifications.specifications(
+
+        return repository.findAll(SaleSpecifications.specifications(
                 employeeId, customerId, paymentType, totalSalesMin, totalSalesMax, status), pageable)
-                .stream()
-                .map(generateSaleResponse::generateSaleResponse)
-                .toList();
-        return new PageImpl<>(salesList, pageable, salesList.size());
+                .map(generate::generateSaleResponse);
     }
 
     public List<Sale> findAllSalesByPeriod(LocalDate dateMin, LocalDate dateMax){
-        return saleRepository.findAll(SaleSpecifications.findByPeriod(dateMin, dateMax))
+        return repository.findAll(SaleSpecifications.findByPeriod(dateMin, dateMax))
                 .stream().filter(s -> !s.getStatus().equals(StatusEntity.DELETED)).toList();
     }
 
     public List<Sale> findAllSalesByProductId(UUID productId){
         Product product = productService.findById(productId);
-        return saleRepository.findAll(SaleSpecifications.findByProductId(product))
+        return repository.findAll(SaleSpecifications.findByProductId(product))
                 .stream().filter(s -> !s.getStatus().equals(StatusEntity.DELETED)).toList();
     }
 }

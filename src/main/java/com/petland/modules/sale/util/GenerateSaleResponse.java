@@ -25,28 +25,18 @@ public class GenerateSaleResponse {
         return saleResponse;
     }
 
-    public List<ItemsSaleResponseDTO> generateItemsSaleResponse(List<ItemsSale> listItemsSale){
+    public List<ItemsSaleResponseDTO> generateItemsSaleResponse(List<ItemsSale> itemsList){
         List<ItemsSaleResponseDTO> listItemsSaleResponseDTO = new ArrayList<>();
-        for(ItemsSale itemsSale : listItemsSale){
+        for(ItemsSale item : itemsList){
            ItemsSaleResponseDTO itemsSaleResponseDTO = ItemsSaleResponseDTO.builder()
-                    .id(itemsSale.getId())
-                    .saleId(itemsSale.getSale().getId())
-                    .productId(itemsSale.getProduct().getId())
-                    .productQuantity(itemsSale.getProductQuantity())
-                    .itemsSaleTotal(itemsSale.getItemsSaleTotal())
+                    .id(item.getId())
+                    .saleId(item.getSale().getId())
+                    .productId(item.getProduct().getId())
+                    .productQuantity(item.getProductQuantity())
+                    .itemsSaleTotal(item.getItemsSaleTotal())
                     .build();
             listItemsSaleResponseDTO.add(itemsSaleResponseDTO);
         }
         return listItemsSaleResponseDTO;
-    }
-
-    public List<SaleResponseDTO> generateListSaleResponse(List<Sale> listSales){
-        List<SaleResponseDTO> listSaleResponse = new ArrayList<>();
-        if(!listSales.isEmpty()){
-            for(Sale sale : listSales){
-                listSaleResponse.add(generateSaleResponse(sale));
-            }
-        }
-        return listSaleResponse;
     }
 }

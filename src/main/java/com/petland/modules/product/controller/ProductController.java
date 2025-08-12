@@ -49,7 +49,7 @@ public class ProductController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deactivateProductById(@PathVariable(name = "id") UUID productId){
-        productService.deleteById(productId);
+        productService.deactivateById(productId);
         return ResponseEntity.noContent().build();
     }
 

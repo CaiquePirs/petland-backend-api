@@ -1,7 +1,6 @@
 package com.petland.modules.vaccination.service;
 
 import com.petland.modules.vaccination.dto.AppliedVaccineRequestDTO;
-import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.module.Vaccine;
 import com.petland.modules.vaccination.module.AppliedVaccine;
 import lombok.RequiredArgsConstructor;
@@ -16,20 +15,15 @@ public class AppliedVaccineService {
 
     private final VaccineService vaccineService;
 
-    public List<AppliedVaccine> create(Vaccination vaccination, List<AppliedVaccineRequestDTO> listAppliedVaccineRequest){
-        List<AppliedVaccine> listVaccineApplied = listAppliedVaccineRequest.stream()
-                .map(appliedVaccineRequest -> {
+    public List<AppliedVaccine> create(List<AppliedVaccineRequestDTO> appliedVaccinesDTO) {
+        return appliedVaccinesDTO.stream()
+                .map(dto -> {
                     AppliedVaccine appliedVaccine = new AppliedVaccine();
-                    Vaccine vaccine = vaccineService.updateStock(appliedVaccineRequest.quantityUsed(), appliedVaccineRequest.vaccineId());
-                        appliedVaccine.setVaccination(vaccination);
-                        vaccination.getAppliedVaccines().add(appliedVaccine);
-                        appliedVaccine.setVaccine(vaccine);
-                        appliedVaccine.setQuantityUsed(appliedVaccineRequest.quantityUsed());
+                    Vaccine vaccine = vaccineService.updateStock(dto.quantityUsed(), dto.vaccineId());
+                    appliedVaccine.setVaccine(vaccine);
+                    appliedVaccine.setQuantityUsed(dto.quantityUsed());
                     return appliedVaccine;
                 }).collect(Collectors.toList());
-
-        vaccination.setAppliedVaccines(listVaccineApplied);
-        return listVaccineApplied;
     }
 
 }

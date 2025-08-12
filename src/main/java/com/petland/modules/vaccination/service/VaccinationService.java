@@ -23,7 +23,6 @@ import com.petland.modules.vaccination.calculator.VaccinationCalculator;
 import com.petland.modules.vaccination.validator.VaccinationUpdateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,28 +49,30 @@ public class VaccinationService {
     private final PetValidator petValidator;
 
     @Transactional
-    public Vaccination register(VaccinationRequestDTO vaccinationRequestDTO){
-        Vaccination vaccination = new Vaccination();
-        Pet pet = petService.findById(vaccinationRequestDTO.petId());
-        Customer customer = customerService.findById(vaccinationRequestDTO.customerId());
-        Employee veterinarian = employeeService.findById(vaccinationRequestDTO.veterinarianId());
-
+    public Vaccination register(VaccinationRequestDTO dto){
+        Pet pet = petService.findById(dto.petId());
+        Customer customer = customerService.findById(dto.customerId());
+        Employee veterinarian = employeeService.findById(dto.veterinarianId());
         petValidator.isPetOwner(pet, customer);
 
-        vaccination.setPet(pet);
-        vaccination.setCustomer(customer);
-        vaccination.setVeterinarian(veterinarian);
-        vaccination.setLocation(vaccinationRequestDTO.location());
-        vaccination.setClinicalNotes(vaccinationRequestDTO.clinicalNotes());
-        vaccination.setVaccinationDate(vaccinationRequestDTO.vaccinationDate());
-        vaccination.setNextDoseDate(vaccinationRequestDTO.nextDoseDate());
+        List<AppliedVaccine> appliedVaccines = appliedVaccineService.create(dto.listAppliedVaccineRequestDTO());
+        BigDecimal totalCostVaccination = calculator.calculateTotalVaccination(appliedVaccines);
+        BigDecimal totalProfit = calculator.calculateProfitByVaccineApplied(appliedVaccines);
 
-        List<AppliedVaccine> listAppliedVaccine = appliedVaccineService.create(vaccination, vaccinationRequestDTO.listAppliedVaccineRequestDTO());
-        BigDecimal totalCostVaccination = calculator.calculateTotalVaccination(listAppliedVaccine);
-        BigDecimal totalProfit = calculator.calculateProfitByVaccineApplied(listAppliedVaccine);
-        vaccination.setTotalByVaccination(totalCostVaccination);
-        vaccination.setProfitByVaccination(totalProfit);
+        Vaccination vaccination = Vaccination.builder()
+                .customer(customer)
+                .pet(pet)
+                .veterinarian(veterinarian)
+                .location(dto.location())
+                .clinicalNotes(dto.clinicalNotes())
+                .vaccinationDate(dto.vaccinationDate())
+                .nextDoseDate(dto.nextDoseDate())
+                .appliedVaccines(appliedVaccines)
+                .totalByVaccination(totalCostVaccination)
+                .profitByVaccination(totalProfit)
+                .build();
 
+        appliedVaccines.forEach(v -> v.setVaccination(vaccination));
         pet.getVaccinationsHistory().add(vaccination);
         return vaccinationRepository.save(vaccination);
     }
@@ -106,12 +107,12 @@ public class VaccinationService {
     }
 
     public Page<VaccinationResponseDTO> listAllVaccinationsByFilter(UUID petId, UUID customerId, UUID veterinarianId, LocalDate vaccinationDate,
-                                                         LocalDate nextDoseBefore, StatusEntity status, Pageable pageable){
+                                                                    LocalDate nextDoseBefore, StatusEntity status, Pageable pageable) {
 
-        List<VaccinationResponseDTO> vaccinationsList = vaccinationRepository.findAll(VaccinationSpecification.specifications(
-                petId, customerId, veterinarianId, vaccinationDate, nextDoseBefore, status), pageable).map(generateResponse::generate).toList();
-
-        return new PageImpl<>(vaccinationsList, pageable, vaccinationsList.size());
+        return vaccinationRepository.findAll(VaccinationSpecification.specifications(
+                        petId, customerId, veterinarianId,
+                        vaccinationDate, nextDoseBefore, status), pageable)
+                       .map(generateResponse::generate);
     }
 
     public List<Vaccination> findAllVaccinationsByPeriod(LocalDate dateMin, LocalDate dateMax) {

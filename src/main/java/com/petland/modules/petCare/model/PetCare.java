@@ -7,6 +7,7 @@ import com.petland.modules.employee.model.Employee;
 import com.petland.modules.pet.model.Pet;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "tb_petcare_services")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PetCare extends BaseEntity {
