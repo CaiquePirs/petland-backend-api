@@ -3,6 +3,7 @@ package com.petland.modules.vaccination.service;
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.common.exception.InsufficientStockException;
+import com.petland.modules.vaccination.builder.VaccineFilter;
 import com.petland.modules.vaccination.dto.VaccineRequestDTO;
 import com.petland.modules.vaccination.dto.VaccineResponseDTO;
 import com.petland.modules.vaccination.dto.VaccineUpdateDTO;
@@ -66,16 +67,9 @@ public class VaccineService {
         return vaccine.getPriceSale().subtract(vaccine.getPurchasePrice());
     }
 
-    public Page<VaccineResponseDTO> filterAllVaccinesByFilter(String lotNumber, String supplierName, VaccineType vaccineType, BigDecimal minPurchasePrice,
-                                                              BigDecimal maxPurchasePrice, BigDecimal minPriceSale, BigDecimal maxPriceSale,
-                                                              Integer minStockQuantity, Integer maxStockQuantity, LocalDate manufactureAfter,
-                                                              LocalDate expirationBefore, StatusEntity status, Pageable pageable){
-
-        List<VaccineResponseDTO> listVaccines = vaccineRepository.findAll(VaccineSpecification.specification(lotNumber, supplierName, vaccineType, minPurchasePrice,
-                maxPurchasePrice, minPriceSale, maxPriceSale, minStockQuantity, maxStockQuantity, manufactureAfter, expirationBefore, status
-        ), pageable).map(mapper::toDTO).toList();
-
-        return new PageImpl<>(listVaccines, pageable, listVaccines.size());
+    public Page<VaccineResponseDTO> filterAllVaccinesByFilter(VaccineFilter filter, Pageable pageable){
+       return vaccineRepository.findAll(VaccineSpecification.specification(filter), pageable)
+               .map(mapper::toDTO);
     }
 
     public Vaccine updateById(UUID vaccineId, VaccineUpdateDTO dto){

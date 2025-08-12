@@ -1,71 +1,55 @@
 package com.petland.modules.vaccination.specifications;
 
-import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.vaccination.enums.VaccineType;
+import com.petland.modules.vaccination.builder.VaccineFilter;
 import com.petland.modules.vaccination.module.Vaccine;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class VaccineSpecification {
 
-    public static Specification<Vaccine> specification(String lotNumber, String supplierName, VaccineType vaccineType, BigDecimal minPurchasePrice,
-                                                            BigDecimal maxPurchasePrice, BigDecimal minPriceSale, BigDecimal maxPriceSale,
-                                                            Integer minStockQuantity, Integer maxStockQuantity, LocalDate manufactureAfter,
-                                                            LocalDate expirationBefore, StatusEntity status) {
+    public static Specification<Vaccine> specification(VaccineFilter filter) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (lotNumber != null && !lotNumber.isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("lotNumber")), "%" + lotNumber.toLowerCase() + "%"));
-            }
 
-            if (supplierName != null && !supplierName.isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("supplierName")), "%" + supplierName.toLowerCase() + "%"));
+            if (filter.getLotNumber() != null && !filter.getLotNumber().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("lotNumber")), "%" + filter.getLotNumber().toLowerCase() + "%"));
             }
-
-            if (vaccineType != null) {
-                predicates.add(cb.equal(root.get("vaccineType"), vaccineType));
+            if (filter.getSupplierName() != null && !filter.getSupplierName().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("supplierName")), "%" + filter.getSupplierName().toLowerCase() + "%"));
             }
-
-            if (minPurchasePrice != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("purchasePrice"), minPurchasePrice));
+            if (filter.getVaccineType() != null) {
+                predicates.add(cb.equal(root.get("vaccineType"), filter.getVaccineType()));
             }
-
-            if (maxPurchasePrice != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("purchasePrice"), maxPurchasePrice));
+            if (filter.getMinPurchasePrice() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("purchasePrice"), filter.getMinPurchasePrice()));
             }
-
-            if (minPriceSale != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("priceSale"), minPriceSale));
+            if (filter.getMaxPurchasePrice() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("purchasePrice"), filter.getMaxPurchasePrice()));
             }
-
-            if (maxPriceSale != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("priceSale"), maxPriceSale));
+            if (filter.getMinPriceSale() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("priceSale"), filter.getMinPriceSale()));
             }
-
-            if (minStockQuantity != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("stockQuantity"), minStockQuantity));
+            if (filter.getMaxPriceSale() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("priceSale"), filter.getMaxPriceSale()));
             }
-
-            if (maxStockQuantity != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("stockQuantity"), maxStockQuantity));
+            if (filter.getMinStockQuantity() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("stockQuantity"), filter.getMinStockQuantity()));
             }
-
-            if (manufactureAfter != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("manufactureDate"), manufactureAfter));
+            if (filter.getMaxStockQuantity() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("stockQuantity"), filter.getMaxStockQuantity()));
             }
-
-            if (expirationBefore != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("expirationDate"), expirationBefore));
+            if (filter.getManufactureAfter() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("manufactureDate"), filter.getManufactureAfter()));
             }
-
-            predicates.add(cb.equal(root.get("status"), status));
+            if (filter.getExpirationBefore() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("expirationDate"), filter.getExpirationBefore()));
+            }
+            if (filter.getStatus() != null) {
+                predicates.add(cb.equal(root.get("status"), filter.getStatus()));
+            }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }

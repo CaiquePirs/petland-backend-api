@@ -4,10 +4,10 @@ import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
+import com.petland.modules.product.builder.ProductFilter;
 import com.petland.modules.product.dto.ProductRequestDTO;
 import com.petland.modules.product.dto.ProductResponseDTO;
 import com.petland.modules.product.dto.ProductUpdateDTO;
-import com.petland.modules.product.enums.ProductType;
 import com.petland.modules.product.mappers.ProductMapper;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.repository.ProductRepository;
@@ -19,8 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -66,13 +64,8 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public Page<ProductResponseDTO> findAllByFilter(String name, String brand, ProductType productType,
-                                         LocalDate manufactureDateMin, LocalDate expirationDateMax,
-                                         BigDecimal costSaleMin, Integer stockMin, StatusEntity status, Pageable pageable){
-
-        return productRepository.findAll(ProductSpecification.specification(
-                name, brand, productType, manufactureDateMin, expirationDateMax,
-                costSaleMin, stockMin, status), pageable)
+    public Page<ProductResponseDTO> findAllByFilter(ProductFilter filter, Pageable pageable){
+        return productRepository.findAll(ProductSpecification.specification(filter), pageable)
                 .map(mapper::toDTO);
     }
 

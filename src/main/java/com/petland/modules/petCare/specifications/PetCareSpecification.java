@@ -1,5 +1,6 @@
 package com.petland.modules.petCare.specifications;
 
+import com.petland.modules.petCare.builder.PetCareFilter;
 import com.petland.modules.petCare.enums.PetCareType;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
@@ -19,51 +20,43 @@ import jakarta.persistence.criteria.Predicate;
 @Component
 public class PetCareSpecification {
 
-    public static Specification<PetCare> specification(UUID petId, UUID customerId, UUID employeeId,
-                                                       BigDecimal minRevenue, BigDecimal maxCostOperating,
-                                                       BigDecimal minProfit, BigDecimal maxProfit,
-                                                       LocalDateTime startDate, LocalDateTime endDate) {
+    public static Specification<PetCare> specification(PetCareFilter filter) {
         return ((root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (petId != null) {
-                predicates.add(cb.equal(root.get("pet").get("id"), petId));
+            if (filter.getPetId() != null) {
+                predicates.add(cb.equal(root.get("pet").get("id"), filter.getPetId()));
+            }
+            if (filter.getCustomerId() != null) {
+                predicates.add(cb.equal(root.get("customer").get("id"), filter.getCustomerId()));
+            }
+            if (filter.getEmployeeId() != null) {
+                predicates.add(cb.equal(root.get("employee").get("id"), filter.getEmployeeId()));
+            }
+            if (filter.getMinRevenue() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("totalRevenue"), filter.getMinRevenue()));
+            }
+            if (filter.getMaxCostOperating() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("totalCostOperating"), filter.getMaxCostOperating()));
+            }
+            if (filter.getStatus() != null) {
+                predicates.add(cb.equal(root.get("status"), filter.getStatus()));
             }
 
-            if (customerId != null) {
-                predicates.add(cb.equal(root.get("customer").get("id"), customerId));
+            if (filter.getMinProfit() != null && filter.getMaxProfit() != null) {
+                predicates.add(cb.between(root.get("totalProfit"), filter.getMinProfit(), filter.getMaxProfit()));
+            } else if (filter.getMinProfit() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("totalProfit"), filter.getMinProfit()));
+            } else if (filter.getMaxProfit() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("totalProfit"), filter.getMaxProfit()));
             }
 
-            if (employeeId != null) {
-                predicates.add(cb.equal(root.get("employee").get("id"), employeeId));
-            }
-
-            if (minRevenue != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("totalRevenue"), minRevenue));
-            }
-
-            if (maxCostOperating != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("totalCostOperating"), maxCostOperating));
-            }
-
-            if (minProfit != null && maxProfit != null) {
-                predicates.add(cb.between(root.get("totalProfit"), minProfit, maxProfit));
-
-            } else if (minProfit != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("totalProfit"), minProfit));
-
-            } else if (maxProfit != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("totalProfit"), maxProfit));
-            }
-
-            if (startDate != null && endDate != null) {
-                predicates.add(cb.between(root.get("serviceDate"), startDate, endDate));
-
-            } else if (startDate != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("serviceDate"), startDate));
-
-            } else if (endDate != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("serviceDate"), endDate));
+            if (filter.getStartDate() != null && filter.getEndDate() != null) {
+                predicates.add(cb.between(root.get("serviceDate"), filter.getStartDate(), filter.getEndDate()));
+            } else if (filter.getStartDate() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("serviceDate"), filter.getStartDate()));
+            } else if (filter.getEndDate() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("serviceDate"), filter.getEndDate()));
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         });
@@ -75,14 +68,11 @@ public class PetCareSpecification {
 
             if (dateMin != null && dateMax != null) {
                 predicates.add(cb.between(root.get("serviceDate"), dateMin, dateMax));
-
             } else if (dateMin != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("serviceDate"), dateMin));
-
             } else if (dateMax != null) {
                 predicates.add(cb.lessThanOrEqualTo(root.get("serviceDate"), dateMax));
             }
-
             return cb.and(predicates.toArray(new Predicate[0]));
         };
 

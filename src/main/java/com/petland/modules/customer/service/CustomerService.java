@@ -3,6 +3,7 @@ package com.petland.modules.customer.service;
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.Roles;
 import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.customer.builder.CustomerFilter;
 import com.petland.modules.customer.dto.CustomerRequestDTO;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.dto.UpdateCustomerDTO;
@@ -71,8 +72,8 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public Page<CustomerResponseDTO> listAllByFilter(String name, String email, String phone, StatusEntity status, Pageable pageable){
-     Specification<Customer>  filterCustomers = CustomerSpecification.filterBy(name, email, phone, status);
+    public Page<CustomerResponseDTO> listAllByFilter(CustomerFilter filter, Pageable pageable){
+     Specification<Customer>  filterCustomers = CustomerSpecification.filterBy(filter);
      Page<Customer> customers = customerRepository.findAll(filterCustomers, pageable);
      return customers.map(customerMapper::toDTO);
     }

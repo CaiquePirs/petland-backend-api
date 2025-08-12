@@ -1,6 +1,6 @@
 package com.petland.modules.employee.controller;
 
-import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.employee.builder.EmployeeFilter;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.dto.EmployeeUpdateDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
@@ -8,6 +8,7 @@ import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,22 +52,18 @@ public class EmployeeController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<EmployeeResponseDTO>> findAllEmployeeByFilter(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "email", required = false) String email,
-            @RequestParam(value = "phone", required = false) String phone,
-            @RequestParam(value = "department", required = false) String department,
-            @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") StatusEntity status,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size){
+            @ModelAttribute EmployeeFilter filter,
+            @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
+            @RequestParam(value = "size", defaultValue = "10") @Min(1) int size){
 
-        Page<EmployeeResponseDTO> employeeList = employeeService.listAllByFilter(name, email, phone, department, status, PageRequest.of(page, size));
+        Page<EmployeeResponseDTO> employeeList = employeeService.listAllByFilter(filter, PageRequest.of(page, size));
         return ResponseEntity.ok(employeeList);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EmployeeResponseDTO> updateEmployeeById(@PathVariable(name = "id") UUID employeeId,
-                                                              @RequestBody @Valid EmployeeUpdateDTO employeeDTO) {
+                                                                  @RequestBody @Valid EmployeeUpdateDTO employeeDTO) {
         EmployeeResponseDTO employeeResponse = employeeService.updateById(employeeId, employeeDTO);
         return ResponseEntity.ok(employeeResponse);
     }

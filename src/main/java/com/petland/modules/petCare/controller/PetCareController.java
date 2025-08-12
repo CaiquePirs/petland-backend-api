@@ -1,5 +1,6 @@
 package com.petland.modules.petCare.controller;
 
+import com.petland.modules.petCare.builder.PetCareFilter;
 import com.petland.modules.petCare.dtos.PetCareRequestDTO;
 import com.petland.modules.petCare.dtos.PetCareResponseDTO;
 import com.petland.modules.petCare.model.PetCare;
@@ -52,22 +53,11 @@ public class PetCareController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<PetCareResponseDTO>> findAllServicesByFilter(
-            @RequestParam(required = false) UUID petId,
-            @RequestParam(required = false) UUID customerId,
-            @RequestParam(required = false) UUID employeeId,
-            @RequestParam(required = false) BigDecimal minRevenue,
-            @RequestParam(required = false) BigDecimal maxCostOperating,
-            @RequestParam(required = false) BigDecimal minProfit,
-            @RequestParam(required = false) BigDecimal maxProfit,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
-            @RequestParam(required = false, name = "page", defaultValue = "0") @Min(0) int page,
+            @ModelAttribute PetCareFilter filter,
+            @RequestParam(required = false, name = "page", defaultValue = "0")@Min(0) int page,
             @RequestParam(required = false, name = "size", defaultValue = "10") @Min(1) int size){
 
-        Page<PetCareResponseDTO> listServices = petCareService.findAllByFilter(petId, customerId, employeeId,
-                minRevenue, maxCostOperating, minProfit,
-                maxProfit, startDate, endDate, PageRequest.of(page, size));
-
+        Page<PetCareResponseDTO> listServices = petCareService.findAllByFilter(filter, PageRequest.of(page, size));
         return ResponseEntity.ok(listServices);
     }
 

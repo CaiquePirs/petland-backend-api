@@ -1,49 +1,41 @@
 package com.petland.modules.sale.specifications;
 
-import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.consultation.enums.PaymentType;
 import com.petland.modules.product.model.Product;
+import com.petland.modules.sale.builder.SaleFilter;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class SaleSpecifications {
 
-    public static Specification<Sale> specifications(UUID employeeId, UUID customerId,
-                                                     PaymentType paymentType, BigDecimal totalSalesMin,
-                                                     BigDecimal totalSalesMax, StatusEntity status) {
+    public static Specification<Sale> specifications(SaleFilter filter) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (employeeId != null) {
-                predicates.add(cb.equal(root.get("employee").get("id"), employeeId));
+            if (filter.getEmployeeId() != null) {
+                predicates.add(cb.equal(root.get("employee").get("id"), filter.getEmployeeId()));
             }
-
-            if (customerId != null) {
-                predicates.add(cb.equal(root.get("customer").get("id"), customerId));
+            if (filter.getCustomerId() != null) {
+                predicates.add(cb.equal(root.get("customer").get("id"), filter.getCustomerId()));
             }
-
-            if (paymentType != null) {
-                predicates.add(cb.equal(root.get("paymentType"), paymentType));
+            if (filter.getPaymentType() != null) {
+                predicates.add(cb.equal(root.get("paymentType"), filter.getPaymentType()));
             }
-
-            if (totalSalesMin != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("totalSales"), totalSalesMin));
+            if (filter.getTotalSalesMin() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("totalSales"), filter.getTotalSalesMin()));
             }
-
-            if (totalSalesMax != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("totalSales"), totalSalesMax));
+            if (filter.getTotalSalesMax() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("totalSales"), filter.getTotalSalesMax()));
             }
-
-            predicates.add(cb.equal(root.get("status"), status));
+            if(filter.getStatus() != null){
+                predicates.add(cb.equal(cb.lower(root.get("status")), filter.getStatus()));
+            }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
@@ -55,7 +47,6 @@ public class SaleSpecifications {
             if (dateMin != null && dateMax != null) {
                 predicates.add(cb.between(root.get("createAt"), dateMin, dateMax));
             }
-
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }

@@ -1,6 +1,6 @@
 package com.petland.modules.customer.specifications;
 
-import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.customer.builder.CustomerFilter;
 import com.petland.modules.customer.model.Customer;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,23 +12,21 @@ import java.util.List;
 @Component
 public class CustomerSpecification {
 
-    public static Specification<Customer> filterBy(String name, String email, String phone, StatusEntity status) {
+    public static Specification<Customer> filterBy(CustomerFilter filter) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-
-            if (name != null && !name.isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
+            if (filter.getName() != null && !filter.getName().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("name")), "%" + filter.getName().toLowerCase() + "%"));
             }
-
-            if (email != null && !email.isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("email")), "%" + email.toLowerCase() + "%"));
+            if (filter.getEmail() != null && !filter.getEmail() .isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("email")), "%" + filter.getEmail() .toLowerCase() + "%"));
             }
-
-            if (phone != null && !phone.isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("phone")), "%" + phone.toLowerCase() + "%"));
+            if (filter.getPhone() != null && !filter.getPhone().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("phone")), "%" + filter.getPhone().toLowerCase() + "%"));
             }
-
-            predicates.add(cb.equal(root.get("status"), status));
+            if (filter.getStatus() != null) {
+                predicates.add(cb.equal(root.get("status"), filter.getStatus()));
+            }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }

@@ -1,6 +1,7 @@
 package com.petland.modules.pet.specifications;
 
 import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.pet.builder.PetFilter;
 import com.petland.modules.pet.model.Pet;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -12,28 +13,26 @@ import jakarta.persistence.criteria.Predicate;
 @Component
 public class PetSpecification {
 
-    public static Specification<Pet> filterBy(String name,  String specie,
-                                       String gender, String breed, StatusEntity status){
+    public static Specification<Pet> filterBy(PetFilter filter){
         return ((root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (name != null && !name.isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
+            if (filter.getName() != null && !filter.getName().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("name")), "%" + filter.getName().toLowerCase() + "%"));
             }
-
-            if(breed != null && !breed.isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("breed")), "%" + breed.toLowerCase() + "%"));
+            if (filter.getBreed() != null && !filter.getBreed().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("breed")), "%" + filter.getBreed().toLowerCase() + "%"));
             }
-
-            if(specie != null && !specie.isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("specie")), "%" + specie.toLowerCase() + "%"));
+            if (filter.getSpecie() != null && !filter.getSpecie().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("specie")), "%" + filter.getSpecie().toLowerCase() + "%"));
             }
-
-            if(gender != null && !gender.isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("gender")), "%" + gender.toLowerCase() + "%"));
+            if (filter.getGender() != null && !filter.getGender().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("gender")), "%" + filter.getGender().toLowerCase() + "%"));
             }
-
-            predicates.add(cb.equal(root.get("status"), status));
+            if (filter.getStatus() != null) {
+                predicates.add(cb.equal(root.get("status"), filter.getStatus()));
+            }
+            predicates.add(cb.equal(root.get("status"), filter.getStatus() != null ? filter.getStatus() : "ACTIVE"));
             return cb.and(predicates.toArray(new Predicate[0]));
         });
     }

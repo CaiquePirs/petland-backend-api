@@ -58,6 +58,10 @@ public class ConsultationSpecification {
             if (filter.getCostOperatingByService() != null) {
                 predicates.add(cb.equal(root.get("costOperatingByService"), filter.getCostOperatingByService()));
             }
+
+            if (filter.getStatus() != null) {
+                predicates.add(cb.equal(root.get("status"), filter.getStatus()));
+            }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }

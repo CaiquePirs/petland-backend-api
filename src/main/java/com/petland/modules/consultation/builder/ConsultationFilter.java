@@ -1,5 +1,6 @@
 package com.petland.modules.consultation.builder;
 
+import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.consultation.enums.ConsultationPriority;
 import com.petland.modules.consultation.enums.ConsultationStatus;
 import com.petland.modules.consultation.enums.PaymentType;
@@ -27,8 +28,13 @@ public class ConsultationFilter {
     private BigDecimal totalByService;
     private BigDecimal profitByService;
     private BigDecimal costOperatingByService;
+    private StatusEntity status;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime serviceDateFrom;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime serviceDateTo;
+
+    public String getStatus(){
+        return status.toString().toUpperCase();
+    }
 }

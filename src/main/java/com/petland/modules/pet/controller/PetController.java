@@ -2,6 +2,7 @@ package com.petland.modules.pet.controller;
 
 import com.petland.common.auth.validator.AccessValidator;
 import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.pet.builder.PetFilter;
 import com.petland.modules.pet.dto.PetRequestDTO;
 import com.petland.modules.pet.dto.PetResponseDTO;
 import com.petland.modules.pet.dto.PetUpdateDTO;
@@ -54,15 +55,11 @@ public class PetController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<PetResponseDTO>> listAllPetsByFilter(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "species", required = false) String species,
-            @RequestParam(value = "gender", required = false) String gender,
-            @RequestParam(value = "breed", required = false) String breed,
-            @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") StatusEntity status,
+            @ModelAttribute PetFilter filter,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
-      Page<PetResponseDTO> petsByFilters = petService.listAllByFilter(name, species, gender, breed, status, PageRequest.of(page, size));
+      Page<PetResponseDTO> petsByFilters = petService.listAllByFilter(filter, PageRequest.of(page, size));
       return ResponseEntity.ok(petsByFilters);
     }
 

@@ -1,6 +1,6 @@
 package com.petland.modules.vaccination.specifications;
 
-import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.vaccination.builder.VaccinationFilter;
 import com.petland.modules.vaccination.module.AppliedVaccine;
 import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.module.Vaccine;
@@ -12,34 +12,31 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class VaccinationSpecification {
-    public static Specification<Vaccination> specifications(UUID petId, UUID customerId, UUID veterinarianId,
-                                                     LocalDate vaccinationDate, LocalDate nextDoseBefore, StatusEntity status){
+    public static Specification<Vaccination> specifications(VaccinationFilter filter){
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (petId != null) {
-                predicates.add(cb.equal(root.get("pet"), petId));
-            }
 
-            if (customerId != null) {
-                predicates.add(cb.equal(root.get("customer"), customerId));
+            if (filter.getPetId() != null) {
+                predicates.add(cb.equal(root.get("pet"), filter.getPetId()));
             }
-
-            if (veterinarianId != null) {
-                predicates.add(cb.equal(root.get("veterinarian"), veterinarianId));
+            if (filter.getCustomerId() != null) {
+                predicates.add(cb.equal(root.get("customer"), filter.getCustomerId()));
             }
-
-            if (vaccinationDate != null) {
-                predicates.add(cb.equal(root.get("vaccinationDate"), vaccinationDate));
+            if (filter.getVeterinarianId() != null) {
+                predicates.add(cb.equal(root.get("veterinarian"), filter.getVeterinarianId()));
             }
-
-            if (nextDoseBefore != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("nextDoseDate"), nextDoseBefore));
+            if (filter.getVaccinationDate() != null) {
+                predicates.add(cb.equal(root.get("vaccinationDate"), filter.getVaccinationDate()));
             }
-            predicates.add(cb.equal(root.get("status"), status));
+            if (filter.getNextDoseBefore() != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("nextDoseDate"), filter.getNextDoseBefore()));
+            }
+            if (filter.getStatus() != null) {
+                predicates.add(cb.equal(root.get("status"), filter.getStatus()));
+            }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }

@@ -9,6 +9,7 @@ import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
 import com.petland.modules.pet.validator.PetValidator;
+import com.petland.modules.petCare.builder.PetCareFilter;
 import com.petland.modules.petCare.calculator.PetCareCalculator;
 import com.petland.modules.petCare.dtos.PetCareHistoryResponseDTO;
 import com.petland.modules.petCare.dtos.PetCareRequestDTO;
@@ -103,14 +104,8 @@ public class PetCareService {
         repository.save(petCare);
     }
 
-    public Page<PetCareResponseDTO> findAllByFilter(UUID petId, UUID customerId, UUID employeeId,
-                                                    BigDecimal minRevenue, BigDecimal maxCostOperating,
-                                                    BigDecimal minProfit, BigDecimal maxProfit,
-                                                    LocalDateTime startDate, LocalDateTime endDate, Pageable pageable){
-
-        return repository.findAll(PetCareSpecification.specification(
-                 petId, customerId, employeeId, minRevenue, maxCostOperating,
-                 minProfit, maxProfit, startDate, endDate), pageable)
+    public Page<PetCareResponseDTO> findAllByFilter(PetCareFilter filter, Pageable pageable){
+        return repository.findAll(PetCareSpecification.specification(filter), pageable)
                 .map(generateResponse::generate);
     }
 

@@ -3,6 +3,7 @@ package com.petland.modules.employee.service;
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.Roles;
 import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.employee.builder.EmployeeFilter;
 import com.petland.modules.employee.dto.EmployeeRequestDTO;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.dto.EmployeeUpdateDTO;
@@ -55,9 +56,9 @@ public class EmployeeService {
        employeeRepository.save(employee);
     }
 
-    public Page<EmployeeResponseDTO> listAllByFilter(String name, String email, String phone, String department, StatusEntity status, Pageable pageable){
+    public Page<EmployeeResponseDTO> listAllByFilter(EmployeeFilter filter, Pageable pageable){
          return employeeRepository
-                 .findAll(EmployeeSpecification.Specification(name, email, phone, department, status), pageable)
+                 .findAll(EmployeeSpecification.Specification(filter), pageable)
                  .map(employeeMapper::toDTO);
     }
 

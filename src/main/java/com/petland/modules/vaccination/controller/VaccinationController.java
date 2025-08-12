@@ -1,6 +1,7 @@
 package com.petland.modules.vaccination.controller;
 
 import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.vaccination.builder.VaccinationFilter;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
 import com.petland.modules.vaccination.dto.VaccinationResponseDTO;
 import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
@@ -65,16 +66,12 @@ public class VaccinationController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<VaccinationResponseDTO>> listAllVaccinationsByFilter(
-            @RequestParam(required = false) UUID petId, @RequestParam(required = false) UUID customerId,
-            @RequestParam(required = false) UUID veterinarianId,
-            @RequestParam(required = false, defaultValue = "ACTIVE") StatusEntity status,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate vaccinationDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate nextDoseBefore,
+            @ModelAttribute VaccinationFilter filter,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size){
 
         Page<VaccinationResponseDTO> vaccinationList = vaccinationService.listAllVaccinationsByFilter(
-                petId, customerId, veterinarianId, vaccinationDate, nextDoseBefore, status, PageRequest.of(page, size)
+                filter, PageRequest.of(page, size)
         );
         return ResponseEntity.ok(vaccinationList);
     }

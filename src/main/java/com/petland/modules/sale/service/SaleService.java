@@ -3,13 +3,12 @@ package com.petland.modules.sale.service;
 import com.petland.common.auth.validator.AccessValidator;
 import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.consultation.enums.PaymentType;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
-import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;
+import com.petland.modules.sale.builder.SaleFilter;
 import com.petland.modules.sale.dtos.SaleRequestDTO;
 import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.ItemsSale;
@@ -88,11 +87,8 @@ public class SaleService {
     }
 
 
-    public Page<SaleResponseDTO> findAllSalesByFilter(UUID employeeId, UUID customerId, PaymentType paymentType, BigDecimal totalSalesMin,
-                                                      BigDecimal totalSalesMax, StatusEntity status , Pageable pageable){
-
-        return repository.findAll(SaleSpecifications.specifications(
-                employeeId, customerId, paymentType, totalSalesMin, totalSalesMax, status), pageable)
+    public Page<SaleResponseDTO> findAllSalesByFilter(SaleFilter filter, Pageable pageable){
+        return repository.findAll(SaleSpecifications.specifications(filter), pageable)
                 .map(generate::generateSaleResponse);
     }
 

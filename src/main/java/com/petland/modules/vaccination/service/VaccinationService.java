@@ -9,6 +9,7 @@ import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
 import com.petland.modules.pet.validator.PetValidator;
+import com.petland.modules.vaccination.builder.VaccinationFilter;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
 import com.petland.modules.vaccination.dto.VaccinationResponseDTO;
 import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
@@ -106,12 +107,8 @@ public class VaccinationService {
        return validator.validate(vaccination, dto);
     }
 
-    public Page<VaccinationResponseDTO> listAllVaccinationsByFilter(UUID petId, UUID customerId, UUID veterinarianId, LocalDate vaccinationDate,
-                                                                    LocalDate nextDoseBefore, StatusEntity status, Pageable pageable) {
-
-        return vaccinationRepository.findAll(VaccinationSpecification.specifications(
-                        petId, customerId, veterinarianId,
-                        vaccinationDate, nextDoseBefore, status), pageable)
+    public Page<VaccinationResponseDTO> listAllVaccinationsByFilter(VaccinationFilter filter, Pageable pageable) {
+        return vaccinationRepository.findAll(VaccinationSpecification.specifications(filter), pageable)
                        .map(generateResponse::generate);
     }
 

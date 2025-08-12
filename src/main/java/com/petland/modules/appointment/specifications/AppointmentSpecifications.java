@@ -10,9 +10,9 @@ import java.util.List;
 
 public class AppointmentSpecifications {
 
-    public static Specification<Appointment> specification(AppointmentFilter filter){
+    public static Specification<Appointment> specification(AppointmentFilter filter) {
         return (root, query, cb) -> {
-          List<Predicate> predicates = new ArrayList<>();
+            List<Predicate> predicates = new ArrayList<>();
 
             if (filter.getCustomerId() != null) {
                 predicates.add(cb.equal(root.get("customerId"), filter.getCustomerId()));
@@ -20,8 +20,8 @@ public class AppointmentSpecifications {
             if (filter.getPetId() != null) {
                 predicates.add(cb.equal(root.get("petId"), filter.getPetId()));
             }
-            if (filter.getStatus() != null) {
-                predicates.add(cb.equal(root.get("appointmentStatus"), filter.getStatus()));
+            if (filter.getAppointmentStatus() != null) {
+                predicates.add(cb.equal(root.get("appointmentStatus"), filter.getAppointmentStatus()));
             }
             if (filter.getAppointmentHour() != null) {
                 predicates.add(cb.equal(root.get("appointmentHour"), filter.getAppointmentHour()));
@@ -31,6 +31,9 @@ public class AppointmentSpecifications {
             }
             if (filter.getAppointmentType() != null) {
                 predicates.add(cb.equal(root.get("appointmentType"), filter.getAppointmentType()));
+            }
+            if (filter.getStatus() != null) {
+                predicates.add(cb.equal(root.get("status"), filter.getStatus()));
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };

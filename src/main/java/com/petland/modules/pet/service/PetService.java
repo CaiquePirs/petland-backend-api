@@ -5,6 +5,7 @@ import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
+import com.petland.modules.pet.builder.PetFilter;
 import com.petland.modules.pet.dto.PetRequestDTO;
 import com.petland.modules.pet.dto.PetResponseDTO;
 import com.petland.modules.pet.dto.PetUpdateDTO;
@@ -64,8 +65,8 @@ public class PetService {
                 .toList();
     }
 
-    public Page<PetResponseDTO> listAllByFilter(String name, String specie, String gender, String breed, StatusEntity status, Pageable pageable){
-      Page<Pet> petsByFilter = petRepository.findAll(PetSpecification.filterBy(name, specie, gender, breed,status), pageable);
+    public Page<PetResponseDTO> listAllByFilter(PetFilter filter, Pageable pageable){
+      Page<Pet> petsByFilter = petRepository.findAll(PetSpecification.filterBy(filter), pageable);
       return petsByFilter.map(petMapper::toDTO);
     }
 

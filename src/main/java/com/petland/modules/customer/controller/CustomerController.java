@@ -2,12 +2,14 @@ package com.petland.modules.customer.controller;
 
 import com.petland.common.auth.validator.AccessValidator;
 import com.petland.common.entity.enums.StatusEntity;
+import com.petland.modules.customer.builder.CustomerFilter;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.dto.UpdateCustomerDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,15 +46,12 @@ public class CustomerController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<CustomerResponseDTO>> listAllCustomersByFilter(
-            @RequestParam(value = "email", required = false) String email,
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "phone", required = false) String phone,
-            @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") StatusEntity status,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size){
+            @ModelAttribute CustomerFilter filter,
+            @RequestParam(value = "size", defaultValue = "0") @Min(0) int page,
+            @RequestParam(value = "size", defaultValue = "10") @Min(1) int size){
 
         Page<CustomerResponseDTO> customersResponseDTO = customerService.listAllByFilter(
-                name, email, phone, status, PageRequest.of(page, size)
+                filter, PageRequest.of(page, size)
         );
         return ResponseEntity.ok(customersResponseDTO);
     }
