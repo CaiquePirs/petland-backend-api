@@ -3,21 +3,22 @@ package com.petland.modules.consultation.strategy.impl;
 import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.strategy.ConsultationStrategy;
-import com.petland.modules.petCare.model.PetCare;
-import com.petland.modules.petCare.service.PetCareService;
+import com.petland.modules.sale.model.Sale;
+import com.petland.modules.sale.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+
 @Component
 @RequiredArgsConstructor
-public class PetCareAStrategy implements ConsultationStrategy {
+public class SalesConsultationImpl implements ConsultationStrategy {
 
-    private final PetCareService petCareService;
+    private final SaleService saleService;
 
     public Consultation execute(Consultation consultation, ConsultationRequestDTO requestDTO) {
-        if(requestDTO.petCareRequestDTO() != null){
-            PetCare petCare = petCareService.register(requestDTO.petCareRequestDTO());
-            consultation.setService(petCare);
+        if(requestDTO.saleRequestDTO() != null){
+            Sale sale = saleService.registerSale(requestDTO.saleRequestDTO());
+            consultation.setSales(sale);
         }
         return consultation;
     }
