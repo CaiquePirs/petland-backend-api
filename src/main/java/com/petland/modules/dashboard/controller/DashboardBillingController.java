@@ -1,8 +1,8 @@
 package com.petland.modules.dashboard.controller;
 
-import com.petland.modules.dashboard.dtos.Report;
-import com.petland.modules.dashboard.reports.BillingReport;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.BillingReportsService;
+import com.petland.modules.dashboard.strategies.impl.SendReportViaPDF;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
@@ -19,12 +19,13 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class DashboardBillingController {
 
-    private final BillingReport billingReport;
-    private final BillingReportsService reportsService;
+    private final BillingReportsService billingReport;
+    private final SendReportViaPDF sendReportViaPDF;
+
 
     @GetMapping("/by-period")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Report> findTotalRevenueByPeriod(
+    public ResponseEntity<Report> generateTotalRevenueReport(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMin,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMax) {
 
@@ -34,15 +35,14 @@ public class DashboardBillingController {
 
     @GetMapping("/by-pdf")
     @PreAuthorize(("hasRole('ADMIN')"))
-    public ResponseEntity<byte[]> findTotalRevenueByPDF(
+    public ResponseEntity<byte[]> generateTotalRevenueReportByPDF(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMin,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMax) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDisposition(ContentDisposition.inline().filename("ReportsSale.pdf").build());
-
-        var reportPDF = reportsService.issueBillingReportByPDF(dateMin, dateMax);
-        return new ResponseEntity<>(reportPDF, headers, HttpStatus.OK);
+        Report report = billingReport.generate(dateMin, dateMax);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=report.pdf")
+                .body(sendReportViaPDF.generate(report));
     }
 }

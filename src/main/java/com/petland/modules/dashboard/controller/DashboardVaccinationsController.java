@@ -1,6 +1,6 @@
 package com.petland.modules.dashboard.controller;
 
-import com.petland.modules.dashboard.dtos.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.VaccinationsReportsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,18 +20,17 @@ public class DashboardVaccinationsController {
 
     @GetMapping("/by-period")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Report> vaccinationsReportByPeriod(
+    public ResponseEntity<Report> generateReportVaccinationsByPeriod(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMin,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMax){
-
-        var reports = generator.totalByPeriod(dateMin, dateMax);
-        return ResponseEntity.ok(reports);
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMax) {
+        Report report = generator.totalByPeriod(dateMin, dateMax);
+        return ResponseEntity.ok(report);
     }
 
     @GetMapping("/by-vaccine/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Report> vaccinationsReportByVaccine(@PathVariable(name = "id") UUID vaccineId){
-        var reports = generator.totalByVaccine(vaccineId);
-        return ResponseEntity.ok(reports);
+    public ResponseEntity<Report> generateReportVaccinationsByVaccine(@PathVariable(name = "id") UUID vaccineId) {
+        Report report = generator.totalByVaccine(vaccineId);
+        return ResponseEntity.ok(report);
     }
 }

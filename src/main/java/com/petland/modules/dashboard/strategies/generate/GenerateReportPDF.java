@@ -1,7 +1,8 @@
-package com.petland.modules.dashboard.reports.pdf;
+package com.petland.modules.dashboard.strategies.generate;
 
 import com.petland.common.exception.FailedToGeneratePdfException;
-import com.petland.modules.dashboard.dtos.Report;
+import com.petland.modules.dashboard.model.Report;
+import com.petland.common.utils.PDFStyle;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -16,11 +17,11 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 @RequiredArgsConstructor
-public class IssueReportPDF {
+public class GenerateReportPDF {
 
     private final PDFStyle pdfStyler;
 
-    public byte[] generateReport(Report report) {
+    public byte[] generate(Report report) {
         try (PDDocument document = new PDDocument();
              ByteArrayOutputStream output = new ByteArrayOutputStream()) {
 
@@ -31,22 +32,22 @@ public class IssueReportPDF {
                 content.setFont(PDType1Font.HELVETICA_BOLD, 25);
                 content.setNonStrokingColor(Color.BLACK);
                 content.newLine(); content.newLine();
-                content.showText("PetShop Billing Report"); content.newLine();
+                content.showText("PetShop Billing Reports"); content.newLine();
 
                 content.setFont(PDType1Font.HELVETICA, 15);
-                content.showText("Total Revenue: R$" + report.totalRevenue()); content.newLine();
-                content.showText("Quantity of items and services sold: " + report.itemsQuantity()); content.newLine();
-                content.showText("Total Operating Costs: R$" + report.operatingCost()); content.newLine();
-                content.showText("Total Profit: R$" + report.totalProfit()); content.newLine(); content.newLine();
+                content.showText("Total Revenue: R$" + report.getTotalRevenue()); content.newLine();
+                content.showText("Quantity of items and services sold: " + report.getItemsQuantity()); content.newLine();
+                content.showText("Total Operating Costs: R$" + report.getOperatingCost()); content.newLine();
+                content.showText("Total Profit: R$" + report.getTotalProfit()); content.newLine(); content.newLine();
 
                 content.setFont(PDType1Font.HELVETICA_BOLD, 18);
                 content.showText("Issued by employee: "); content.newLine();
 
                 content.setFont(PDType1Font.HELVETICA, 15);
-                content.showText("ID: " + report.employee().id()); content.newLine();
-                content.showText("Name: " + report.employee().name()); content.newLine();
-                content.showText("Department: " + report.employee().department()); content.newLine();
-                content.showText("Report issue date: " + report.issueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+                content.showText("ID: " + report.getEmployee().id()); content.newLine();
+                content.showText("Name: " + report.getEmployee().name()); content.newLine();
+                content.showText("Department: " + report.getEmployee().department()); content.newLine();
+                content.showText("Report issue date: " + report.getIssueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
                 content.newLine(); content.newLine(); content.newLine();
 
                 content.showText("Petland Reports © 2025 - Confidential Document");

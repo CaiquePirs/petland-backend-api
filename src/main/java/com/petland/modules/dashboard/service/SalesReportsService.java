@@ -1,17 +1,15 @@
 package com.petland.modules.dashboard.service;
 
 import com.petland.common.exception.NotFoundException;
-import com.petland.modules.dashboard.dtos.Report;
-import com.petland.modules.dashboard.reports.SaleReport;
-import com.petland.modules.product.model.Product;
-import com.petland.modules.product.service.ProductService;
-import com.petland.modules.sale.model.ItemsSale;
+import com.petland.modules.dashboard.report.BuilderReport;
+import com.petland.modules.dashboard.model.Report;
+import com.petland.modules.sale.calculator.SaleCalculator;
 import com.petland.modules.sale.model.Sale;
-import com.petland.modules.sale.service.ItemsSaleService;
 import com.petland.modules.sale.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -21,26 +19,32 @@ import java.util.UUID;
 public class SalesReportsService {
 
     private final SaleService saleService;
-    private final ItemsSaleService itemsSaleService;
-    private final ProductService productService;
-    private final SaleReport report;
+    private final SaleCalculator calculator;
+    private final BuilderReport builderReport;
 
     public Report totalByPeriod(LocalDate dateMin, LocalDate dateMax) {
-        List<Sale> salesList = saleService.findAllSalesByPeriod(dateMin, dateMax);
-
-        if (salesList.isEmpty()) {
-            throw new NotFoundException("Sales reports not found");
-        }
-        return report.generateBySales(salesList);
+        List<Sale> sales = saleService.findAllSalesByPeriod(dateMin, dateMax);
+        return generate(sales);
     }
 
     public Report totalByProductId(UUID productId) {
-        Product product = productService.findById(productId);
-        List<ItemsSale> itemsSaleList = itemsSaleService.findAllItemsSaleByProductId(product.getId());
-
-        if (itemsSaleList.isEmpty()) {
-            throw new NotFoundException("Sales reports not found");
-        }
-        return report.generateByItemsSale(itemsSaleList);
+        List<Sale> sales = saleService.findAllSalesByProductId(productId);
+        return generate(sales);
     }
+
+    private Report generate(List<Sale> sales){
+        validateIfListSalesIsEmpty(sales);
+        BigDecimal totalBilled = calculator.calculateTotalBilledBySaleList(sales);
+        BigDecimal totalProfit = calculator.calculateProfitBySales(sales);
+        BigDecimal totalCostByProducts = calculator.calculateTotalCostProducts(sales);
+        Integer sumItems = calculator.sumQuantityItemsSale(sales);
+        return builderReport.generate(totalBilled, totalProfit, sumItems, totalCostByProducts);
+    }
+
+    private void validateIfListSalesIsEmpty(List<Sale> sales){
+        if(sales.isEmpty()){
+            throw new NotFoundException("Sale list reports not found");
+        }
+    }
+
 }

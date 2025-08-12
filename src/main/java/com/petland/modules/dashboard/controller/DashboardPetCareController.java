@@ -1,7 +1,7 @@
 package com.petland.modules.dashboard.controller;
 
 import com.petland.common.exception.ErrorProcessingRequestException;
-import com.petland.modules.dashboard.dtos.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.PetCareReportsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,7 +23,7 @@ public class DashboardPetCareController {
 
     @GetMapping("/by-period")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Report> findTotalRevenueByPeriod(
+    public ResponseEntity<Report> generateServiceReportByPeriod(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMin,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMax){
 
@@ -33,7 +33,7 @@ public class DashboardPetCareController {
 
     @GetMapping("/by-service-type")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Report> findTotalByServiceType(@RequestParam(value = "type", required = false) String serviceType){
+    public ResponseEntity<Report> generateServiceReportByType(@RequestParam(value = "type", required = false) String serviceType){
         try {
             Report report = reportsService.totalByServiceType(serviceType.toUpperCase());
             return ResponseEntity.ok().body(report);
