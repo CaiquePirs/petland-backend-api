@@ -1,6 +1,5 @@
 package com.petland.modules.pet.specifications;
 
-import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.pet.builder.PetFilter;
 import com.petland.modules.pet.model.Pet;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,11 +22,12 @@ public class PetSpecification {
             if (filter.getBreed() != null && !filter.getBreed().isBlank()) {
                 predicates.add(cb.like(cb.lower(root.get("breed")), "%" + filter.getBreed().toLowerCase() + "%"));
             }
-            if (filter.getSpecie() != null && !filter.getSpecie().isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("specie")), "%" + filter.getSpecie().toLowerCase() + "%"));
+            if (filter.getSpecie() != null) {
+                predicates.add(cb.equal(root.get("specie"), filter.getSpecie()));
             }
-            if (filter.getGender() != null && !filter.getGender().isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("gender")), "%" + filter.getGender().toLowerCase() + "%"));
+
+            if (filter.getGender() != null) {
+                predicates.add(cb.equal(root.get("gender"), filter.getGender()));
             }
             if (filter.getStatus() != null) {
                 predicates.add(cb.equal(root.get("status"), filter.getStatus()));

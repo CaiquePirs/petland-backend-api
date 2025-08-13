@@ -20,13 +20,13 @@ public class VaccinationSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if (filter.getPetId() != null) {
-                predicates.add(cb.equal(root.get("pet"), filter.getPetId()));
+                predicates.add(cb.equal(root.get("pet").get("id"), filter.getPetId()));
             }
             if (filter.getCustomerId() != null) {
-                predicates.add(cb.equal(root.get("customer"), filter.getCustomerId()));
+                predicates.add(cb.equal(root.get("customer").get("id"), filter.getCustomerId()));
             }
             if (filter.getVeterinarianId() != null) {
-                predicates.add(cb.equal(root.get("veterinarian"), filter.getVeterinarianId()));
+                predicates.add(cb.equal(root.get("veterinarian").get("id"), filter.getVeterinarianId()));
             }
             if (filter.getVaccinationDate() != null) {
                 predicates.add(cb.equal(root.get("vaccinationDate"), filter.getVaccinationDate()));

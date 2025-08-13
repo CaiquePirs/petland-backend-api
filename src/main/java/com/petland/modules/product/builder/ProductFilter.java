@@ -21,7 +21,4 @@ public class ProductFilter {
     private Integer stockMin;
     private StatusEntity status;
 
-    public String getStatus(){
-        return status.toString().toUpperCase();
-    }
 }

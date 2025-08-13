@@ -11,8 +11,4 @@ public class CustomerFilter {
     private String email;
     private String phone;
     private StatusEntity status;
-
-    public String getStatus(){
-        return status.toString().toUpperCase();
-    }
 }

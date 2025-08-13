@@ -16,11 +16,11 @@ import java.util.UUID;
 @Data
 @Builder
 public class ConsultationFilter {
-    private UUID customerId;
-    private UUID employeeId;
-    private UUID saleId;
-    private UUID vaccinationId;
-    private UUID serviceId;
+    private String customerId;
+    private String employeeId;
+    private String saleId;
+    private String vaccinationId;
+    private String serviceId;
     private ConsultationStatus consultationStatus;
     private ServiceType type;
     private ConsultationPriority priority;
@@ -34,7 +34,23 @@ public class ConsultationFilter {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime serviceDateTo;
 
-    public String getStatus(){
-        return status.toString().toUpperCase();
+    public UUID getCustomerId() {
+        return customerId != null && !customerId.isBlank() ? UUID.fromString(customerId) : null;
+    }
+
+    public UUID getSaleId() {
+        return saleId != null && !saleId.isBlank() ? UUID.fromString(saleId) : null;
+    }
+
+    public UUID getVaccinationId() {
+        return vaccinationId != null && !vaccinationId.isBlank() ? UUID.fromString(vaccinationId) : null;
+    }
+
+    public UUID getServiceId() {
+        return serviceId != null && !serviceId.isBlank() ? UUID.fromString(serviceId) : null;
+    }
+
+    public UUID getEmployeeId() {
+        return employeeId != null && !employeeId.isBlank() ? UUID.fromString(employeeId) : null;
     }
 }

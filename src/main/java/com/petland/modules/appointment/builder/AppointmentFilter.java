@@ -18,16 +18,19 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AppointmentFilter {
 
-    private UUID customerId;
-    private UUID petId;
+    private String customerId;
+    private String petId;
     private AppointmentStatus appointmentStatus;
     private LocalTime appointmentHour;
     private LocalDate appointmentDate;
     private ServiceType appointmentType;
     private StatusEntity status;
 
-    public String getStatus(){
-     return status.toString().toUpperCase();
+    public UUID getCustomerId() {
+        return customerId != null && !customerId.isBlank() ? UUID.fromString(customerId) : null;
     }
 
+    public UUID getPetId() {
+        return petId != null && !petId.isBlank() ? UUID.fromString(petId) : null;
+    }
 }

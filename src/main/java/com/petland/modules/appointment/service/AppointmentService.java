@@ -94,12 +94,8 @@ public class AppointmentService {
     }
 
     public Page<AppointmentResponseDTO> listAllAppointmentsByFilter(AppointmentFilter filter, Pageable pageable){
-        List<AppointmentResponseDTO> listAppointments = repository.findAll(AppointmentSpecifications.specification(filter), pageable)
-                .stream()
-                .filter(a -> !a.getStatus().equals(StatusEntity.DELETED))
-                .map(mapper::toDTO)
-                .toList();
-        return new PageImpl<>(listAppointments, pageable, listAppointments.size());
+        return repository.findAll(AppointmentSpecifications.specification(filter), pageable)
+                .map(mapper::toDTO);
     }
 
     public Page<AppointmentResponseDTO> listAllAppointmentsByCustomerId(UUID customerId, Pageable pageable){

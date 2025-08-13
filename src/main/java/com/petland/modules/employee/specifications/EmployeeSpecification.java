@@ -1,6 +1,5 @@
 package com.petland.modules.employee.specifications;
 
-import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.employee.builder.EmployeeFilter;
 import com.petland.modules.employee.model.Employee;
 import jakarta.persistence.criteria.Predicate;
@@ -26,8 +25,8 @@ public class EmployeeSpecification {
             if (filter.getPhone() != null && !filter.getPhone().isBlank()) {
                 predicates.add(cb.like(cb.lower(root.get("phone")), "%" + filter.getPhone().toLowerCase() + "%"));
             }
-            if (filter.getDepartment() != null && !filter.getDepartment().isBlank()) {
-                predicates.add(cb.like(cb.lower(root.get("department")), "%" + filter.getDepartment().toLowerCase() + "%"));
+            if (filter.getDepartment() != null) {
+                predicates.add(cb.equal(root.get("department"), filter.getDepartment()));
             }
             if (filter.getStatus() != null) {
                 predicates.add(cb.equal(root.get("status"), filter.getStatus()));

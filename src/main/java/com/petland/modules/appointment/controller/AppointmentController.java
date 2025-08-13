@@ -84,7 +84,7 @@ public class AppointmentController {
     public ResponseEntity<Page<AppointmentResponseDTO>> listAllAppointments(
             @ModelAttribute AppointmentFilter filter,
             @RequestParam(name = "page", defaultValue = "0") @Min(0) int page,
-            @RequestParam(name = "size", defaultValue = "10") @Min(10) int size){
+            @RequestParam(name = "size", defaultValue = "10") @Min(1) int size){
 
         Page<AppointmentResponseDTO> listAppointments = service.listAllAppointmentsByFilter(
                 filter, PageRequest.of(page, size)

@@ -24,8 +24,4 @@ public class VaccineFilter {
     private LocalDate manufactureAfter;
     private LocalDate expirationBefore;
     private StatusEntity status;
-
-    public String getStatus(){
-        return status.toString().toUpperCase();
-    }
 }
