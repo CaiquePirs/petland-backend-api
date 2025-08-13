@@ -12,6 +12,7 @@ import com.petland.modules.consultation.enums.ConsultationStatus;
 import com.petland.modules.consultation.generate.GenerateConsultationResponse;
 import com.petland.modules.consultation.mappers.ConsultationMapper;
 import com.petland.modules.consultation.model.Consultation;
+import com.petland.modules.consultation.model.ConsultationDetails;
 import com.petland.modules.consultation.repositories.ConsultationRepository;
 import com.petland.modules.consultation.specifications.ConsultationSpecification;
 import com.petland.modules.consultation.strategy.factory.ConsultationFactory;
@@ -61,18 +62,16 @@ public class ConsultationService {
         validator.validateIfItIsTheSameCustomer(requestDTO, customer, pet);
 
         Consultation consultation = mapper.toEntity(requestDTO);
-        consultation.setEmployee(employee);
-        consultation.setCustomer(customer);
-        consultation.setPet(pet);
-
         consultation = consultationFactory.execute(consultation, requestDTO);
 
-        if(consultation.getDetails() != null) {
-            consultation.getDetails().setTotalByService(calculator.calculateTotalBilling(consultation));
-            consultation.getDetails().setCostOperatingByService(calculator.calculateTotalCostOperating(consultation));
-            consultation.getDetails().setProfitByService(calculator.calculateTotalProfit(consultation));
-        }
+        ConsultationDetails details = consultation.getDetails();
+        details.setCostOperatingByService(calculator.calculateTotalCostOperating(consultation));
+        details.setProfitByService(calculator.calculateTotalProfit(consultation));
+        details.setTotalByService(calculator.calculateTotalBilling(consultation));
 
+        consultation.setEmployee(employee);
+        consultation.setPet(pet);
+        consultation.setCustomer(customer);
         consultation.getCustomer().getConsultationsHistory().add(consultation);
         consultation.getPet().getConsultationsHistory().add(consultation);
         return repository.save(consultation);
