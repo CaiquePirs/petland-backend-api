@@ -110,9 +110,9 @@ public class GlobalExceptionHandler {
                 "Invalid value for " + e.getName(), List.of(error)));
     }
 
-    @ExceptionHandler(InvalidAppointmentTimeException.class)
-    public ResponseEntity<ErrorResponseDTO> handleInvalidAppointmentTime(InvalidAppointmentTimeException e){
-        ErrorMessageDTO errorMessageDTO = new ErrorMessageDTO("Invalid Date", e.getMessage());
+    @ExceptionHandler(InvalidAppointmentException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidAppointmentTime(InvalidAppointmentException e){
+        ErrorMessageDTO errorMessageDTO = new ErrorMessageDTO("Error Appointment", e.getMessage());
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage(),

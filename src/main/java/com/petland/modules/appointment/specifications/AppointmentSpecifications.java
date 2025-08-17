@@ -5,6 +5,8 @@ import com.petland.modules.appointment.model.Appointment;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,12 @@ public class AppointmentSpecifications {
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
+    }
 
+    public static Specification<Appointment> appointmentAtSameTimeSpec(LocalDate date, LocalTime hour) {
+        return (root, query, cb) -> cb.and(
+                cb.equal(root.get("appointmentDate"), date),
+                cb.equal(root.get("appointmentHour"), hour)
+        );
     }
 }

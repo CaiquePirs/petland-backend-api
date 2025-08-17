@@ -45,6 +45,7 @@ public class AppointmentService {
         Customer customer = customerService.findById(requestDTO.customerId());
 
         validator.validateAppointmentTimeWindow(requestDTO.appointmentDate(), requestDTO.appointmentHour());
+        validator.checkForExistingAppointmentAtSameTime(requestDTO.appointmentDate(), requestDTO.appointmentHour());
         petValidator.isPetOwner(pet, customer);
         accessValidator.isOwnerOrAdmin(requestDTO.customerId());
 
@@ -65,6 +66,7 @@ public class AppointmentService {
       Appointment appointment = findAppointmentById(appointmentId);
 
       validator.validateAppointmentTimeWindow(appointmentDate, appointmentHour);
+      validator.checkForExistingAppointmentAtSameTime(appointmentDate, appointmentHour);
       accessValidator.isOwnerOrAdmin(appointment.getCustomer().getId());
 
       appointment.setAppointmentStatus(AppointmentStatus.RESCHEDULED);
