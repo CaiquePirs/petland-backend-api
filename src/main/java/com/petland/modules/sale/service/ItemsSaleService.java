@@ -56,12 +56,12 @@ public class ItemsSaleService {
                 .orElseThrow(() -> new NotFoundException("ItemSale with ID " + itemId + " not found in Sale " + saleId));
     }
 
-    public void deactivateItemsList(List<ItemsSale> itemsSalesList){
-        if(!itemsSalesList.isEmpty()){
-           for(ItemsSale itemsSale : itemsSalesList){
+    public void deactivateItemsList(List<ItemsSale> items){
+        if(!items.isEmpty()){
+           for(ItemsSale itemsSale : items){
                itemsSale.setStatus(StatusEntity.DELETED);
            }
-           itemsSaleRepository.saveAll(itemsSalesList);
+           itemsSaleRepository.saveAll(items);
         }
     }
 
