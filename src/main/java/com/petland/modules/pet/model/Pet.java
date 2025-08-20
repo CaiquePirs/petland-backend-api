@@ -1,5 +1,6 @@
 package com.petland.modules.pet.model;
 
+import com.auth0.jwt.JWTVerifier;
 import com.petland.common.entity.BaseEntity;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.customer.model.Customer;
@@ -9,6 +10,7 @@ import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.vaccination.module.Vaccination;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +24,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Pet extends BaseEntity {
 
     @Id

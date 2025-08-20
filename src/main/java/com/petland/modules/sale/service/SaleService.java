@@ -32,7 +32,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SaleService {
 
-    private final EmployeeService employeeService;
     private final CustomerService customerService;
     private final ProductService productService;
     private final ItemsSaleService itemsSaleService;
@@ -64,8 +63,8 @@ public class SaleService {
 
     public Sale findSaleById(UUID saleId){
      return repository.findById(saleId)
-                .filter(s -> !s.getStatus().equals(StatusEntity.DELETED))
-                .orElseThrow(() -> new NotFoundException("Sale not found"));
+             .filter(s -> !s.getStatus().equals(StatusEntity.DELETED))
+             .orElseThrow(() -> new NotFoundException("Sale not found"));
     }
 
     @Transactional
@@ -77,13 +76,8 @@ public class SaleService {
     }
 
     public Page<SaleResponseDTO> findSalesByCustomerId(UUID customerId, Pageable pageable) {
-        Customer customer = customerService.findById(customerId);
-        Page<Sale> sales = repository.findByCustomerId(customer.getId(), pageable);
-
-        if(sales.isEmpty()){
-            throw new NotFoundException("Sales by customer ID not found");
-        }
-        return sales.map(generate::generateSaleResponse);
+        return repository.findByCustomerId(customerService.findById(customerId).getId(), pageable)
+                .map(generate::generateSaleResponse);
     }
 
 
@@ -94,12 +88,13 @@ public class SaleService {
 
     public List<Sale> findAllSalesByPeriod(LocalDate dateMin, LocalDate dateMax){
         return repository.findAll(SaleSpecifications.findByPeriod(dateMin, dateMax))
-                .stream().filter(s -> !s.getStatus().equals(StatusEntity.DELETED)).toList();
+                .stream()
+                .filter(s -> !s.getStatus().equals(StatusEntity.DELETED)).toList();
     }
 
     public List<Sale> findAllSalesByProductId(UUID productId){
-        Product product = productService.findById(productId);
-        return repository.findAll(SaleSpecifications.findByProductId(product))
-                .stream().filter(s -> !s.getStatus().equals(StatusEntity.DELETED)).toList();
+        return repository.findAll(SaleSpecifications.findByProductId(productService.findById(productId)))
+                .stream()
+                .filter(s -> !s.getStatus().equals(StatusEntity.DELETED)).toList();
     }
 }
