@@ -80,7 +80,6 @@ public class AppointmentService {
         accessValidator.isOwnerOrAdmin(appointment.getCustomer().getId());
 
         appointment.setAppointmentStatus(AppointmentStatus.CANCELED);
-        appointment.setStatus(StatusEntity.DELETED);
         repository.save(appointment);
     }
 
