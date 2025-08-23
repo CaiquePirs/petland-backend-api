@@ -17,24 +17,20 @@ public class AccessValidator {
     private final EmployeeService employeeService;
 
     public UUID getLoggedInUser() {
-        Object userIdAttr = request.getAttribute("id");
-
-        if (userIdAttr == null) {
-            return null;
-        }
-        return UUID.fromString(userIdAttr.toString());
+        Object userLogged = request.getAttribute("id");
+        if(userLogged == null) return null;
+        return UUID.fromString(userLogged.toString());
     }
 
     public Employee getEmployeeLogged(){
+        UUID employeeId = getLoggedInUser();
+        if(employeeId == null) throw new UnauthorizedException("User not authorized");
         return employeeService.findById(getLoggedInUser());
     }
 
     public void isOwnerOrAdmin(UUID ownerId){
         boolean isAdmin = request.isUserInRole("ADMIN");
         boolean isOwner = request.getAttribute("id").toString().equals(ownerId.toString());
-
-        if(!isAdmin && !isOwner){
-            throw new UnauthorizedException("User not authorized");
-        }
+        if(!isAdmin && !isOwner) throw new UnauthorizedException("User not authorized");
     }
 }
