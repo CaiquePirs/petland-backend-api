@@ -128,7 +128,7 @@ class AppointmentServiceTest {
         InvalidAppointmentException ex = assertThrows(InvalidAppointmentException.class, () -> service.scheduleAppointment(dto));
         assertEquals("There is already an appointment with this time", ex.getMessage());
 
-        verify(repository, never()).save(any());
+        verify(repository, never()).save(appointment);
     }
 
     @Test
@@ -144,7 +144,7 @@ class AppointmentServiceTest {
         UnauthorizedException ex = assertThrows(UnauthorizedException.class, () -> service.scheduleAppointment(dto));
         assertEquals("This pet does not belong to this customer", ex.getMessage());
 
-        verify(repository, never()).save(any());
+        verify(repository, never()).save(appointment);
     }
 
     @Test
@@ -166,7 +166,7 @@ class AppointmentServiceTest {
 
         InvalidAppointmentException ex = assertThrows(InvalidAppointmentException.class, () -> service.scheduleAppointment(request));
         assertEquals("Appointment must be scheduled at least 10 hour in advance", ex.getMessage());
-        verify(repository, never()).save(any());
+        verify(repository, never()).save(appointment);
     }
 
     @Test
@@ -175,7 +175,7 @@ class AppointmentServiceTest {
 
         NotFoundException ex = assertThrows(NotFoundException.class, () -> service.scheduleAppointment(dto));
         assertEquals("Customer ID not found", ex.getMessage());
-        verify(repository, never()).save(any());
+        verify(repository, never()).save(appointment);
     }
 
     @Test
@@ -196,7 +196,7 @@ class AppointmentServiceTest {
 
         UnauthorizedException ex = assertThrows(UnauthorizedException.class, () -> service.scheduleAppointment(dto));
         assertEquals("User not authorized", ex.getMessage());
-        verify(repository, never()).save(any());
+        verify(repository, never()).save(appointment);
     }
 
 

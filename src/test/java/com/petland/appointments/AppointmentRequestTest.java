@@ -21,7 +21,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AppointmentRequestDTOTest {
+public class AppointmentRequestTest {
 
     private Validator validator;
     private UUID customerId;
