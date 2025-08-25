@@ -23,6 +23,7 @@ import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;
+import com.petland.modules.pet.validator.PetValidator;
 import com.petland.modules.petCare.service.PetCareService;
 import com.petland.modules.sale.service.SaleService;
 import com.petland.modules.vaccination.service.VaccinationService;
@@ -53,13 +54,16 @@ public class ConsultationService {
     private final SaleService saleService;
     private final VaccinationService vaccinationService;
     private final PetCareService petCareService;
+    private final PetValidator petValidator;
 
     @Transactional
     public Consultation registerConsultation(ConsultationRequestDTO requestDTO) {
         Employee employee = employeeService.findById(accessValidator.getLoggedInUser());
         Customer customer = customerService.findById(requestDTO.customerId());
         Pet pet = petService.findById(requestDTO.petId());
-        validator.validateIfItIsTheSameCustomer(requestDTO, customer, pet);
+
+        validator.validateIfItIsTheSameCustomer(requestDTO);
+        petValidator.isPetOwner(pet, customer);
 
         Consultation consultation = mapper.toEntity(requestDTO);
         consultation = consultationFactory.execute(consultation, requestDTO);
