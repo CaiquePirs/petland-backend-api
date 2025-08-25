@@ -17,25 +17,52 @@ public class ConsultationCalculator {
 
     public BigDecimal calculateTotalBilling(Consultation consultation) {
         return Stream.of(
-                Optional.ofNullable(consultation.getSales()).map(Sale::getTotalSales).orElse(BigDecimal.ZERO),
-                Optional.ofNullable(consultation.getVaccination()).map(Vaccination::getTotalByVaccination).orElse(BigDecimal.ZERO),
-                Optional.ofNullable(consultation.getService()).map(PetCare::getTotalRevenue).orElse(BigDecimal.ZERO)
+                Optional.ofNullable(consultation.getSales())
+                        .map(Sale::getTotalSales)
+                        .orElse(BigDecimal.ZERO),
+
+                Optional.ofNullable(consultation.getVaccination())
+                        .map(Vaccination::getTotalByVaccination)
+                        .orElse(BigDecimal.ZERO),
+
+                Optional.ofNullable(consultation.getService())
+                        .map(PetCare::getTotalRevenue)
+                        .orElse(BigDecimal.ZERO)
+
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal calculateTotalCostOperating(Consultation consultation) {
         return Stream.of(
-                Optional.ofNullable(consultation.getSales()).map(s -> s.getTotalSales().subtract(s.getProfitSale())).orElse(BigDecimal.ZERO),
-                Optional.ofNullable(consultation.getVaccination()).map(v -> v.getTotalByVaccination().subtract(v.getProfitByVaccination())).orElse(BigDecimal.ZERO),
-                Optional.ofNullable(consultation.getService()).map(PetCare::getTotalCostOperating).orElse(BigDecimal.ZERO)
+                Optional.ofNullable(consultation.getSales())
+                        .map(s -> s.getTotalSales().subtract(s.getProfitSale()))
+                        .orElse(BigDecimal.ZERO),
+
+                Optional.ofNullable(consultation.getVaccination())
+                        .map(v -> v.getTotalByVaccination().subtract(v.getProfitByVaccination()))
+                        .orElse(BigDecimal.ZERO),
+
+                Optional.ofNullable(consultation.getService())
+                        .map(PetCare::getTotalCostOperating)
+                        .orElse(BigDecimal.ZERO)
+
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal calculateTotalProfit(Consultation consultation) {
         return Stream.of(
-                Optional.ofNullable(consultation.getSales()).map(Sale::getProfitSale).orElse(BigDecimal.ZERO),
-                Optional.ofNullable(consultation.getVaccination()).map(Vaccination::getProfitByVaccination).orElse(BigDecimal.ZERO),
-                Optional.ofNullable(consultation.getService()).map(PetCare::getTotalProfit).orElse(BigDecimal.ZERO)
+                Optional.ofNullable(consultation.getSales())
+                        .map(Sale::getProfitSale)
+                        .orElse(BigDecimal.ZERO),
+
+                Optional.ofNullable(consultation.getVaccination())
+                        .map(Vaccination::getProfitByVaccination)
+                        .orElse(BigDecimal.ZERO),
+
+                Optional.ofNullable(consultation.getService())
+                        .map(PetCare::getTotalProfit)
+                        .orElse(BigDecimal.ZERO)
+
         ).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
