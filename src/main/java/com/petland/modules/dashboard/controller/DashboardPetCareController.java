@@ -1,7 +1,7 @@
 package com.petland.modules.dashboard.controller;
 
 import com.petland.common.exception.ErrorProcessingRequestException;
-import com.petland.modules.dashboard.model.Report;
+import com.petland.modules.dashboard.report.Report;
 import com.petland.modules.dashboard.service.PetCareReportsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

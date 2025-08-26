@@ -2,10 +2,12 @@ package com.petland.modules.petCare.dtos;
 
 import com.petland.common.entity.Address;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
 import java.util.List;
 import java.util.UUID;
 
+@Builder
 public record PetCareRequestDTO(@NotNull(message = "Pet ID is required")
                                 UUID petId,
 

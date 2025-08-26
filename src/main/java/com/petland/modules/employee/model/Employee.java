@@ -6,6 +6,7 @@ import com.petland.common.entity.enums.Roles;
 import com.petland.modules.employee.enums.Department;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Employee extends BaseEntity {
 
     @Id

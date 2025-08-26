@@ -2,12 +2,14 @@ package com.petland.modules.vaccination.dto;
 
 import com.petland.common.entity.Address;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Builder
 public record VaccinationRequestDTO(@NotNull(message = "Pet ID is required")
                                     UUID petId,
 

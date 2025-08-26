@@ -5,8 +5,6 @@ import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
-import com.petland.modules.employee.service.EmployeeService;
-import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;
 import com.petland.modules.sale.builder.SaleFilter;
 import com.petland.modules.sale.dtos.SaleRequestDTO;

@@ -1,8 +1,8 @@
 package com.petland.modules.dashboard.service;
 
 import com.petland.modules.dashboard.calculator.BillingCalculator;
-import com.petland.modules.dashboard.model.Report;
-import com.petland.modules.dashboard.report.BuilderReport;
+import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.builder.BuilderReport;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.service.PetCareService;
 import com.petland.modules.sale.model.Sale;

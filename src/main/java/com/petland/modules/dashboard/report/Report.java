@@ -1,4 +1,4 @@
-package com.petland.modules.dashboard.model;
+package com.petland.modules.dashboard.report;
 
 import com.petland.modules.employee.dto.EmployeeResponseReportDTO;
 import lombok.AllArgsConstructor;

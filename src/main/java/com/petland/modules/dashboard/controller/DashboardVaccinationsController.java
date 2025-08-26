@@ -1,10 +1,9 @@
 package com.petland.modules.dashboard.controller;
 
-import com.petland.modules.dashboard.model.Report;
+import com.petland.modules.dashboard.report.Report;
 import com.petland.modules.dashboard.service.VaccinationsReportsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

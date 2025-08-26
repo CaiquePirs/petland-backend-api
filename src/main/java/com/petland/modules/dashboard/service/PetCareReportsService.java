@@ -1,13 +1,12 @@
 package com.petland.modules.dashboard.service;
 
 import com.petland.common.exception.NotFoundException;
-import com.petland.modules.dashboard.model.Report;
-import com.petland.modules.dashboard.report.BuilderReport;
+import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.builder.BuilderReport;
 import com.petland.modules.petCare.calculator.PetCareCalculator;
 import com.petland.modules.petCare.enums.PetCareType;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.service.PetCareService;
-import com.petland.modules.vaccination.module.Vaccination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

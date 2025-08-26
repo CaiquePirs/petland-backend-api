@@ -3,6 +3,7 @@ package com.petland.modules.petCare.model;
 import com.petland.common.entity.BaseEntity;
 import com.petland.modules.petCare.enums.PetCareType;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Data
 @Table(name = "tb_petcare_details")
 @Entity
+@Builder
 public class PetCareDetails extends BaseEntity {
 
     @Id
