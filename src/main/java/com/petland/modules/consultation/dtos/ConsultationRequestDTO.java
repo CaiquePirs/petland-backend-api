@@ -5,9 +5,11 @@ import com.petland.modules.petCare.dtos.PetCareRequestDTO;
 import com.petland.modules.sale.dtos.SaleRequestDTO;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
 import java.util.UUID;
 
+@Builder
 public record ConsultationRequestDTO(
         @NotNull(message = "Customer ID is required")
         UUID customerId,
