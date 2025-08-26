@@ -29,36 +29,15 @@ public class CustomerRequestTest {
     private static Stream<Arguments> generateInvalidArguments(){
         Address address = new Address();
         return Stream.of(
-                Arguments.of(null, "test@gmail.com", "password1234",
-                        "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Name is required"
-                ),
-                Arguments.of("Test", null, "password1234",
-                        "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Email is required"
-                ),
-                Arguments.of("Test", "test.com", "password1234",
-                        "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Email must be valid"
-                ),
-                Arguments.of("Test", "test@gmail.com", null,
-                        "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Password is required"
-                ),
-                Arguments.of("Test", "test@gmail.com", "1234",
-                        "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Password must be up to 8 characters"
-                ),
-                Arguments.of("Test", "test@gmail.com", "password1234",
-                        null, LocalDate.of(2004, 04, 04), address, "Phone is required"
-                ),
-                Arguments.of("Test", "test@gmail.com", "1234",
-                        "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Password must be up to 8 characters"
-                ),
-                Arguments.of("Test", "test@gmail.com", "password1234",
-                        "90 0909-09992", null, address, "DateBirth is required"
-                ),
-                Arguments.of("Test", "test@gmail.com", "password1234",
-                        "90 0909-09992", LocalDate.now().plusDays(1), address, "The date cannot be in the future"
-                ),
-                Arguments.of("Test", "test@gmail.com", "password1234",
-                        "90 0909-09992", LocalDate.now().plusDays(1), null, "Address is required"
-                )
+                Arguments.of(null, "test@gmail.com", "password1234", "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Name is required"),
+                Arguments.of("Test", null, "password1234", "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Email is required"),
+                Arguments.of("Test", "test.com", "password1234", "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Email must be valid"),
+                Arguments.of("Test", "test@gmail.com", null, "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Password is required"),
+                Arguments.of("Test", "test@gmail.com", "1234", "90 0909-09992", LocalDate.of(2004, 04, 04), address, "Password must be up to 8 characters"),
+                Arguments.of("Test", "test@gmail.com", "password1234", null, LocalDate.of(2004, 04, 04), address, "Phone is required"),
+                Arguments.of("Test", "test@gmail.com", "password1234", "90 0909-09992", null, address, "DateBirth is required"),
+                Arguments.of("Test", "test@gmail.com", "password1234", "90 0909-09992", LocalDate.now().plusDays(1), address, "The date cannot be in the future"),
+                Arguments.of("Test", "test@gmail.com", "password1234", "90 0909-09992", LocalDate.now().plusDays(1), null, "Address is required")
         );
     }
 

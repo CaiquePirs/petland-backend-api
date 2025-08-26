@@ -22,36 +22,28 @@ public class EmployeeUpdateValidator {
             Address addressUpdated = addressValidator.validate(dto.addressDTO(), employee.getAddress());
             employee.setAddress(addressUpdated);
         }
-
         if(dto.name() != null && !dto.name().isBlank()){
             employee.setName(dto.name());
         }
-
         if(dto.email() != null && !dto.email().isBlank()){
             emailValidator.checkIfEmailExists(dto.email());
             employee.setEmail(dto.email());
         }
-
         if(dto.password() != null && !dto.password().isBlank()){
             employee.setPassword(passwordEncoder.encode(dto.password()));
         }
-
         if(dto.department() != null && !dto.department().toString().isBlank()){
             employee.setDepartment(dto.department());
         }
-
         if(dto.phone() != null && !dto.phone().isBlank()){
             employee.setPhone(dto.phone());
         }
-
         if(dto.dateBirth() != null){
             employee.setDateBirth(dto.dateBirth());
         }
-
         if(dto.hireDate() != null){
             employee.setHireDate(dto.hireDate());
         }
-
         if(dto.role() != null && !dto.role().toString().isBlank()){
             employee.setRole(dto.role());
         }
