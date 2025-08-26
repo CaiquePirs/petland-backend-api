@@ -33,14 +33,14 @@ import java.util.UUID;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final EmailValidator validateEmail;
+    private final EmailValidator emailValidator;
     private final CustomerMapper customerMapper;
     private final PasswordEncoder passwordEncoder;
     private final PetRepository petRepository;
     private final CustomerUpdateValidator updateValidator;
 
     public Customer register(CustomerRequestDTO customerRequestDTO){
-        validateEmail.checkIfEmailExists(customerRequestDTO.email());
+        emailValidator.checkIfEmailExists(customerRequestDTO.email());
         String encryptedPassword = passwordEncoder.encode(customerRequestDTO.password());
 
         Customer customer = customerMapper.toEntity(customerRequestDTO);

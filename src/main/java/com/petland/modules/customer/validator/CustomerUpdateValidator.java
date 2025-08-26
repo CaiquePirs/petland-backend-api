@@ -22,28 +22,22 @@ public class CustomerUpdateValidator {
             emailValidator.checkIfEmailExists(updateCustomer.email());
             customer.setEmail(updateCustomer.email());
         }
-
         if(updateCustomer.password() != null){
             customer.setPassword(passwordEncoder.encode(updateCustomer.password()));
         }
-
         if(updateCustomer.phone() != null){
             customer.setPhone(updateCustomer.phone());
         }
-
         if(updateCustomer.name() != null){
             customer.setName(updateCustomer.name());
         }
-
         if(updateCustomer.dateBirth() != null){
             customer.setDateBirth(updateCustomer.dateBirth());
         }
-
         Address addressUpdated = validateAddress.validate(
                 updateCustomer.addressDTO(),
                 customer.getAddress()
         );
-
         customer.setAddress(addressUpdated);
         return customer;
     }

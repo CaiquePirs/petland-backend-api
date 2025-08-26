@@ -6,10 +6,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 
+@Builder
 public record CustomerRequestDTO(@NotBlank(message = "Name is required")
                                  String name,
 
@@ -22,7 +24,6 @@ public record CustomerRequestDTO(@NotBlank(message = "Name is required")
                                  String password,
 
                                  @NotBlank(message = "Phone is required")
-                                 @Length(max = 17, message = "Cell phone number must be up to 17 numbers")
                                  String phone,
 
                                  @NotNull(message = "DateBirth is required")
