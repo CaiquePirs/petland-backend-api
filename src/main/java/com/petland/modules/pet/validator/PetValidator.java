@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class PetValidator {
 
     public void isPetOwner(Pet pet, Customer customer) {
-        if (customer.getMyPets() == null || pet == null || !customer.getMyPets().contains(pet)) {
+        if (customer.getMyPets().isEmpty() || pet.getOwner() == null || !customer.getMyPets().contains(pet)) {
             throw new UnauthorizedException("This pet does not belong to this customer");
         }
     }
