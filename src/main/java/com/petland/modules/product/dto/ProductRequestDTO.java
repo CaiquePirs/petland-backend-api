@@ -3,10 +3,12 @@ package com.petland.modules.product.dto;
 import com.petland.modules.product.enums.ProductType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Builder
 public record ProductRequestDTO(
         @NotBlank(message = "Name is required")
         String name,

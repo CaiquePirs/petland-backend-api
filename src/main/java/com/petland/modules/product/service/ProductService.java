@@ -26,14 +26,13 @@ import java.util.UUID;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
     private final EmployeeService employeeService;
     private final ProductMapper mapper;
     private final ProductUpdateValidator validator;
 
     public Product register(UUID employeeId, ProductRequestDTO productRequestDTO){
         Employee employee = employeeService.findById(employeeId);
-        Product product = productMapper.toEntity(productRequestDTO);
+        Product product = mapper.toEntity(productRequestDTO);
         product.setBarCode(UUID.randomUUID());
         product.setEmployee(employee);
         return productRepository.save(product);
@@ -73,6 +72,6 @@ public class ProductService {
         Product product = findById(productId);
         product = validator.validate(dto, product);
         productRepository.save(product);
-        return productMapper.toDTO(product);
+        return mapper.toDTO(product);
     }
 }
