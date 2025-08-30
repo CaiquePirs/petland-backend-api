@@ -1,4 +1,4 @@
-package com.petland.dashboard.service;
+package com.petland.dashboard;
 
 import com.petland.common.exception.NotFoundException;
 import com.petland.modules.dashboard.builder.BuilderReport;
