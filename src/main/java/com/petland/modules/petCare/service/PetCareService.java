@@ -79,10 +79,7 @@ public class PetCareService {
 
     public Page<PetCareHistoryResponseDTO> findAllByCustomerId(UUID customerId, Pageable pageable){
         Page<PetCare> petCareList = repository.findByCustomerId(customerId, pageable);
-
-        if(petCareList.getContent().isEmpty()){
-            throw new NotFoundException("Customer service history list not found");
-        }
+        if(petCareList.getContent().isEmpty()) throw new NotFoundException("Customer service history list not found");
         return petCareList.map(generateResponse::mapToCustomerServiceHistory);
     }
 
@@ -96,9 +93,7 @@ public class PetCareService {
         PetCare petCare = findById(petCareID);
 
         if(!petCare.getPetCareDetails().isEmpty()){
-            for(PetCareDetails details : petCare.getPetCareDetails()){
-                details.setStatus(StatusEntity.DELETED);
-            }
+            petCare.getPetCareDetails().forEach(d -> d.setStatus(StatusEntity.DELETED));
         }
         petCare.setStatus(StatusEntity.DELETED);
         repository.save(petCare);
@@ -110,12 +105,16 @@ public class PetCareService {
     }
 
     public List<PetCare> findAllByPeriod(LocalDate dateMin, LocalDate dateMax){
-        return repository.findAll(PetCareSpecification.reportSpecification(dateMin, dateMax)).stream()
-                        .filter(p -> !p.getStatus().equals(StatusEntity.DELETED)).toList();
+        return repository.findAll(PetCareSpecification.reportSpecification(dateMin, dateMax))
+                .stream()
+                .filter(p -> !p.getStatus().equals(StatusEntity.DELETED))
+                .toList();
     }
 
     public List<PetCare> findAllByPetCareType(PetCareType petCareType){
-        return repository.findAll(PetCareSpecification.findByServiceType(petCareType)).stream()
-                        .filter(p -> !p.getStatus().equals(StatusEntity.DELETED)).toList();
+        return repository.findAll(PetCareSpecification.findByServiceType(petCareType))
+                .stream()
+                .filter(p -> !p.getStatus().equals(StatusEntity.DELETED))
+                .toList();
     }
 }

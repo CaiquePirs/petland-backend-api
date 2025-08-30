@@ -19,13 +19,10 @@ public class GeneratePetCareResponse {
     private final PetCareDetailsMapper mapper;
 
     public PetCareResponseDTO generate(PetCare petCare) {
-        List<PetCareDetailsResponseDTO> detailsResponseList = generatePetCareDetailsList(
-                petCare.getPetCareDetails());
-
         return PetCareResponseDTO.builder()
                 .id(petCare.getId())
                 .location(petCare.getLocation())
-                .detailsResponseDTO(detailsResponseList)
+                .detailsResponseDTO(generatePetCareDetailsList(petCare.getPetCareDetails()))
                 .totalRevenue(petCare.getTotalRevenue())
                 .totalProfit(petCare.getTotalProfit())
                 .totalCostOperating(petCare.getTotalCostOperating())
@@ -54,35 +51,16 @@ public class GeneratePetCareResponse {
                 .toList();
     }
 
-    public PetCareHistoryResponseDTO mapToCustomerServiceHistory(PetCare petCare){
-        List<PetCareDetailsHistoryResponseDTO> serviceDetails = mapServiceDetails(petCare.getPetCareDetails());
-
+    public PetCareHistoryResponseDTO mapToCustomerServiceHistory(PetCare petCare) {
         return PetCareHistoryResponseDTO.builder()
                 .id(petCare.getId())
                 .petId(petCare.getPet().getId())
                 .employeeId(petCare.getEmployee().getId())
                 .customerId(petCare.getCustomer().getId())
                 .location(petCare.getLocation())
-                .detailsResponseDTO(serviceDetails)
+                .detailsResponseDTO(mapServiceDetails(petCare.getPetCareDetails()))
                 .serviceDate(petCare.getServiceDate())
                 .totalService(petCare.getTotalRevenue())
                 .build();
-    }
-
-    public List<PetCareHistoryResponseDTO> mapToListCustomerServiceHistory(List<PetCare> petCareList) {
-        return petCareList.stream().map(petCare -> {
-            List<PetCareDetailsHistoryResponseDTO> serviceDetails = mapServiceDetails(petCare.getPetCareDetails());
-
-            return PetCareHistoryResponseDTO.builder()
-                    .id(petCare.getId())
-                    .petId(petCare.getPet().getId())
-                    .employeeId(petCare.getEmployee().getId())
-                    .customerId(petCare.getCustomer().getId())
-                    .location(petCare.getLocation())
-                    .detailsResponseDTO(serviceDetails)
-                    .serviceDate(petCare.getServiceDate())
-                    .totalService(petCare.getTotalRevenue())
-                    .build();
-        }).toList();
     }
 }
