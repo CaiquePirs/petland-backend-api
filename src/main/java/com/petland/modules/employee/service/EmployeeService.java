@@ -47,7 +47,7 @@ public class EmployeeService {
     public Employee findById(UUID employeeId){
        return employeeRepository.findById(employeeId)
                 .filter(e -> !e.getStatus().equals(StatusEntity.DELETED))
-                .orElseThrow(() -> new NotFoundException("Employer not found"));
+                .orElseThrow(() -> new NotFoundException("Employee ID not found"));
     }
 
     public void deactivateById(UUID employeeId) {
@@ -57,8 +57,7 @@ public class EmployeeService {
     }
 
     public Page<EmployeeResponseDTO> listAllByFilter(EmployeeFilter filter, Pageable pageable){
-         return employeeRepository
-                 .findAll(EmployeeSpecification.Specification(filter), pageable)
+         return employeeRepository.findAll(EmployeeSpecification.Specification(filter), pageable)
                  .map(employeeMapper::toDTO);
     }
 

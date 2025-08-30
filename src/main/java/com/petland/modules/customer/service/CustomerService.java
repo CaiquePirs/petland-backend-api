@@ -52,7 +52,7 @@ public class CustomerService {
     public Customer findById(UUID customerId){
         return customerRepository.findById(customerId)
                 .filter(c -> !c.getStatus().equals(StatusEntity.DELETED))
-                .orElseThrow(() -> new NotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("Customer ID not found"));
     }
 
     @Transactional
@@ -64,9 +64,7 @@ public class CustomerService {
                 .orElse(Collections.emptyList());
 
         if (!petByCustomer.isEmpty()) {
-            for (Pet pet : petByCustomer) {
-                pet.setStatus(StatusEntity.DELETED);
-            }
+            petByCustomer.forEach(p -> p.setStatus(StatusEntity.DELETED));
             petRepository.saveAll(petByCustomer);
         }
         customerRepository.save(customer);

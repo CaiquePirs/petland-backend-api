@@ -47,7 +47,7 @@ public class PetService {
     public Pet findById(UUID petId) {
        return petRepository.findById(petId)
                 .filter(p -> !p.getStatus().equals(StatusEntity.DELETED))
-                .orElseThrow(() -> new NotFoundException("Pet not found"));
+                .orElseThrow(() -> new NotFoundException("Pet ID not found"));
     }
 
     public void deactivateById(UUID petId) {

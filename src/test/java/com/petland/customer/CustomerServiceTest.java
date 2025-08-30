@@ -109,7 +109,7 @@ public class CustomerServiceTest {
                 NotFoundException.class,
                 () -> customerService.findById(customerId)
         );
-        assertEquals("User not found", ex.getMessage());
+        assertEquals("Customer ID not found", ex.getMessage());
         verify(repository).findById(customerId);
     }
 
@@ -126,7 +126,7 @@ public class CustomerServiceTest {
                 NotFoundException.class,
                 () -> customerService.findById(customerId)
         );
-        assertEquals("User not found", ex.getMessage());
+        assertEquals("Customer ID not found", ex.getMessage());
         verify(repository).findById(customerId);
     }
 

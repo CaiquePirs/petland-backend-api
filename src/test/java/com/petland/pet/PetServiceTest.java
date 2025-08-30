@@ -81,14 +81,14 @@ public class PetServiceTest {
 
     @Test
     void shouldThrowExceptionWhenCustomerIsNotFound() {
-        doThrow(new NotFoundException("User not found"))
+        doThrow(new NotFoundException("Customer ID not found"))
                 .when(customerService).findById(petRequest.customerId());
 
         NotFoundException ex = assertThrows(
                 NotFoundException.class,
                 () -> petService.create(petRequest)
         );
-        assertEquals("User not found", ex.getMessage());
+        assertEquals("Customer ID not found", ex.getMessage());
 
         verify(customerService).findById(petRequest.customerId());
         verify(petRepository, never()).save(pet);
@@ -111,7 +111,7 @@ public class PetServiceTest {
         NotFoundException ex = assertThrows(NotFoundException.class,
                 ()-> petService.findById(petId)
         );
-        assertEquals("Pet not found", ex.getMessage());
+        assertEquals("Pet ID not found", ex.getMessage());
         verify(petRepository).findById(petId);
     }
 
@@ -123,7 +123,7 @@ public class PetServiceTest {
         NotFoundException ex = assertThrows(NotFoundException.class,
                 ()-> petService.findById(petId)
         );
-        assertEquals("Pet not found", ex.getMessage());
+        assertEquals("Pet ID not found", ex.getMessage());
         verify(petRepository).findById(petId);
     }
 
@@ -174,7 +174,7 @@ public class PetServiceTest {
 
     @Test
     public void shouldThrowExceptionWhenCustomerNotFound() {
-        when(customerService.findById(customerId)).thenThrow(new NotFoundException("Customer not found"));
+        when(customerService.findById(customerId)).thenThrow(new NotFoundException("Customer ID not found"));
 
         assertThrows(NotFoundException.class, () -> petService.getPetsByCustomerId(customerId));
 

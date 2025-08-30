@@ -108,7 +108,7 @@ class EmployeeServiceTest {
         when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(deletedEmployee));
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> employeeService.findById(employeeId));
-        assertEquals("Employer not found", exception.getMessage());
+        assertEquals("Employee ID not found", exception.getMessage());
 
         verify(employeeRepository).findById(employeeId);
     }
@@ -121,7 +121,7 @@ class EmployeeServiceTest {
         when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> employeeService.findById(employeeId));
-        assertEquals("Employer not found", exception.getMessage());
+        assertEquals("Employee ID not found", exception.getMessage());
 
         verify(employeeRepository).findById(employeeId);
     }
