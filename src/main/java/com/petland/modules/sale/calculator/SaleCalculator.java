@@ -13,7 +13,7 @@ public class SaleCalculator {
 
     public BigDecimal calculateTotalSale(int quantity, BigDecimal value){
         if (quantity < 0 || value == null || value.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Invalid values for calculation.");
+            throw new RuntimeException("Invalid values for calculation.");
         }
         return value.multiply(BigDecimal.valueOf(quantity));
     }
@@ -29,7 +29,8 @@ public class SaleCalculator {
     }
 
     public BigDecimal calculateTotalBilledByItemsSale(List<ItemsSale> listItemsSale){
-        return listItemsSale.stream()
+        return listItemsSale
+                .stream()
                 .map(ItemsSale::getItemsSaleTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
@@ -41,21 +42,20 @@ public class SaleCalculator {
     }
 
     public Integer sumQuantityItemsSale(List<Sale> sales) {
-        return sales.stream()
-                .mapToInt(sale -> sale.getItemsSale().size())
-                .sum();
+        return sales.stream().mapToInt(sale -> sale.getItemsSale().size()).sum();
     }
 
     public BigDecimal calculateProfitByItemsSale(List<ItemsSale> listItemsSale) {
-        return listItemsSale.stream()
+        return listItemsSale
+                .stream()
                 .map(ItemsSale::getProfit)
-                .reduce(BigDecimal.ZERO ,BigDecimal::add);
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal calculateProfitBySales(List<Sale> listSales) {
         return listSales.stream()
                 .map(Sale::getProfitSale)
-                .reduce(BigDecimal.ZERO ,BigDecimal::add);
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal calculateTotalCostProducts(List<Sale> sales){

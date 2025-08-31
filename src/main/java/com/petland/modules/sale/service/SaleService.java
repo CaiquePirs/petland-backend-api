@@ -78,7 +78,6 @@ public class SaleService {
                 .map(generate::generateSaleResponse);
     }
 
-
     public Page<SaleResponseDTO> findAllSalesByFilter(SaleFilter filter, Pageable pageable){
         return repository.findAll(SaleSpecifications.specifications(filter), pageable)
                 .map(generate::generateSaleResponse);
