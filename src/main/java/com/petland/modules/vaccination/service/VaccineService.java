@@ -48,9 +48,7 @@ public class VaccineService {
         if(vaccine.getStockQuantity() <= 0 || stockUsed > vaccine.getStockQuantity()){
             throw new InsufficientStockException("Vaccine stock is insufficient");
         }
-
-        int stockUpdated = vaccine.getStockQuantity() - stockUsed;
-        vaccine.setStockQuantity(stockUpdated);
+        vaccine.setStockQuantity(vaccine.getStockQuantity() - stockUsed);
         return vaccineRepository.save(vaccine);
     }
 
@@ -58,13 +56,6 @@ public class VaccineService {
         Vaccine vaccine = findById(vaccineId);
         vaccine.setStatus(StatusEntity.DELETED);
         vaccineRepository.save(vaccine);
-    }
-
-    public BigDecimal calculateProfitByVaccine(Vaccine vaccine){
-        if(vaccine.getPurchasePrice() == null || vaccine.getPriceSale() == null){
-            return BigDecimal.ZERO;
-        }
-        return vaccine.getPriceSale().subtract(vaccine.getPurchasePrice());
     }
 
     public Page<VaccineResponseDTO> filterAllVaccinesByFilter(VaccineFilter filter, Pageable pageable){

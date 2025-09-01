@@ -93,10 +93,7 @@ public class VaccinationService {
         Vaccination vaccination = findById(vaccinationId);
 
         if(!vaccination.getAppliedVaccines().isEmpty()){
-            for(AppliedVaccine appliedVaccine : vaccination.getAppliedVaccines()){
-                appliedVaccine.setStatus(StatusEntity.DELETED);
-            }
-            appliedVaccineRepository.saveAll(vaccination.getAppliedVaccines());
+            vaccination.getAppliedVaccines().forEach(a -> a.setStatus(StatusEntity.DELETED));
         }
         vaccination.setStatus(StatusEntity.DELETED);
         vaccinationRepository.save(vaccination);
@@ -109,18 +106,20 @@ public class VaccinationService {
 
     public Page<VaccinationResponseDTO> listAllVaccinationsByFilter(VaccinationFilter filter, Pageable pageable) {
         return vaccinationRepository.findAll(VaccinationSpecification.specifications(filter), pageable)
-                       .map(generateResponse::generate);
+                .map(generateResponse::generate);
     }
 
     public List<Vaccination> findAllVaccinationsByPeriod(LocalDate dateMin, LocalDate dateMax) {
         return vaccinationRepository.findAll(VaccinationSpecification.findByPeriod(dateMin, dateMax))
-                .stream().filter(v -> !v.getStatus().equals(StatusEntity.DELETED)).toList();
+                .stream()
+                .filter(v -> !v.getStatus().equals(StatusEntity.DELETED)).toList();
     }
 
     public List<Vaccination> findAllVaccinationsByVaccine(UUID vaccineId){
         Vaccine vaccine = vaccineService.findById(vaccineId);
         return vaccinationRepository.findAll(VaccinationSpecification.findByVaccine(vaccine))
-                .stream().filter(v -> !v.getStatus().equals(StatusEntity.DELETED)).toList();
+                .stream()
+                .filter(v -> !v.getStatus().equals(StatusEntity.DELETED)).toList();
     }
 
 }

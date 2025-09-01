@@ -30,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BillingCalculatorTest {
 
      private BillingCalculator billingCalculator;
-     @Mock private VaccineService vaccineService;
      @InjectMocks private VaccinationCalculator vaccinationCalculator;
 
      private List<Vaccination> vaccinations;
@@ -41,7 +40,7 @@ public class BillingCalculatorTest {
     void setUp() {
         SaleCalculator saleCalculator = new SaleCalculator();
         PetCareCalculator petCareCalculator = new PetCareCalculator();
-        vaccinationCalculator = new VaccinationCalculator(vaccineService);
+        vaccinationCalculator = new VaccinationCalculator();
         billingCalculator = new BillingCalculator(vaccinationCalculator, saleCalculator, petCareCalculator);
 
         vaccinations = new ArrayList<>();

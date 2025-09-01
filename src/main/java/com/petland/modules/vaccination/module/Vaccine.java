@@ -4,6 +4,7 @@ import com.petland.common.entity.BaseEntity;
 import com.petland.modules.vaccination.enums.VaccineType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Vaccine extends BaseEntity {
 
     @Id

@@ -18,19 +18,9 @@ public class VaccinationUpdateValidator {
             Address addressUpdated = addressValidator.validate(dto.location(), vaccination.getLocation());
             vaccination.setLocation(addressUpdated);
         }
-
-        if(dto.clinicalNotes() != null){
-            vaccination.setClinicalNotes(dto.clinicalNotes());
-        }
-
-        if(dto.vaccinationDate() != null){
-            vaccination.setVaccinationDate(dto.vaccinationDate());
-        }
-
-        if(dto.nextDoseDate() != null){
-            vaccination.setNextDoseDate(dto.nextDoseDate());
-        }
-
+        if(dto.clinicalNotes() != null) vaccination.setClinicalNotes(dto.clinicalNotes());
+        if(dto.vaccinationDate() != null) vaccination.setVaccinationDate(dto.vaccinationDate());
+        if(dto.nextDoseDate() != null) vaccination.setNextDoseDate(dto.nextDoseDate());
         return vaccination;
     }
 }

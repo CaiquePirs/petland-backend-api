@@ -1,11 +1,13 @@
 package com.petland.modules.vaccination.dto;
 
 import com.petland.modules.vaccination.enums.VaccineType;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Builder
 public record VaccineResponseDTO(UUID id,
                                  String lotNumber,
                                  String supplierName,
