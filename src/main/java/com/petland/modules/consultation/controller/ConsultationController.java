@@ -51,7 +51,6 @@ public class ConsultationController {
 
         Page<ConsultationResponseDTO> consultationResponseList = service.listAllConsultationsByFilter(
                 filter, PageRequest.of(page, size));
-
         return ResponseEntity.ok(consultationResponseList);
     }
 
@@ -66,12 +65,7 @@ public class ConsultationController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> toggleStatusConsultation(@PathVariable(name = "id") UUID consultationId,
                                                          @RequestParam(name = "status") ConsultationStatus status){
-        try {
             service.toggleStatusConsultation(consultationId, status);
             return ResponseEntity.noContent().build();
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

@@ -126,5 +126,6 @@ public class ConsultationService {
     public void toggleStatusConsultation(UUID consultationId, ConsultationStatus status){
         Consultation consultation = findById(consultationId);
         consultation.getDetails().setConsultationStatus(status);
+        repository.save(consultation);
     }
 }
