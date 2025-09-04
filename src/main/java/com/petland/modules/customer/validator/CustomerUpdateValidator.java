@@ -22,8 +22,10 @@ public class CustomerUpdateValidator {
             emailValidator.checkIfEmailExists(updateCustomer.email());
             customer.setEmail(updateCustomer.email());
         }
-        Address addressUpdated = validateAddress.validate(updateCustomer.addressDTO(), customer.getAddress());
-        customer.setAddress(addressUpdated);
+        if(updateCustomer.addressDTO() != null){
+            Address addressUpdated = validateAddress.validate(updateCustomer.addressDTO(), customer.getAddress());
+            customer.setAddress(addressUpdated);
+        }
 
         if(updateCustomer.password() != null) customer.setPassword(passwordEncoder.encode(updateCustomer.password()));
         if(updateCustomer.phone() != null) customer.setPhone(updateCustomer.phone());
