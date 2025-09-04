@@ -51,11 +51,13 @@ public class AppointmentController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
-    public ResponseEntity<byte []> rescheduleAppointmentById(
-            @PathVariable(name = "id" ) UUID appointmentId,
-            @RequestBody @Valid AppointmentUpdateDTO requestDTO){
-
-        Appointment appointment = service.rescheduleAppointment(appointmentId, requestDTO.appointmentDate(), requestDTO.appointmentHour());
+    public ResponseEntity<byte []> rescheduleAppointmentById(@PathVariable(name = "id" ) UUID appointmentId,
+                                                             @RequestBody @Valid AppointmentUpdateDTO requestDTO){
+        Appointment appointment = service.rescheduleAppointment(
+                appointmentId,
+                requestDTO.appointmentDate(),
+                requestDTO.appointmentHour()
+        );
         byte[] appointmentScheduledPDF = generatorPDF.generate(appointment);
 
         return ResponseEntity.ok()

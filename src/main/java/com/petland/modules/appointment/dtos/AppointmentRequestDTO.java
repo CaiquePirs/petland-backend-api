@@ -4,11 +4,13 @@ import com.petland.modules.appointment.model.enums.AppointmentStatus;
 import com.petland.modules.consultation.enums.ServiceType;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
+@Builder
 public record AppointmentRequestDTO(@NotNull(message = "Customer ID is required")
                                     UUID customerId,
 

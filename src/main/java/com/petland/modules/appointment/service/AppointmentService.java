@@ -78,18 +78,13 @@ public class AppointmentService {
     public void cancelAppointment(UUID appointmentId){
         Appointment appointment = findAppointmentById(appointmentId);
         accessValidator.isOwnerOrAdmin(appointment.getCustomer().getId());
-
         appointment.setAppointmentStatus(AppointmentStatus.CANCELED);
         repository.save(appointment);
     }
 
     public void toggleStatusAppointment(UUID appointmentId, String status){
         Appointment appointment = findAppointmentById(appointmentId);
-
-        if(status.equals(AppointmentStatus.CANCELED.toString())){
-            cancelAppointment(appointmentId);
-        }
-
+        if(status.equals(AppointmentStatus.CANCELED.toString())) cancelAppointment(appointmentId);
         appointment.setAppointmentStatus(AppointmentStatus.valueOf(status));
         repository.save(appointment);
     }
