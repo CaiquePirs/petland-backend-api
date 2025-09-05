@@ -1,7 +1,6 @@
 package com.petland.modules.customer.controller;
 
 import com.petland.common.auth.validator.AccessValidator;
-import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.customer.builder.CustomerFilter;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.dto.UpdateCustomerDTO;
@@ -24,14 +23,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private final CustomerService customerService;
+    private final CustomerService service;
     private final CustomerMapper customerMapper;
     private final AccessValidator accessValidator;
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CustomerResponseDTO> findCustomerById(@PathVariable(name = "id") UUID customerId){
-        Customer customer = customerService.findById(customerId);
+        Customer customer = service.findById(customerId);
         return ResponseEntity.ok(customerMapper.toDTO(customer));
     }
 
@@ -39,7 +38,7 @@ public class CustomerController {
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
     public ResponseEntity<Void> deactivateCustomerById(@PathVariable(name = "id") UUID customerId){
         accessValidator.isOwnerOrAdmin(customerId);
-        customerService.deactivateById(customerId);
+        service.deactivateById(customerId);
         return ResponseEntity.noContent().build();
     }
 
@@ -47,21 +46,20 @@ public class CustomerController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<CustomerResponseDTO>> listAllCustomersByFilter(
             @ModelAttribute CustomerFilter filter,
-            @RequestParam(value = "size", defaultValue = "0") @Min(0) int page,
+            @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
             @RequestParam(value = "size", defaultValue = "10") @Min(1) int size){
 
-        Page<CustomerResponseDTO> customersResponseDTO = customerService.listAllByFilter(
-                filter, PageRequest.of(page, size)
-        );
-        return ResponseEntity.ok(customersResponseDTO);
+        return ResponseEntity.ok(service.listAllByFilter(filter, PageRequest.of(page, size)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
-    public ResponseEntity<CustomerResponseDTO> updateCustomerById(@PathVariable(name = "id") UUID customerId,
-                                                              @RequestBody @Valid UpdateCustomerDTO updateCustomerDTO){
+    public ResponseEntity<CustomerResponseDTO> updateCustomerById(
+            @PathVariable(name = "id") UUID customerId,
+            @RequestBody @Valid UpdateCustomerDTO updateCustomerDTO){
+
         accessValidator.isOwnerOrAdmin(customerId);
-        Customer customer = customerService.updateById(customerId, updateCustomerDTO);
+        Customer customer = service.updateById(customerId, updateCustomerDTO);
         return ResponseEntity.ok(customerMapper.toDTO(customer));
     }
 }

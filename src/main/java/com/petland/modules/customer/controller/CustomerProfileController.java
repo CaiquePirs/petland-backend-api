@@ -55,8 +55,7 @@ public class CustomerProfileController {
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<List<PetResponseDTO>> getMyPets(){
         List<PetResponseDTO> myPets = petService.getPetsByCustomerId(accessValidator.getLoggedInUser())
-                .stream()
-                .map(petMapper::toDTO).toList();
+                .stream().map(petMapper::toDTO).toList();
         return ResponseEntity.ok(myPets);
     }
 
@@ -82,7 +81,6 @@ public class CustomerProfileController {
         Page<PetCareHistoryResponseDTO> servicesHistoryList = petCareService.findAllByCustomerId(
                 accessValidator.getLoggedInUser(), PageRequest.of(page, size)
         );
-
         return ResponseEntity.ok(servicesHistoryList);
     }
 
