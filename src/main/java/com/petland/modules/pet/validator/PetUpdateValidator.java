@@ -12,9 +12,9 @@ public class PetUpdateValidator {
         if(petUpdateDTO.weight() != null) pet.setWeight(petUpdateDTO.weight());
         if(petUpdateDTO.breed() != null && !petUpdateDTO.breed().isBlank()) pet.setBreed(petUpdateDTO.breed());
         if(petUpdateDTO.name() != null && !petUpdateDTO.name().isBlank()) pet.setName(petUpdateDTO.name());
-        if(petUpdateDTO.breed() != null && !petUpdateDTO.breed().isBlank()) pet.setBreed(petUpdateDTO.breed());
         if(petUpdateDTO.specie() != null && !petUpdateDTO.specie().toString().isBlank()) pet.setSpecie(petUpdateDTO.specie());
-        if(petUpdateDTO.gender() != null && !petUpdateDTO.gender().toString().isBlank()) pet.setBreed(petUpdateDTO.breed());
+        if(petUpdateDTO.gender() != null && !petUpdateDTO.gender().toString().isBlank()) pet.setGender(petUpdateDTO.gender());
+        if(petUpdateDTO.dateBirth() != null) pet.setDateBirth(petUpdateDTO.dateBirth());
         return pet;
     }
 }

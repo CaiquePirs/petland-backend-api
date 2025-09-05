@@ -70,6 +70,4 @@ public class PetController {
         Pet pet = petService.updateById(petId, petUpdateDTO);
         return ResponseEntity.ok(petMapper.toDTO(pet));
     }
-
-
 }

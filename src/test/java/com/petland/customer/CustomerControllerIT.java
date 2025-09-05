@@ -201,7 +201,7 @@ public class CustomerControllerIT {
 
         UUID customerId = customer.getId();
 
-        UpdateCustomerDTO updaterDTO = UpdateCustomerDTO.builder()
+        UpdateCustomerDTO updateDTO = UpdateCustomerDTO.builder()
                 .name("Customer Name")
                 .phone("(000) 00 0000-0000")
                 .email("customer@gmail.com")
@@ -210,7 +210,7 @@ public class CustomerControllerIT {
 
         mockMvc.perform(put("/customers/" + customerId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updaterDTO))
+                        .content(objectMapper.writeValueAsString(updateDTO))
                         .with(request -> {
                             request.setAttribute("id", customer.getId());
                             return request;
@@ -221,10 +221,10 @@ public class CustomerControllerIT {
 
                     assertNotEquals(customer.getEmail(), response.email());
                     assertEquals(customer.getId(), response.id());
-                    assertEquals(updaterDTO.name(), response.name());
-                    assertEquals(updaterDTO.phone(), response.phone());
-                    assertEquals(updaterDTO.email(), response.email());
-                    assertEquals(updaterDTO.dateBirth(), response.dateBirth());
+                    assertEquals(updateDTO.name(), response.name());
+                    assertEquals(updateDTO.phone(), response.phone());
+                    assertEquals(updateDTO.email(), response.email());
+                    assertEquals(updateDTO.dateBirth(), response.dateBirth());
                 });
     }
 
