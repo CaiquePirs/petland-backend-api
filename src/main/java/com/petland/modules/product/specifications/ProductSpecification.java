@@ -35,9 +35,6 @@ public class ProductSpecification {
             if (filter.getStockMin() != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("stockQuantity"), filter.getStockMin()));
             }
-            if(filter.getStatus() != null){
-                predicates.add(cb.equal(cb.lower(root.get("status")), filter.getStatus()));
-            }
             if (filter.getStatus() != null) {
                 predicates.add(cb.equal(root.get("status"), filter.getStatus()));
             }
