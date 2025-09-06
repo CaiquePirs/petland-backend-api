@@ -17,9 +17,7 @@ import com.petland.modules.employee.repository.EmployeeRepository;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.repository.PetRepository;
 import com.petland.utils.TestUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,7 +42,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class AppointmentControllerIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class AppointmentIntegrationTest {
 
     @Autowired private MockMvc mockMvc;
     @Autowired private ObjectMapper objectMapper;
@@ -58,7 +57,7 @@ class AppointmentControllerIT {
     private Employee employee;
 
     @BeforeEach
-    void setUp() {
+    void cleanBeforeTest() {
         appointmentRepository.deleteAll();
         employeeRepository.deleteAll();
         customerRepository.deleteAll();
@@ -72,6 +71,15 @@ class AppointmentControllerIT {
         customerRepository.save(customer);
         employeeRepository.save(employee);
     }
+
+    @AfterEach
+    void cleanAfterTest(){
+        appointmentRepository.deleteAll();
+        employeeRepository.deleteAll();
+        customerRepository.deleteAll();
+        petRepository.deleteAll();
+    }
+
 
     @Test
     @WithMockUser(roles = "CUSTOMER")

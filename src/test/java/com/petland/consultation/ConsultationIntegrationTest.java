@@ -29,8 +29,10 @@ import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
 import com.petland.modules.vaccination.module.Vaccine;
 import com.petland.modules.vaccination.repository.VaccineRepository;
 import com.petland.utils.TestUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -53,7 +55,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class ConsultationControllerIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class ConsultationIntegrationTest {
 
     @Autowired private CustomerRepository customerRepository;
     @Autowired private PetRepository petRepository;
@@ -71,7 +74,7 @@ public class ConsultationControllerIT {
     private Product product;
 
     @BeforeEach
-    void setUp() {
+    void cleanBeforeTest() {
         customerRepository.deleteAll();
         petRepository.deleteAll();
         productRepository.deleteAll();
@@ -90,6 +93,16 @@ public class ConsultationControllerIT {
         product.setEmployee(employee);
         productRepository.save(product);
         vaccineRepository.save(vaccine);
+    }
+
+    @AfterEach
+    void cleanAfterTest(){
+        consultationRepository.deleteAll();
+        petRepository.deleteAll();
+        customerRepository.deleteAll();
+        productRepository.deleteAll();
+        vaccineRepository.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     private SaleRequestDTO saleRequest(){

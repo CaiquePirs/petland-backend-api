@@ -9,15 +9,19 @@ import com.petland.modules.employee.enums.Department;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.repository.EmployeeRepository;
 import com.petland.utils.TestUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,14 +36,20 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @SpringBootTest
-public class EmployeeControllerIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class EmployeeIntegrationTest {
 
     @Autowired ObjectMapper objectMapper;
     @Autowired EmployeeRepository employeeRepository;
     @Autowired MockMvc mockMvc;
 
     @BeforeEach
-    void setUp(){
+    void cleanBeforeTest(){
+        employeeRepository.deleteAll();
+    }
+
+    @AfterEach
+    void cleanAfterTest(){
         employeeRepository.deleteAll();
     }
 

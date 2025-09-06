@@ -10,9 +10,7 @@ import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.repository.EmployeeRepository;
 import com.petland.utils.TestUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,7 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles(profiles = "test")
 @AutoConfigureMockMvc
-public class CustomerControllerIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class CustomerIntegrationTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired ObjectMapper objectMapper;
@@ -43,12 +42,18 @@ public class CustomerControllerIT {
     private Employee employee;
 
     @BeforeEach
-    void setUp(){
+    void cleanBeforeTest(){
         customerRepository.deleteAll();
         employeeRepository.deleteAll();
 
         employee = TestUtils.employee();
         employeeRepository.save(employee);
+    }
+
+    @AfterEach
+    void cleanAfterTest(){
+        customerRepository.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     @Test

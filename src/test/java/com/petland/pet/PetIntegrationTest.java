@@ -14,9 +14,7 @@ import com.petland.modules.pet.enums.PetSpecies;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.repository.PetRepository;
 import com.petland.utils.TestUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,7 +35,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles(profiles = "test")
 @AutoConfigureMockMvc
-public class PetControllerIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class PetIntegrationTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired ObjectMapper objectMapper;
@@ -46,7 +45,14 @@ public class PetControllerIT {
     @Autowired PetRepository petRepository;
 
     @BeforeEach
-    void setUp(){
+    void cleanBeforeTest(){
+        petRepository.deleteAll();
+        customerRepository.deleteAll();
+        employeeRepository.deleteAll();
+    }
+
+    @AfterEach
+    void cleanAfterAll(){
         petRepository.deleteAll();
         customerRepository.deleteAll();
         employeeRepository.deleteAll();

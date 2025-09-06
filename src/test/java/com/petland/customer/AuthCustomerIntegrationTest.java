@@ -11,6 +11,7 @@ import com.petland.modules.customer.repository.CustomerRepository;
 import com.petland.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles(profiles = "test")
 @AutoConfigureMockMvc
-public class AuthCustomerControllerIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class AuthCustomerIntegrationTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired PasswordEncoder passwordEncoder;
@@ -36,7 +38,7 @@ public class AuthCustomerControllerIT {
     @Autowired ObjectMapper objectMapper;
 
     @BeforeEach
-    void setUp(){
+    void cleanBeforeTest(){
         customerRepository.deleteAll();
     }
 

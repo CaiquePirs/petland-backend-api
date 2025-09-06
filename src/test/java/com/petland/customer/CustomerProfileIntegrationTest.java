@@ -22,8 +22,10 @@ import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.SaleRepository;
 import com.petland.utils.TestUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,7 +44,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class CustomerProfileControllerIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class CustomerProfileIntegrationTest {
 
     @Autowired private MockMvc mockMvc;
     @Autowired private ObjectMapper objectMapper;
@@ -56,16 +59,31 @@ public class CustomerProfileControllerIT {
     @Autowired private AppointmentRepository appointmentRepository;
 
     @BeforeEach
-    void setUp(){
+    void cleanBeforeTest(){
         saleRepository.deleteAll();
         consultationRepository.deleteAll();
         appointmentRepository.deleteAll();
         productRepository.deleteAll();
         petCareRepository.deleteAll();
 
+        productRepository.deleteAll();
         employeeRepository.deleteAll();
-        customerRepository.deleteAll();
         petRepository.deleteAll();
+        customerRepository.deleteAll();
+    }
+
+    @AfterEach
+    void cleanAfterTest(){
+        saleRepository.deleteAll();
+        consultationRepository.deleteAll();
+        appointmentRepository.deleteAll();
+        productRepository.deleteAll();
+        petCareRepository.deleteAll();
+
+        productRepository.deleteAll();
+        employeeRepository.deleteAll();
+        petRepository.deleteAll();
+        customerRepository.deleteAll();
     }
 
     private Sale sale() {
