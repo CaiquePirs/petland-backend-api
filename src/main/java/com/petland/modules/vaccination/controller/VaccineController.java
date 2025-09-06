@@ -23,27 +23,27 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class VaccineController {
 
-    private final VaccineService vaccineService;
-    private final VaccineMapper vaccineMapper;
+    private final VaccineService service;
+    private final VaccineMapper mapper;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VaccineResponseDTO> create(@RequestBody @Valid VaccineRequestDTO vaccineRequestDTO){
-        Vaccine vaccine = vaccineService.create(vaccineRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(vaccineMapper.toDTO(vaccine));
+        Vaccine vaccine = service.create(vaccineRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(vaccine));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VaccineResponseDTO> findVaccineById(@PathVariable(name = "id") UUID vaccineId){
-        Vaccine vaccine = vaccineService.findById(vaccineId);
-        return ResponseEntity.ok(vaccineMapper.toDTO(vaccine));
+        Vaccine vaccine = service.findById(vaccineId);
+        return ResponseEntity.ok(mapper.toDTO(vaccine));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deactivateVaccineById(@PathVariable(name = "id") UUID vaccineId){
-        vaccineService.deactivateById(vaccineId);
+        service.deactivateById(vaccineId);
         return ResponseEntity.noContent().build();
     }
 
@@ -54,7 +54,7 @@ public class VaccineController {
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
 
-        Page<VaccineResponseDTO> vaccinesListPage = vaccineService.filterAllVaccinesByFilter(
+        Page<VaccineResponseDTO> vaccinesListPage = service.filterAllVaccinesByFilter(
                filter, PageRequest.of(page, size)
         );
         return ResponseEntity.ok(vaccinesListPage);
@@ -64,7 +64,7 @@ public class VaccineController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VaccineResponseDTO> updateVaccineByID(@PathVariable(name = "id") UUID vaccineId,
                                                                 @RequestBody VaccineUpdateDTO dto){
-        Vaccine vaccine = vaccineService.updateById(vaccineId, dto);
-        return ResponseEntity.ok(vaccineMapper.toDTO(vaccine));
+        Vaccine vaccine = service.updateById(vaccineId, dto);
+        return ResponseEntity.ok(mapper.toDTO(vaccine));
     }
 }

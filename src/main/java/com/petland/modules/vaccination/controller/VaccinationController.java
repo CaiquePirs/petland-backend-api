@@ -1,6 +1,5 @@
 package com.petland.modules.vaccination.controller;
 
-import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.vaccination.builder.VaccinationFilter;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
 import com.petland.modules.vaccination.dto.VaccinationResponseDTO;
@@ -12,13 +11,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
@@ -26,32 +23,31 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class VaccinationController {
 
-    private final VaccinationService vaccinationService;
-    private final GenerateVaccinationResponse generateVaccinationResponse;
+    private final VaccinationService service;
+    private final GenerateVaccinationResponse response;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VaccinationResponseDTO> register(@RequestBody VaccinationRequestDTO vaccinationRequestDTO){
-        Vaccination vaccination = vaccinationService.register(vaccinationRequestDTO);
-        VaccinationResponseDTO vaccinationResponseDTO = generateVaccinationResponse.generate(vaccination);
+        Vaccination vaccination = service.register(vaccinationRequestDTO);
+        VaccinationResponseDTO vaccinationResponseDTO = response.generate(vaccination);
         return ResponseEntity.status(HttpStatus.CREATED).body(vaccinationResponseDTO);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<VaccinationResponseDTO> findVaccinationById(@PathVariable(name = "id") UUID vaccinationId){
-        Vaccination vaccination = vaccinationService.findById(vaccinationId);
-        VaccinationResponseDTO vaccinationResponse = generateVaccinationResponse.generate(vaccination);
+        Vaccination vaccination = service.findById(vaccinationId);
+        VaccinationResponseDTO vaccinationResponse = response.generate(vaccination);
         return ResponseEntity.ok(vaccinationResponse);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deactivateVaccinationById(@PathVariable(name = "id") UUID vaccinationId){
-     vaccinationService.deactivateById(vaccinationId);
+     service.deactivateById(vaccinationId);
      return ResponseEntity.noContent().build();
     }
-
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -59,8 +55,8 @@ public class VaccinationController {
             @RequestBody @Valid VaccinationUpdateDTO dto,
             @PathVariable(name = "id") UUID vaccinationId){
 
-        Vaccination vaccination = vaccinationService.updateById(dto, vaccinationId);
-        return ResponseEntity.ok(generateVaccinationResponse.generate(vaccination));
+        Vaccination vaccination = service.updateById(dto, vaccinationId);
+        return ResponseEntity.ok(response.generate(vaccination));
     }
 
     @GetMapping
@@ -70,7 +66,7 @@ public class VaccinationController {
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size){
 
-        Page<VaccinationResponseDTO> vaccinationList = vaccinationService.listAllVaccinationsByFilter(
+        Page<VaccinationResponseDTO> vaccinationList = service.listAllVaccinationsByFilter(
                 filter, PageRequest.of(page, size)
         );
         return ResponseEntity.ok(vaccinationList);
