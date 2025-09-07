@@ -1,4 +1,4 @@
-package com.petland.employee;
+package com.petland.employee.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petland.common.auth.dto.AuthRequestDTO;

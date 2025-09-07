@@ -1,4 +1,4 @@
-package com.petland.customer;
+package com.petland.customer.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petland.modules.appointment.model.Appointment;

@@ -1,4 +1,4 @@
-package com.petland.appointments;
+package com.petland.appointments.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petland.common.exception.NotFoundException;

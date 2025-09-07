@@ -1,4 +1,4 @@
-package com.petland.pet;
+package com.petland.pet.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petland.common.entity.enums.StatusEntity;

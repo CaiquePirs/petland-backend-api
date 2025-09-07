@@ -1,4 +1,4 @@
-package com.petland.vaccination;
+package com.petland.vaccination.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petland.common.entity.dto.UpdateAddressDTO;
