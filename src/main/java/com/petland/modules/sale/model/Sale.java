@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -39,8 +40,9 @@ public class Sale extends BaseEntity {
 
     private BigDecimal profitSale;
 
+    private LocalDate dateSale = LocalDate.now();
+
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
-
 }
 

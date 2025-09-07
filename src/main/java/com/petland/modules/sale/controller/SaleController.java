@@ -21,29 +21,29 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SaleController {
 
-    private final SaleService saleService;
-    private final GenerateSaleResponse generateSaleResponse;
+    private final SaleService service;
+    private final GenerateSaleResponse response;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SaleResponseDTO> create(@RequestBody SaleRequestDTO saleRequestDTO){
-        Sale sale = saleService.registerSale(saleRequestDTO);
-        SaleResponseDTO saleResponseDTO = generateSaleResponse.generateSaleResponse(sale);
+        Sale sale = service.registerSale(saleRequestDTO);
+        SaleResponseDTO saleResponseDTO = response.generateSaleResponse(sale);
         return ResponseEntity.status(HttpStatus.CREATED).body(saleResponseDTO);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SaleResponseDTO> findSaleById(@PathVariable(name = "id") UUID saleId){
-        Sale sale = saleService.findSaleById(saleId);
-        SaleResponseDTO saleResponse = generateSaleResponse.generateSaleResponse(sale);
+        Sale sale = service.findSaleById(saleId);
+        SaleResponseDTO saleResponse = response.generateSaleResponse(sale);
         return ResponseEntity.ok(saleResponse);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deactivateSaleById(@PathVariable(name = "id") UUID saleId){
-        saleService.deactivateSaleById(saleId);
+        service.deactivateSaleById(saleId);
         return ResponseEntity.noContent().build();
     }
 
@@ -54,11 +54,10 @@ public class SaleController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
-        Page<SaleResponseDTO> salesList = saleService.findSalesByCustomerId(
+        Page<SaleResponseDTO> sales = service.findSalesByCustomerId(
                 customerId, PageRequest.of(page, size)
         );
-
-        return ResponseEntity.ok(salesList);
+        return ResponseEntity.ok(sales);
     }
 
     @GetMapping
@@ -68,10 +67,10 @@ public class SaleController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size){
 
-        Page<SaleResponseDTO> salesList = saleService.findAllSalesByFilter(
+        Page<SaleResponseDTO> sales = service.findAllSalesByFilter(
                 filter ,PageRequest.of(page, size)
         );
-        return ResponseEntity.ok(salesList);
+        return ResponseEntity.ok(sales);
     }
 
 }

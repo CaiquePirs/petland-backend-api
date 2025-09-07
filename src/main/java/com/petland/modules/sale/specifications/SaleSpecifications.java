@@ -33,8 +33,8 @@ public class SaleSpecifications {
             if (filter.getTotalSalesMax() != null) {
                 predicates.add(cb.lessThanOrEqualTo(root.get("totalSales"), filter.getTotalSalesMax()));
             }
-            if(filter.getStatus() != null){
-                predicates.add(cb.equal(cb.lower(root.get("status")), filter.getStatus()));
+            if (filter.getStatus() != null) {
+                predicates.add(cb.equal(root.get("status"), filter.getStatus()));
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
@@ -44,8 +44,8 @@ public class SaleSpecifications {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (dateMin != null && dateMax != null) {
-                predicates.add(cb.between(root.get("createAt"), dateMin, dateMax));
+            if(dateMin != null || dateMax !=null){
+                predicates.add(cb.between(root.get("dateSale"), dateMin, dateMax));
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
