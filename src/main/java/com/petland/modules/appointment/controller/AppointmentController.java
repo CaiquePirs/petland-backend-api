@@ -1,5 +1,6 @@
 package com.petland.modules.appointment.controller;
 
+import com.petland.docs.AppointmentControllerDOC;
 import com.petland.modules.appointment.builder.AppointmentFilter;
 import com.petland.modules.appointment.dtos.AppointmentRequestDTO;
 import com.petland.modules.appointment.dtos.AppointmentResponseDTO;
@@ -24,7 +25,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/appointments")
 @RequiredArgsConstructor
-public class AppointmentController {
+public class AppointmentController implements AppointmentControllerDOC {
 
     private final AppointmentService service;
     private final SendAppointmentViaPDF generatorPDF;
