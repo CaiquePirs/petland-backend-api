@@ -22,7 +22,6 @@ public class DashboardBillingController {
     private final BillingReportsService billingReport;
     private final SendReportViaPDF sendReportViaPDF;
 
-
     @GetMapping("/by-period")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Report> generateTotalRevenueReport(

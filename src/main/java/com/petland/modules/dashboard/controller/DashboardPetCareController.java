@@ -1,8 +1,8 @@
 package com.petland.modules.dashboard.controller;
 
-import com.petland.common.exception.ErrorProcessingRequestException;
 import com.petland.modules.dashboard.report.Report;
 import com.petland.modules.dashboard.service.PetCareReportsService;
+import com.petland.modules.petCare.enums.PetCareType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class DashboardPetCareController {
 
-    private final PetCareReportsService reportsService;
+    private final PetCareReportsService service;
 
     @GetMapping("/by-period")
     @PreAuthorize("hasRole('ADMIN')")
@@ -27,19 +27,14 @@ public class DashboardPetCareController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateMin,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate dateMax){
 
-        Report report = reportsService.totalByPeriod(dateMin, dateMax);
+        Report report = service.totalByPeriod(dateMin, dateMax);
         return ResponseEntity.ok(report);
     }
 
     @GetMapping("/by-service-type")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Report> generateServiceReportByType(@RequestParam(value = "type", required = false) String serviceType){
-        try {
-            Report report = reportsService.totalByServiceType(serviceType.toUpperCase());
+    public ResponseEntity<Report> generateServiceReportByType(@RequestParam(value = "type", required = false) PetCareType petCareType){
+            Report report = service.totalByServiceType(petCareType);
             return ResponseEntity.ok(report);
-
-        }catch (IllegalArgumentException e){
-            throw new ErrorProcessingRequestException("Error processing request. Try entering a valid service type");
-        }
     }
 }

@@ -124,7 +124,7 @@ public class PetCareReportsServiceTest {
         when(builder.generate(totalBilled, totalProfit, sumItemsSold, totalCostOperating)).thenReturn(report());
 
         Report reportExpected = report();
-        Report result = petCareReportsService.totalByServiceType(String.valueOf(petCareType));
+        Report result = petCareReportsService.totalByServiceType(petCareType);
 
         assertAll(
                 () -> assertNotNull(petCares),
@@ -149,7 +149,7 @@ public class PetCareReportsServiceTest {
 
         NotFoundException ex = assertThrows(
                 NotFoundException.class,
-                () -> petCareReportsService.totalByServiceType(String.valueOf(petCareType))
+                () -> petCareReportsService.totalByServiceType(petCareType)
         );
         assertEquals("PetCare list reports not found", ex.getMessage());
 

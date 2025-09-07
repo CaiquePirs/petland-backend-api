@@ -1,6 +1,7 @@
 package com.petland.modules.dashboard.service;
 
 import com.petland.common.exception.NotFoundException;
+import com.petland.modules.consultation.enums.ServiceType;
 import com.petland.modules.dashboard.report.Report;
 import com.petland.modules.dashboard.builder.BuilderReport;
 import com.petland.modules.petCare.calculator.PetCareCalculator;
@@ -27,8 +28,8 @@ public class PetCareReportsService {
         return generate(petCareServices);
     }
 
-    public Report totalByServiceType(String petCareType){
-        List<PetCare> petCareServices = service.findAllByPetCareType(PetCareType.valueOf(petCareType));
+    public Report totalByServiceType(PetCareType petCareType){
+        List<PetCare> petCareServices = service.findAllByPetCareType(petCareType);
         return generate(petCareServices);
     }
 
