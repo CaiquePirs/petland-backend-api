@@ -23,6 +23,16 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers( "/auth/**").permitAll()
+                            .requestMatchers("/actuator/**").permitAll()
+                            .requestMatchers(
+                                    "/v3/api-docs/**",
+                                    "/v3/api-docs.yaml",
+                                    "/swagger-ui/**",
+                                    "/swagger-ui.html",
+                                    "/swagger-ui/index.html",
+                                    "/swagger-resources/**",
+                                    "/webjars/**"
+                            ).permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtAuthFilter, BasicAuthenticationFilter.class);
