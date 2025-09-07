@@ -1,5 +1,6 @@
 package com.petland.modules.consultation.controller;
 
+import com.petland.docs.ConsultationControllerDOC;
 import com.petland.modules.consultation.builder.ConsultationFilter;
 import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
@@ -22,7 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/consultations")
 @RequiredArgsConstructor
-public class ConsultationController {
+public class ConsultationController implements ConsultationControllerDOC {
 
     private final ConsultationService service;
     private final GenerateConsultationResponse generate;

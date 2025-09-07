@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InsufficientStockException.class)
     public ResponseEntity<ErrorResponseDTO> handleInsufficientStock(InsufficientStockException e){
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
-                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                HttpStatus.CONFLICT.value(),
                 e.getMessage(),
                 List.of(new ErrorMessageDTO("Stock", e.getMessage())));
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);
