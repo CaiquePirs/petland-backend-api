@@ -1,8 +1,8 @@
 package com.petland.modules.pet.controller;
 
 import com.petland.common.auth.validator.AccessValidator;
-import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.pet.builder.PetFilter;
+import com.petland.modules.pet.doc.PetApi;
 import com.petland.modules.pet.dto.PetRequestDTO;
 import com.petland.modules.pet.dto.PetResponseDTO;
 import com.petland.modules.pet.dto.PetUpdateDTO;
@@ -24,7 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/pets")
 @RequiredArgsConstructor
-public class PetController {
+public class PetController implements PetApi {
 
     private final PetService petService;
     private final PetMapper petMapper;
