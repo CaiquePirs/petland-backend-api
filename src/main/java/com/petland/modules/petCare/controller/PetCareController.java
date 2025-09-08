@@ -1,6 +1,7 @@
 package com.petland.modules.petCare.controller;
 
 import com.petland.modules.petCare.builder.PetCareFilter;
+import com.petland.modules.petCare.doc.PetCareApi;
 import com.petland.modules.petCare.dtos.PetCareRequestDTO;
 import com.petland.modules.petCare.dtos.PetCareResponseDTO;
 import com.petland.modules.petCare.model.PetCare;
@@ -24,7 +25,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/petcare/services")
 @RequiredArgsConstructor
-public class PetCareController {
+public class PetCareController implements PetCareApi {
 
     private final PetCareService petCareService;
     private final GeneratePetCareResponse petCareResponse;

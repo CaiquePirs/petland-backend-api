@@ -26,7 +26,7 @@ import java.util.UUID;
 @Tag(name = "Consultation", description = "Endpoints to manage consultations")
 public interface ConsultationApi {
 
-    @Operation(summary = "Register Consultation")
+    @Operation(summary = "Consultation Register")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
@@ -36,7 +36,7 @@ public interface ConsultationApi {
 
             @ApiResponse(
                     responseCode = "404",
-                    description = "Not not found",
+                    description = "Not found",
                     content = @Content(
                             schema = @Schema(implementation = ErrorResponseDTO.class),
                             examples = @ExampleObject(value = """

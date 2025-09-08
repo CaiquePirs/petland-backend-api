@@ -10,7 +10,9 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
+@Builder
 @Schema(description = "Request DTO used to create or update an appointment.")
 public record AppointmentRequestDTO(
 
