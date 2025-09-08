@@ -77,7 +77,7 @@ public class VaccineRequestTest {
                         new VaccineRequestDTO("123", "Supplier", VaccineType.RABIES,
                                 BigDecimal.TEN, BigDecimal.ONE, 10,
                                 LocalDate.now(), null),
-                        "expiration Date is required"
+                        "Expiration Date is required"
                 )
         );
     }
