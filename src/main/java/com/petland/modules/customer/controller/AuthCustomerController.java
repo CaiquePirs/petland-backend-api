@@ -2,6 +2,7 @@ package com.petland.modules.customer.controller;
 
 import com.petland.common.auth.dto.AuthRequestDTO;
 import com.petland.common.auth.dto.AuthResponseDTO;
+import com.petland.docs.AuthCustomerControllerDOC;
 import com.petland.modules.customer.dto.CustomerRequestDTO;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth/customers")
 @RequiredArgsConstructor
-public class AuthCustomerController {
+public class AuthCustomerController implements AuthCustomerControllerDOC {
 
     private final AuthCustomerUseCase authCustomerUseCase;
     private final CustomerService customerService;

@@ -1,6 +1,7 @@
 package com.petland.modules.customer.controller;
 
 import com.petland.common.auth.validator.AccessValidator;
+import com.petland.docs.CustomerControllerDOC;
 import com.petland.modules.customer.builder.CustomerFilter;
 import com.petland.modules.customer.dto.CustomerResponseDTO;
 import com.petland.modules.customer.dto.UpdateCustomerDTO;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/customers")
 @RequiredArgsConstructor
-public class CustomerController {
+public class CustomerController implements CustomerControllerDOC {
 
     private final CustomerService service;
     private final CustomerMapper customerMapper;
