@@ -1,6 +1,7 @@
 package com.petland.modules.vaccination.controller;
 
 import com.petland.modules.vaccination.builder.VaccinationFilter;
+import com.petland.modules.vaccination.doc.VaccinationApi;
 import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
 import com.petland.modules.vaccination.dto.VaccinationResponseDTO;
 import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/vaccinations")
 @RequiredArgsConstructor
-public class VaccinationController {
+public class VaccinationController implements VaccinationApi {
 
     private final VaccinationService service;
     private final GenerateVaccinationResponse response;
