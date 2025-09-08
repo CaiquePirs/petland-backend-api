@@ -2,6 +2,7 @@ package com.petland.modules.employee.controller;
 
 import com.petland.common.auth.dto.AuthRequestDTO;
 import com.petland.common.auth.dto.AuthResponseDTO;
+import com.petland.modules.employee.doc.AuthEmployeeApi;
 import com.petland.modules.employee.dto.EmployeeRequestDTO;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth/employees")
 @RequiredArgsConstructor
-public class AuthEmployeeController {
+public class AuthEmployeeController implements AuthEmployeeApi {
 
     private final AuthEmployeeUseCase authEmployeeUseCase;
     private final EmployeeMapper employeeMapper;

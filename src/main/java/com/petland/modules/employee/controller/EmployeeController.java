@@ -1,6 +1,7 @@
 package com.petland.modules.employee.controller;
 
 import com.petland.modules.employee.builder.EmployeeFilter;
+import com.petland.modules.employee.doc.EmployeeApi;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.dto.EmployeeUpdateDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/employees")
 @RequiredArgsConstructor
-public class EmployeeController {
+public class EmployeeController implements EmployeeApi {
 
     private final HttpServletRequest request;
     private final EmployeeService employeeService;
