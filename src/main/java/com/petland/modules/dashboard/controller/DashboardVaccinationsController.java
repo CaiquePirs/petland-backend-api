@@ -1,5 +1,6 @@
 package com.petland.modules.dashboard.controller;
 
+import com.petland.modules.dashboard.doc.DashboardVaccinationsApi;
 import com.petland.modules.dashboard.report.Report;
 import com.petland.modules.dashboard.service.VaccinationsReportsService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/dashboard/reports/vaccinations")
 @RequiredArgsConstructor
-public class DashboardVaccinationsController {
+public class DashboardVaccinationsController implements DashboardVaccinationsApi {
 
     private final VaccinationsReportsService generator;
 

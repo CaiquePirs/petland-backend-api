@@ -1,5 +1,6 @@
 package com.petland.modules.dashboard.controller;
 
+import com.petland.modules.dashboard.doc.DashboardBillingApi;
 import com.petland.modules.dashboard.report.Report;
 import com.petland.modules.dashboard.service.BillingReportsService;
 import com.petland.modules.dashboard.strategy.impl.SendReportViaPDF;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/dashboard/reports")
 @RequiredArgsConstructor
-public class DashboardBillingController {
+public class DashboardBillingController implements DashboardBillingApi {
 
     private final BillingReportsService billingReport;
     private final SendReportViaPDF sendReportViaPDF;

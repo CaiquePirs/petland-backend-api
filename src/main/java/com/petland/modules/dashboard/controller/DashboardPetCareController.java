@@ -1,5 +1,6 @@
 package com.petland.modules.dashboard.controller;
 
+import com.petland.modules.dashboard.doc.DashboardPetCareApi;
 import com.petland.modules.dashboard.report.Report;
 import com.petland.modules.dashboard.service.PetCareReportsService;
 import com.petland.modules.petCare.enums.PetCareType;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/dashboard/reports/pet-care")
 @RequiredArgsConstructor
-public class DashboardPetCareController {
+public class DashboardPetCareController implements DashboardPetCareApi {
 
     private final PetCareReportsService service;
 

@@ -1,5 +1,6 @@
 package com.petland.modules.dashboard.controller;
 
+import com.petland.modules.dashboard.doc.DashboardSalesApi;
 import com.petland.modules.dashboard.report.Report;
 import com.petland.modules.dashboard.service.SalesReportsService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/dashboard/reports/sales")
 @RequiredArgsConstructor
-public class DashboardSalesController {
+public class DashboardSalesController implements DashboardSalesApi {
 
     private final SalesReportsService saleReport;
 
