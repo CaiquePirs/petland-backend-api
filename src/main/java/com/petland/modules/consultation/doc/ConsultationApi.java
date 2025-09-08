@@ -120,7 +120,7 @@ public interface ConsultationApi {
     })
     ResponseEntity<ConsultationResponseDTO> findConsultationById(@PathVariable(name = "id") UUID consultationId);
 
-    @Operation(summary = "List all consultations")
+    @Operation(summary = "List All Consultations")
     ResponseEntity<Page<ConsultationResponseDTO>> findAllConsultationsByFilter(
             @ModelAttribute ConsultationFilter filter,
             @RequestParam(required = false, defaultValue = "0") @Min(0) int page,

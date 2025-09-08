@@ -1,7 +1,6 @@
 package com.petland.modules.petCare.doc;
 
 import com.petland.common.error.ErrorResponseDTO;
-import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
 import com.petland.modules.petCare.builder.PetCareFilter;
 import com.petland.modules.petCare.dtos.PetCareRequestDTO;
 import com.petland.modules.petCare.dtos.PetCareResponseDTO;
@@ -25,12 +24,7 @@ public interface PetCareApi {
 
     @Operation(summary = "Petcare Register")
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "Petcare registered successfully",
-                    content = @Content(schema = @Schema(implementation = ConsultationResponseDTO.class))
-            ),
-
+            @ApiResponse(responseCode = "201", description = "Petcare registered successfully"),
             @ApiResponse(
                     responseCode = "404",
                     description = "Not found",

@@ -28,8 +28,7 @@ public interface SaleApi {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Sale registered successfully",
-                    content = @Content(schema = @Schema(implementation = ConsultationResponseDTO.class))
+                    description = "Sale registered successfully"
             ),
 
             @ApiResponse(
@@ -93,8 +92,7 @@ public interface SaleApi {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Sale found successfully",
-                    content = @Content(schema = @Schema(implementation = ConsultationResponseDTO.class))
+                    description = "Sale found successfully"
             ),
 
             @ApiResponse(
