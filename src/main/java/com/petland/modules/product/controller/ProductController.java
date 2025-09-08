@@ -1,6 +1,7 @@
 package com.petland.modules.product.controller;
 
 import com.petland.modules.product.builder.ProductFilter;
+import com.petland.modules.product.doc.ProductApi;
 import com.petland.modules.product.dto.ProductRequestDTO;
 import com.petland.modules.product.dto.ProductResponseDTO;
 import com.petland.modules.product.dto.ProductUpdateDTO;
@@ -22,7 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
-public class ProductController {
+public class ProductController implements ProductApi {
 
     private final HttpServletRequest request;
     private final ProductService productService;

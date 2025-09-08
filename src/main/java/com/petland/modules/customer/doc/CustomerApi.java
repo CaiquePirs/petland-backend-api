@@ -67,6 +67,7 @@ public interface CustomerApi {
 
 
     @Operation(summary = "List All Customer By Filter")
+    @ApiResponse(responseCode = "200")
     ResponseEntity<Page<CustomerResponseDTO>> listAllCustomersByFilter(
             @ModelAttribute CustomerFilter filter,
             @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
@@ -110,8 +111,5 @@ public interface CustomerApi {
     ResponseEntity<CustomerResponseDTO> updateCustomerById(
             @PathVariable(name = "id") UUID customerId,
             @RequestBody @Valid UpdateCustomerDTO updateCustomerDTO);
-
-
-
 
 }
