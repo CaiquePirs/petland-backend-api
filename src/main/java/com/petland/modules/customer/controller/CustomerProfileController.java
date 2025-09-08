@@ -1,7 +1,7 @@
 package com.petland.modules.customer.controller;
 
 import com.petland.common.auth.validator.AccessValidator;
-import com.petland.docs.CustomerProfileControllerDOC;
+import com.petland.modules.customer.doc.CustomerProfileApi;
 import com.petland.modules.appointment.dtos.AppointmentResponseDTO;
 import com.petland.modules.appointment.service.AppointmentService;
 import com.petland.modules.consultation.dtos.ConsultationHistoryResponseDTO;
@@ -33,7 +33,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/customers/me")
 @RequiredArgsConstructor
-public class CustomerProfileController implements CustomerProfileControllerDOC {
+public class CustomerProfileController implements CustomerProfileApi {
 
     private final AccessValidator accessValidator;
     private final CustomerService customerService;

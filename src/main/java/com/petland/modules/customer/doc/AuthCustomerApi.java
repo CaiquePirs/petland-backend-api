@@ -1,4 +1,4 @@
-package com.petland.docs;
+package com.petland.modules.customer.doc;
 
 import com.petland.common.auth.dto.AuthRequestDTO;
 import com.petland.common.auth.dto.AuthResponseDTO;
@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "Customer Authentication", description = "endpoints to managing customer authentication")
-public interface AuthCustomerControllerDOC {
+public interface AuthCustomerApi {
 
     @Operation(summary = "Customer Login")
     @ApiResponses(value = {

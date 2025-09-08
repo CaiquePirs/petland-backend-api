@@ -1,4 +1,4 @@
-package com.petland.docs;
+package com.petland.modules.appointment.doc;
 
 import com.petland.common.error.ErrorResponseDTO;
 import com.petland.modules.appointment.builder.AppointmentFilter;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.UUID;
 
 @Tag(name = "Appointment", description = "Endpoints to manage appointments")
-public interface AppointmentControllerDOC {
+public interface AppointmentApi {
 
     @Operation(summary = "Schedule a new appointment")
     @ApiResponses(value = {

@@ -1,4 +1,4 @@
-package com.petland.docs;
+package com.petland.modules.consultation.doc;
 
 import com.petland.common.error.ErrorResponseDTO;
 import com.petland.modules.consultation.builder.ConsultationFilter;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.UUID;
 
 @Tag(name = "Consultation", description = "Endpoints to manage consultations")
-public interface ConsultationControllerDOC {
+public interface ConsultationApi {
 
     @Operation(summary = "Register Consultation")
     @ApiResponses(value = {

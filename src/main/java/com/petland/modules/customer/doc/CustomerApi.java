@@ -1,4 +1,4 @@
-package com.petland.docs;
+package com.petland.modules.customer.doc;
 
 import com.petland.common.error.ErrorResponseDTO;
 import com.petland.modules.customer.builder.CustomerFilter;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.UUID;
 
 @Tag(name = "Customer", description = "Endpoints for managing customers")
-public interface CustomerControllerDOC {
+public interface CustomerApi {
 
     @Operation(summary = "Find Customer By ID")
     @ApiResponses(value = {

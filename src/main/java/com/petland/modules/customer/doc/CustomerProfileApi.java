@@ -1,4 +1,4 @@
-package com.petland.docs;
+package com.petland.modules.customer.doc;
 
 import com.petland.common.error.ErrorResponseDTO;
 import com.petland.modules.appointment.dtos.AppointmentResponseDTO;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Tag(name = "Customer Profile", description = "Endpoints for managing authenticated customer profiles")
-public interface CustomerProfileControllerDOC {
+public interface CustomerProfileApi {
 
     @Operation(summary = "Get Profile", description = "Get the profile of the logged in customer ")
     @ApiResponses(value = {
