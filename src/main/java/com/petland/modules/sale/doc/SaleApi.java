@@ -1,10 +1,10 @@
-package com.petland.modules.consultation.doc;
+package com.petland.modules.sale.doc;
 
 import com.petland.common.error.ErrorResponseDTO;
-import com.petland.modules.consultation.builder.ConsultationFilter;
-import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
-import com.petland.modules.consultation.enums.ConsultationStatus;
+import com.petland.modules.sale.builder.SaleFilter;
+import com.petland.modules.sale.dtos.SaleRequestDTO;
+import com.petland.modules.sale.dtos.SaleResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -12,8 +12,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
 
-@Tag(name = "Consultation", description = "Endpoints to manage consultations")
-public interface ConsultationApi {
+@Tag(name = "Sale", description = "Endpoints for managing sales")
+public interface SaleApi {
 
-    @Operation(summary = "Consultation Register")
+    @Operation(summary = "Sale Register")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Consultation registered successfully",
+                    description = "Sale registered successfully",
                     content = @Content(schema = @Schema(implementation = ConsultationResponseDTO.class))
             ),
 
@@ -47,8 +45,7 @@ public interface ConsultationApi {
                         { "field": "Not Found", "message": "Customer ID not found" },
                         { "field": "Not Found", "message": "Pet ID not found" },
                         { "field": "Not Found", "message": "Employee ID not found" },
-                        { "field": "Not Found", "message": "Product ID not found" },
-                        { "field": "Not Found", "message": "Vaccine ID not found" },
+                        { "field": "Not Found", "message": "Product ID not found" }
                       ]
                     }
                 """)
@@ -65,7 +62,6 @@ public interface ConsultationApi {
                       "status": 401,
                       "message": "Unauthorized",
                       "errors": [
-                        { "field": "Unauthorized", "message": "The sale must be registered to the same customer as the one associated with the consultation."},
                         { "field": "Unauthorized", "message": "This pet does not belong to the customer" },
                         { "field": "Unauthorized", "message": "User not authorized" }
                       ]
@@ -76,7 +72,7 @@ public interface ConsultationApi {
 
             @ApiResponse(
                     responseCode = "409",
-                    description = "Error Consultation",
+                    description = "Error Sale",
                     content = @Content(
                             schema = @Schema(implementation = ErrorResponseDTO.class),
                             examples = @ExampleObject(value = """
@@ -84,21 +80,20 @@ public interface ConsultationApi {
                       "status": 409,
                       "message": "Stock Insufficient",
                       "errors": [
-                        { "field": "Stock Insufficient", "message": "Product stock is insufficient" },
-                        { "field": "Stock Insufficient", "message": "Vaccine stock is insufficient" }
+                        { "field": "Stock Insufficient", "message": "Product stock is insufficient" }
                       ]
                     }
                 """)
                     )
             )
     })
-    ResponseEntity<ConsultationResponseDTO> registerConsultation(@RequestBody @Valid ConsultationRequestDTO requestDTO);
+    ResponseEntity<SaleResponseDTO> create(@RequestBody SaleRequestDTO saleRequestDTO);
 
-    @Operation(summary = "Find Consultation By ID")
+    @Operation(summary = "Find Sale By ID")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Consultation found successfully",
+                    description = "Sale found successfully",
                     content = @Content(schema = @Schema(implementation = ConsultationResponseDTO.class))
             ),
 
@@ -110,25 +105,19 @@ public interface ConsultationApi {
                             examples = @ExampleObject(value = """
                     {
                       "status": 404,
-                      "message": "Consultation ID not found",
+                      "message": "Sale ID not found",
                       "errors": [
-                        { "field": "Not Found", "message": "Consultation ID not found" }
+                        { "field": "Not Found", "message": "Sale ID not found" }
                       ]
                     }
                 """))
             ),
     })
-    ResponseEntity<ConsultationResponseDTO> findConsultationById(@PathVariable(name = "id") UUID consultationId);
+    ResponseEntity<SaleResponseDTO> findSaleById(@PathVariable(name = "id") UUID saleId);
 
-    @Operation(summary = "List all consultations")
-    ResponseEntity<Page<ConsultationResponseDTO>> findAllConsultationsByFilter(
-            @ModelAttribute ConsultationFilter filter,
-            @RequestParam(required = false, defaultValue = "0") @Min(0) int page,
-            @RequestParam(required = false, defaultValue = "10") @Min(1) int size);
-
-    @Operation(summary = "Deactivate Consultation")
+    @Operation(summary = "Deactivate Sale")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Consultation deactivate successfully"),
+            @ApiResponse(responseCode = "204", description = "Sale deactivate successfully"),
             @ApiResponse(
                     responseCode = "404",
                     description = "Not found",
@@ -137,20 +126,19 @@ public interface ConsultationApi {
                             examples = @ExampleObject(value = """
                     {
                       "status": 404,
-                      "message": "Consultation ID not found",
+                      "message": "Sale ID not found",
                       "errors": [
-                        { "field": "Not Found", "message": "Consultation ID not found" }
+                        { "field": "Not Found", "message": "Sale ID not found" }
                       ]
                     }
                 """))
             ),
     })
-    ResponseEntity<Void> deactivateConsultationById(@PathVariable(name = "id") UUID consultationId);
+    ResponseEntity<Void> deactivateSaleById(@PathVariable(name = "id") UUID saleId);
 
-
-    @Operation(summary = "Toggle Consultation Status")
+    @Operation(summary = "List Sales By Customer")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Status consultation toggle successfully"),
+            @ApiResponse(responseCode = "200", description = "List sales found successfully"),
             @ApiResponse(
                     responseCode = "404",
                     description = "Not found",
@@ -159,16 +147,17 @@ public interface ConsultationApi {
                             examples = @ExampleObject(value = """
                     {
                       "status": 404,
-                      "message": "Consultation ID not found",
+                      "message": "Customer ID not found",
                       "errors": [
-                        { "field": "Not Found", "message": "Consultation ID not found" }
+                        { "field": "Not Found", "message": "Customer ID not found" }
                       ]
                     }
                 """))
             ),
     })
-    ResponseEntity<Void> toggleStatusConsultation(@PathVariable(name = "id") UUID consultationId,
-                                                  @RequestParam(name = "status") ConsultationStatus status);
+    ResponseEntity<Page<SaleResponseDTO>> findSalesByCustomerId(@PathVariable(name = "id") UUID customerId, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size);
 
+    @Operation(summary = "List all Sales")
+    ResponseEntity<Page<SaleResponseDTO>> findAllSalesByFilter(@ModelAttribute SaleFilter filter, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size);
 
 }

@@ -1,5 +1,6 @@
 package com.petland.modules.sale.controller;
 
+import com.petland.modules.sale.doc.ItemSaleApi;
 import com.petland.modules.sale.dtos.ItemsSaleResponseDTO;
 import com.petland.modules.sale.mappers.ItemSaleMapper;
 import com.petland.modules.sale.model.ItemsSale;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/sales/{saleId}/items")
 @RequiredArgsConstructor
-public class ItemsSaleController {
+public class ItemsSaleController implements ItemSaleApi {
 
     private final ItemsSaleService itemsSaleService;
     private final ItemSaleMapper itemSaleMapper;

@@ -1,6 +1,7 @@
 package com.petland.modules.sale.controller;
 
 import com.petland.modules.sale.builder.SaleFilter;
+import com.petland.modules.sale.doc.SaleApi;
 import com.petland.modules.sale.dtos.SaleRequestDTO;
 import com.petland.modules.sale.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.Sale;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/sales")
 @RequiredArgsConstructor
-public class SaleController {
+public class SaleController implements SaleApi {
 
     private final SaleService service;
     private final GenerateSaleResponse response;
