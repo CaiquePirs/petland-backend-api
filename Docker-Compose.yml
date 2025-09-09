@@ -5,14 +5,32 @@ networks:
     driver: bridge
 
 services:
+  petland:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: petland_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - petland_network
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SECRET_KEY: ${SECRET_KEY}
+      SECRET_KEY_EMPLOYEE: ${SECRET_KEY_EMPLOYEE}
+
   postgres:
     image: postgres:15
-    container_name: ${DB_NAME}
+    container_name: petland_db
     restart: always
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     networks:
@@ -23,8 +41,8 @@ services:
     container_name: pgadmin_container
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PG_USER}
-      PGADMIN_DEFAULT_PASSWORD: ${PG_PASSWORD}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "5050:80"
     depends_on:
