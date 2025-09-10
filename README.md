@@ -1,187 +1,189 @@
 # 🐾 Petland Backend API
 
-Welcome to **Petland**, a robust and scalable backend API designed for managing operations of a modern pet shop. Built with Java and Spring Boot, this system handles everything from customer and pet management to product sales, service scheduling, and vaccination tracking. It’s modular, secure, and production-ready.
+Bem-vindo ao **Petland**, uma API backend robusta e escalável desenvolvida para gerenciar as operações de um pet shop moderno. Construída com Java e Spring Boot, esta aplicação cuida de tudo: desde o gerenciamento de clientes e pets até vendas de produtos, agendamento de serviços e controle de vacinas. É modular, segura e pronta para produção.
 
 ---
 
-## 🚀 Project Overview
+## 🚀 Visão Geral do Projeto
 
-Petland is a backend solution tailored for pet shop businesses. It centralizes operations such as:
+Petland é uma solução backend voltada para negócios de pet shop. Ela centraliza operações como:
 
-- 📦 Inventory control (products and vaccines)
-- 👥 Customer and employee management
-- 🐾 Pet registration and tracking
-- 🛁 Scheduling and managing pet care services (grooming, checkups, lab tests)
-- 💰 Product sales and billing
-- 💉 Vaccination tracking
-- 📊 Revenue and service reporting
-
----
-
-## 🧩 Tech Stack
-
-| Layer              | Technology                          |
-|-------------------|-------------------------------------|
-| Language           | Java                                |
-| Framework          | Spring Boot                         |
-| Security           | Spring Security + JWT               |
-| Architecture       | Layered (Domain-Driven Design)      |
-| Containerization   | Docker + Docker Compose             |
-| Documentation      | Swagger                             |
-| Testing            | JUnit + Unitary e Integration Tests |
-| Database           | Relational (e.g., PostgreSQL)       |
+- 📦 Controle de estoque (produtos e vacinas)
+- 👥 Gerenciamento de clientes e funcionários
+- 🐾 Cadastro e rastreamento de pets
+- 🛁 Agendamento e gerenciamento de serviços pet (tosa, consultas, exames)
+- 💰 Vendas de produtos e faturamento
+- 💉 Controle de vacinação
+- 📊 Relatórios de receita e serviços
+- 🗓️ Geração de PDFs para agendamentos e relatórios financeiros
 
 ---
 
-## 📚 Features
+## 🧩 Stack Tecnológica
 
-### 🐶 Pet Management
-- Register multiple pets per customer
-- Track pet details: name, breed, age, species, weight
-- Link pets to services and purchases
-
-### 👤 Customer Management
-- Email validation and secure login
-- View service history, purchases, and appointments
-
-### 🧼 Services & Appointments
-- Schedule services like grooming, bathing, medical checkups
-- Enforce time constraints (min 1h before, max 30 days ahead)
-- Cancel or reschedule appointments
-- Generate appointment PDFs
-
-### 💼 Employee Management
-- Assign employees to departments (MEDICAL, CARE, etc.)
-- Audit employee actions and updates
-
-### 🛍️ Product & Sales
-- Manage product inventory, expiration, pricing
-- Handle multi-item sales with payment methods (CASH, CREDIT_CARD)
-- Update stock on purchase
-
-### 💉 Vaccination Tracking
-- Register vaccines and vaccination events
-- Link vaccinations to pets and customers
-
-### 📊 Reporting & Dashboards
-- Sales reports by product, vaccine, or period
-- Service usage reports
-- PDF export of financial summaries
-
-### 🔐 Security
-- Role-based access (ADMIN, CUSTOMER)
-- JWT authentication with token expiration
-- Soft delete for data integrity and traceability
+| Camada             | Tecnologia                            |
+|--------------------|----------------------------------------|
+| Linguagem          | Java                                   |
+| Framework          | Spring Boot                            |
+| Segurança          | Spring Security + JWT                  |
+| Arquitetura        | Camadas (Domain-Driven Design)         |
+| Conteinerização    | Docker + Docker Compose                |
+| Documentação       | Swagger                                |
+| Testes             | JUnit + Testes Unitários e de Integração |
+| Banco de Dados     | Relacional (ex: PostgreSQL)            |
 
 ---
 
-## 📘 API Endpoints Overview
+## 📚 Funcionalidades
 
-### Customer
-- Create, Read by ID, Update, Delete
-- List all customers
-- Find pets, sales, services, consultations, appointments by customer
+### 🐶 Gestão de Pets
+- Cadastro de múltiplos pets por cliente
+- Rastreamento de dados: nome, raça, idade, espécie, peso
+- Associação de pets a serviços e compras
+
+### 👤 Gestão de Clientes
+- Validação de e-mail e login seguro
+- Visualização de histórico de serviços, compras e agendamentos
+
+### 🧼 Serviços & Agendamentos
+- Agendamento de serviços como banho, tosa, consultas médicas
+- Regras de tempo (mínimo 1h antes, máximo 30 dias à frente)
+- Cancelamento ou reagendamento
+- Geração de PDFs de agendamentos
+
+### 💼 Gestão de Funcionários
+- Atribuição de funcionários a departamentos (MÉDICO, CUIDADOS, etc.)
+- Auditoria de ações e atualizações
+
+### 🛍️ Produtos & Vendas
+- Gerenciamento de estoque, validade e preços
+- Vendas com múltiplos itens e métodos de pagamento (DINHEIRO, CARTÃO)
+- Atualização de estoque após compra
+
+### 💉 Controle de Vacinação
+- Cadastro de vacinas e eventos de vacinação
+- Associação de vacinas a pets e clientes
+
+### 📊 Relatórios & Dashboards
+- Relatórios de vendas por produto, vacina ou período
+- Relatórios de vendas de serviços e vaccinações
+- Exportação de resumos financeiros em PDF
+
+### 🔐 Segurança
+- Acesso baseado em papéis (ADMIN, CLIENTE)
+- Autenticação com JWT e expiração de token
+- Soft delete para integridade e rastreabilidade dos dados
+
+---
+
+## 📘 Visão Geral de alguns Endpoints da API
+
+### Cliente
+- Criar, Buscar por ID, Atualizar, Excluir
+- Listar todos os clientes
+- Buscar pets, vendas, serviços, consultas e agendamentos por cliente
 
 ### Pet
-- Create, Read by ID, Update, Delete
-- List all pets
+- Criar, Buscar por ID, Atualizar, Excluir
+- Listar todos os pets
 
-### Employee
-- Create, Read by ID, Update, Delete
-- List employees with filters
+### Funcionário
+- Criar, Buscar por ID, Atualizar, Excluir
+- Listar funcionários com filtros
 
-### Product
-- Create, Read by ID, Update, Delete
-- Update stock
-- List all products
+### Produto
+- Criar, Buscar por ID, Atualizar, Excluir
+- Atualizar estoque
+- Listar todos os produtos
 
-### Sale & ItemSale
-- Create, Read by ID, Delete
-- List all sales
-- Manage sale items
+### Venda & ItemVenda
+- Criar, Buscar por ID, Excluir
+- Listar todas as vendas
+- Gerenciar itens da venda
 
-### Vaccination & Vaccine
-- Create, Read by ID, Update, Delete
-- List all vaccinations and vaccines
+### Vacinação & Vacina
+- Criar, Buscar por ID, Atualizar, Excluir
+- Listar todas as vacinações e vacinas
 
-### PetCare Services
-- Create, Read by ID or Customer, Delete
-- Paginated list of services
+### Serviços PetCare
+- Criar, Buscar por ID ou Cliente, Excluir
+- Listagem paginada de serviços
 
-### Consultations
-- Create, Read by ID
-- List by customer ID or paginated with filters
+### Consultas
+- Criar, Buscar por ID
+- Listar por ID do cliente ou com filtros paginados
 
-### Appointment
-- Schedule, Reschedule, Cancel
-- Toggle status
-- Read by ID
-- List by filters or customer
-
----
-
-## 📂 Business Rules
-
-- **Soft Delete**: Entities marked as `DELETED` to preserve history
-- **Audit Logging**: Tracks who modified what and when
-- **Status Control**: Entities use `EntityStatus` for lifecycle management
-- **Error Handling**: Structured responses via `ErrorMessageDTO` and `ErrorResponseDTO`
+### Agendamento
+- Agendar, Reagendar, Cancelar
+- Alternar status
+- Buscar por ID
+- Listar por filtros ou cliente
 
 ---
 
-## 🛠️ Development Activities
+## 📂 Regras de Negócio
 
-- ✅ Defined business rules and system requirements
-- ✅ Chose layered backend architecture
-- ✅ Developed and refactored backend code
-- ✅ Implemented unit and integration tests
-- ✅ Documented API with Swagger
-- ✅ Dockerized the application and published to Docker Hub
-- ✅ Modeled system with UML diagrams
+- **Soft Delete**: Entidades marcadas como `DELETED` para preservar histórico
+- **Auditoria**: Rastreia quem modificou o quê e quando
+- **Controle de Status**: Entidades usam `EntityStatus` para gerenciar ciclo de vida
+- **Tratamento de Erros**: Respostas estruturadas via `ErrorMessageDTO` e `ErrorResponseDTO`
 
 ---
 
-## 🎯 Challenges Tackled
+## 🛠️ Atividades de Desenvolvimento
 
-- 🔐 Implemented Spring Security with JWT
-- 🧱 Built layered architecture with domain modularization
-- 🧠 Applied SOLID principles and design patterns
-
----
-
-## 📦 Infrastructure
-
-- Modular domain-based architecture
-- Dockerized services with Compose
-- Swagger UI for live API documentation
-- UML diagrams for system modeling
+- ✅ Definição de regras de negócio e requisitos do sistema
+- ✅ Escolha de arquitetura backend em camadas
+- ✅ Desenvolvimento e refatoração do código backend
+- ✅ Implementação de testes unitários e de integração
+- ✅ Documentação da API com Swagger
+- ✅ Conteinerização da aplicação e publicação no Docker Hub
+- ✅ Modelagem do sistema com diagramas UML
 
 ---
 
-## 📄 Getting Started
+## 🎯 Desafios Enfrentados
+
+- 🔐 Implementação do Spring Security com JWT
+- 🧱 Construção de arquitetura em camadas com modularização por domínio
+- 🧠 Aplicação de princípios SOLID e padrões de projeto
+
+---
+
+## 📦 Infraestrutura
+
+- Arquitetura modular baseada em domínios
+- Serviços conteinerizados com Docker Compose
+- Swagger UI para documentação interativa da API
+- Diagramas UML para modelagem do sistema
+
+---
+
+## 📄 Como Começar
 
 ```bash
-# Clone the repository
+# Clonar o repositório
 https://github.com/CaiquePirs/petland-backend-api.git
 
-# Add your environment variables
+# Adicionar suas variáveis de ambiente
+- criar arquivo .env
 
-# Navigate to the project directory
+# Navegar até o diretório do projeto
 cd petland-backend
 
-# Build the project
+# Compilar o projeto
 mvn clean install
 
-# Run with Docker
+# Executar com Docker
 docker-compose up
 ```
 
 Access Swagger UI at: http://localhost:8080/swagger-ui.html
 
-## 📌 Future Improvements
-- Add CI/CD pipeline
-- Implement role-based dashboards
-- Add notification system for appointments
+## 📌 Melhorias Futuras
+- Adicionar pipeline de CI/CD
+- Implementar dashboards por tipo de usuário
+- Adicionar sistema de notificações para agendamentos
 
-## 🐾 Author
-Caique Backend Developer passionate about clean architecture, scalable systems, and pet-friendly tech solutions.
+## 🐾 Autor
+BookStore API foi desenvolvido por mim **Caique Pires**. Contribuições são bem vindas!
