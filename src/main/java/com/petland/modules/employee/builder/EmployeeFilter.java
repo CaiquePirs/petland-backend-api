@@ -1,7 +1,7 @@
 package com.petland.modules.employee.builder;
 
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.employee.enums.Department;
+import com.petland.modules.employee.model.enums.Department;
 import lombok.Builder;
 import lombok.Data;
 

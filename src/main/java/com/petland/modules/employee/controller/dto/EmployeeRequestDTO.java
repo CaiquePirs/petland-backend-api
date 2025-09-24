@@ -1,9 +1,8 @@
-package com.petland.modules.employee.dto;
+package com.petland.modules.employee.controller.dto;
 
-import com.petland.modules.employee.enums.Department;
+import com.petland.modules.employee.model.enums.Department;
 import com.petland.common.entity.Address;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

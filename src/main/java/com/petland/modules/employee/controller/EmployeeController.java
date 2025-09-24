@@ -1,9 +1,9 @@
 package com.petland.modules.employee.controller;
 
 import com.petland.modules.employee.builder.EmployeeFilter;
-import com.petland.modules.employee.doc.EmployeeApi;
-import com.petland.modules.employee.dto.EmployeeResponseDTO;
-import com.petland.modules.employee.dto.EmployeeUpdateDTO;
+import com.petland.modules.employee.controller.doc.EmployeeApi;
+import com.petland.modules.employee.controller.dto.EmployeeResponseDTO;
+import com.petland.modules.employee.controller.dto.EmployeeUpdateDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.service.EmployeeService;

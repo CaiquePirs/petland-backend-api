@@ -11,7 +11,7 @@ import com.petland.modules.consultation.model.enums.ServiceType;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.model.ConsultationDetails;
 import com.petland.modules.customer.model.Customer;
-import com.petland.modules.employee.enums.Department;
+import com.petland.modules.employee.model.enums.Department;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.pet.model.enums.PetGender;
 import com.petland.modules.pet.model.enums.PetSpecies;

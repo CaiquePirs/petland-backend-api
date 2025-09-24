@@ -1,8 +1,8 @@
 package com.petland.modules.employee.mappers;
 
-import com.petland.modules.employee.dto.EmployeeRequestDTO;
-import com.petland.modules.employee.dto.EmployeeResponseDTO;
-import com.petland.modules.employee.dto.EmployeeResponseReportDTO;
+import com.petland.modules.employee.controller.dto.EmployeeRequestDTO;
+import com.petland.modules.employee.controller.dto.EmployeeResponseDTO;
+import com.petland.modules.employee.controller.dto.EmployeeResponseReportDTO;
 import com.petland.modules.employee.model.Employee;
 import org.mapstruct.Mapper;
 

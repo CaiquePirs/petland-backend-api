@@ -1,9 +1,9 @@
-package com.petland.modules.employee.doc;
+package com.petland.modules.employee.controller.doc;
 
 import com.petland.common.error.ErrorResponseDTO;
 import com.petland.modules.employee.builder.EmployeeFilter;
-import com.petland.modules.employee.dto.EmployeeResponseDTO;
-import com.petland.modules.employee.dto.EmployeeUpdateDTO;
+import com.petland.modules.employee.controller.dto.EmployeeResponseDTO;
+import com.petland.modules.employee.controller.dto.EmployeeUpdateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;

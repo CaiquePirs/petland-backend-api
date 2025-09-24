@@ -1,6 +1,6 @@
 package com.petland.modules.dashboard.model;
 
-import com.petland.modules.employee.dto.EmployeeResponseReportDTO;
+import com.petland.modules.employee.controller.dto.EmployeeResponseReportDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

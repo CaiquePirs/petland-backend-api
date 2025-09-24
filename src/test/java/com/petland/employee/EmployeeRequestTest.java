@@ -1,8 +1,8 @@
 package com.petland.employee;
 
 import com.petland.common.entity.Address;
-import com.petland.modules.employee.dto.EmployeeRequestDTO;
-import com.petland.modules.employee.enums.Department;
+import com.petland.modules.employee.controller.dto.EmployeeRequestDTO;
+import com.petland.modules.employee.model.enums.Department;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

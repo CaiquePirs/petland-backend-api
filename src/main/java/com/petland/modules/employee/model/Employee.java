@@ -3,7 +3,7 @@ package com.petland.modules.employee.model;
 import com.petland.common.entity.BaseEntity;
 import com.petland.common.entity.Address;
 import com.petland.common.entity.enums.Roles;
-import com.petland.modules.employee.enums.Department;
+import com.petland.modules.employee.model.enums.Department;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

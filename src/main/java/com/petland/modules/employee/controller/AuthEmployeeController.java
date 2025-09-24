@@ -2,9 +2,9 @@ package com.petland.modules.employee.controller;
 
 import com.petland.common.auth.dto.AuthRequestDTO;
 import com.petland.common.auth.dto.AuthResponseDTO;
-import com.petland.modules.employee.doc.AuthEmployeeApi;
-import com.petland.modules.employee.dto.EmployeeRequestDTO;
-import com.petland.modules.employee.dto.EmployeeResponseDTO;
+import com.petland.modules.employee.controller.doc.AuthEmployeeApi;
+import com.petland.modules.employee.controller.dto.EmployeeRequestDTO;
+import com.petland.modules.employee.controller.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.mappers.EmployeeMapper;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.usecases.AuthEmployeeUseCase;
