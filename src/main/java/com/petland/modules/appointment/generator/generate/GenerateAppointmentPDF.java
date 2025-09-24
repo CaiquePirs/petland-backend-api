@@ -1,6 +1,7 @@
-package com.petland.modules.appointment.strategy.generate;
+package com.petland.modules.appointment.generator.generate;
 
 import com.petland.common.exception.FailedToGeneratePdfException;
+import com.petland.modules.appointment.generator.PdfFileGenerator;
 import com.petland.modules.appointment.model.Appointment;
 import com.petland.common.utils.PDFStyle;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,12 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class GenerateAppointmentPDF {
+public class GenerateAppointmentPDF implements PdfFileGenerator {
 
     private final PDFStyle pdfStyler;
 
-    public byte[] issue(Appointment appointment){
+    @Override
+    public byte[] generate(Appointment appointment){
         try (PDDocument document = new PDDocument();
              ByteArrayOutputStream output = new ByteArrayOutputStream()) {
 

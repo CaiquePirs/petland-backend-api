@@ -8,7 +8,7 @@ import com.petland.modules.appointment.controller.dtos.AppointmentUpdateDTO;
 import com.petland.modules.appointment.mapper.AppointmentMapper;
 import com.petland.modules.appointment.model.Appointment;
 import com.petland.modules.appointment.service.AppointmentService;
-import com.petland.modules.appointment.strategy.impl.SendAppointmentViaPDF;
+import com.petland.modules.appointment.generator.impl.SendAppointmentViaPDF;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
