@@ -1,7 +1,7 @@
 package com.petland.modules.dashboard.strategy.generate;
 
 import com.petland.common.exception.FailedToGeneratePdfException;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.common.utils.PDFStyle;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;

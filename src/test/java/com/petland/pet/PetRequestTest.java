@@ -1,8 +1,8 @@
 package com.petland.pet;
 
-import com.petland.modules.pet.dto.PetRequestDTO;
-import com.petland.modules.pet.enums.PetGender;
-import com.petland.modules.pet.enums.PetSpecies;
+import com.petland.modules.pet.controller.dto.PetRequestDTO;
+import com.petland.modules.pet.model.enums.PetGender;
+import com.petland.modules.pet.model.enums.PetSpecies;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

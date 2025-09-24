@@ -7,13 +7,13 @@ import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;
 import com.petland.modules.product.service.ProductService;
 import com.petland.modules.sale.builder.SaleFilter;
-import com.petland.modules.sale.dtos.SaleRequestDTO;
-import com.petland.modules.sale.dtos.SaleResponseDTO;
+import com.petland.modules.sale.controller.dtos.SaleRequestDTO;
+import com.petland.modules.sale.controller.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.SaleRepository;
 import com.petland.modules.sale.specifications.SaleSpecifications;
-import com.petland.modules.sale.util.GenerateSaleResponse;
+import com.petland.modules.sale.mappers.SaleMapperGenerator;
 import com.petland.modules.sale.calculator.SaleCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,7 +36,7 @@ public class SaleService {
     private final AccessValidator access;
     private final SaleRepository repository;
     private final SaleCalculator calculator;
-    private final GenerateSaleResponse generate;
+    private final SaleMapperGenerator generate;
 
     @Transactional
     public Sale registerSale(SaleRequestDTO dto){

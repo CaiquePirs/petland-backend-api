@@ -1,8 +1,8 @@
 package com.petland.sale;
 
-import com.petland.modules.consultation.enums.PaymentType;
-import com.petland.modules.sale.dtos.ItemsSaleRequestDTO;
-import com.petland.modules.sale.dtos.SaleRequestDTO;
+import com.petland.modules.consultation.model.enums.PaymentType;
+import com.petland.modules.sale.controller.dtos.ItemsSaleRequestDTO;
+import com.petland.modules.sale.controller.dtos.SaleRequestDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

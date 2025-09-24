@@ -1,25 +1,22 @@
 package com.petland.modules.petCare.controller;
 
 import com.petland.modules.petCare.builder.PetCareFilter;
-import com.petland.modules.petCare.doc.PetCareApi;
-import com.petland.modules.petCare.dtos.PetCareRequestDTO;
-import com.petland.modules.petCare.dtos.PetCareResponseDTO;
+import com.petland.modules.petCare.controller.doc.PetCareApi;
+import com.petland.modules.petCare.controller.dtos.PetCareRequestDTO;
+import com.petland.modules.petCare.controller.dtos.PetCareResponseDTO;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.service.PetCareService;
-import com.petland.modules.petCare.utils.GeneratePetCareResponse;
+import com.petland.modules.petCare.mappers.PetCareMapperGenerator;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RestController
@@ -28,7 +25,7 @@ import java.util.UUID;
 public class PetCareController implements PetCareApi {
 
     private final PetCareService petCareService;
-    private final GeneratePetCareResponse petCareResponse;
+    private final PetCareMapperGenerator petCareResponse;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")

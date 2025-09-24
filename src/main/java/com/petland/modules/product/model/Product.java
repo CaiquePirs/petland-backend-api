@@ -2,7 +2,7 @@ package com.petland.modules.product.model;
 
 import com.petland.common.entity.BaseEntity;
 import com.petland.modules.employee.model.Employee;
-import com.petland.modules.product.enums.ProductType;
+import com.petland.modules.product.model.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

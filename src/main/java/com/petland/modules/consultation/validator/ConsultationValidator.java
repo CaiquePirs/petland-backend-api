@@ -1,7 +1,7 @@
 package com.petland.modules.consultation.validator;
 
 import com.petland.common.exception.UnauthorizedException;
-import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
+import com.petland.modules.consultation.controller.dtos.ConsultationRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,10 +1,10 @@
 package com.petland.modules.consultation.builder;
 
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.consultation.enums.ConsultationPriority;
-import com.petland.modules.consultation.enums.ConsultationStatus;
-import com.petland.modules.consultation.enums.PaymentType;
-import com.petland.modules.consultation.enums.ServiceType;
+import com.petland.modules.consultation.model.enums.ConsultationPriority;
+import com.petland.modules.consultation.model.enums.ConsultationStatus;
+import com.petland.modules.consultation.model.enums.PaymentType;
+import com.petland.modules.consultation.model.enums.ServiceType;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;

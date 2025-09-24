@@ -1,10 +1,10 @@
 package com.petland.modules.appointment.controller;
 
-import com.petland.modules.appointment.doc.AppointmentApi;
+import com.petland.modules.appointment.controller.doc.AppointmentApi;
 import com.petland.modules.appointment.builder.AppointmentFilter;
-import com.petland.modules.appointment.dtos.AppointmentRequestDTO;
-import com.petland.modules.appointment.dtos.AppointmentResponseDTO;
-import com.petland.modules.appointment.dtos.AppointmentUpdateDTO;
+import com.petland.modules.appointment.controller.dtos.AppointmentRequestDTO;
+import com.petland.modules.appointment.controller.dtos.AppointmentResponseDTO;
+import com.petland.modules.appointment.controller.dtos.AppointmentUpdateDTO;
 import com.petland.modules.appointment.mapper.AppointmentMapper;
 import com.petland.modules.appointment.model.Appointment;
 import com.petland.modules.appointment.service.AppointmentService;

@@ -1,7 +1,7 @@
 package com.petland.modules.dashboard.controller;
 
-import com.petland.modules.dashboard.doc.DashboardBillingApi;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.controller.doc.DashboardBillingApi;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.BillingReportsService;
 import com.petland.modules.dashboard.strategy.impl.SendReportViaPDF;
 import lombok.RequiredArgsConstructor;

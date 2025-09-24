@@ -1,7 +1,7 @@
 package com.petland.modules.product.builder;
 
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.product.enums.ProductType;
+import com.petland.modules.product.model.enums.ProductType;
 import lombok.Builder;
 import lombok.Data;
 

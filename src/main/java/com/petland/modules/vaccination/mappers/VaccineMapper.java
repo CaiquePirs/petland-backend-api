@@ -1,7 +1,7 @@
 package com.petland.modules.vaccination.mappers;
 
-import com.petland.modules.vaccination.dto.VaccineRequestDTO;
-import com.petland.modules.vaccination.dto.VaccineResponseDTO;
+import com.petland.modules.vaccination.controller.dto.VaccineRequestDTO;
+import com.petland.modules.vaccination.controller.dto.VaccineResponseDTO;
 import com.petland.modules.vaccination.module.Vaccine;
 import org.mapstruct.Mapper;
 

@@ -2,7 +2,7 @@ package com.petland.modules.dashboard.service;
 
 import com.petland.common.exception.NotFoundException;
 import com.petland.modules.dashboard.builder.BuilderReport;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.vaccination.calculator.VaccinationCalculator;
 import com.petland.modules.vaccination.module.Vaccination;
 import com.petland.modules.vaccination.service.VaccinationService;

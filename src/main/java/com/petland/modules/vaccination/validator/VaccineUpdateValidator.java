@@ -1,6 +1,6 @@
 package com.petland.modules.vaccination.validator;
 
-import com.petland.modules.vaccination.dto.VaccineUpdateDTO;
+import com.petland.modules.vaccination.controller.dto.VaccineUpdateDTO;
 import com.petland.modules.vaccination.module.Vaccine;
 import org.springframework.stereotype.Component;
 

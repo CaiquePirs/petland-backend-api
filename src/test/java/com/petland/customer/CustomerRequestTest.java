@@ -1,7 +1,7 @@
 package com.petland.customer;
 
 import com.petland.common.entity.Address;
-import com.petland.modules.customer.dto.CustomerRequestDTO;
+import com.petland.modules.customer.controller.dto.CustomerRequestDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

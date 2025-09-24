@@ -1,10 +1,10 @@
 package com.petland.modules.product.controller;
 
 import com.petland.modules.product.builder.ProductFilter;
-import com.petland.modules.product.doc.ProductApi;
-import com.petland.modules.product.dto.ProductRequestDTO;
-import com.petland.modules.product.dto.ProductResponseDTO;
-import com.petland.modules.product.dto.ProductUpdateDTO;
+import com.petland.modules.product.controller.doc.ProductApi;
+import com.petland.modules.product.controller.dto.ProductRequestDTO;
+import com.petland.modules.product.controller.dto.ProductResponseDTO;
+import com.petland.modules.product.controller.dto.ProductUpdateDTO;
 import com.petland.modules.product.mappers.ProductMapper;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;

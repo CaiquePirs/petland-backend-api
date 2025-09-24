@@ -1,12 +1,12 @@
 package com.petland.modules.vaccination.controller;
 
 import com.petland.modules.vaccination.builder.VaccinationFilter;
-import com.petland.modules.vaccination.doc.VaccinationApi;
-import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
-import com.petland.modules.vaccination.dto.VaccinationResponseDTO;
-import com.petland.modules.vaccination.dto.VaccinationUpdateDTO;
+import com.petland.modules.vaccination.controller.doc.VaccinationApi;
+import com.petland.modules.vaccination.controller.dto.VaccinationRequestDTO;
+import com.petland.modules.vaccination.controller.dto.VaccinationResponseDTO;
+import com.petland.modules.vaccination.controller.dto.VaccinationUpdateDTO;
 import com.petland.modules.vaccination.module.Vaccination;
-import com.petland.modules.vaccination.util.GenerateVaccinationResponse;
+import com.petland.modules.vaccination.mappers.VaccinationMapperGenerator;
 import com.petland.modules.vaccination.service.VaccinationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import java.util.UUID;
 public class VaccinationController implements VaccinationApi {
 
     private final VaccinationService service;
-    private final GenerateVaccinationResponse response;
+    private final VaccinationMapperGenerator response;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")

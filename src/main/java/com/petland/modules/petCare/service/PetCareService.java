@@ -11,18 +11,17 @@ import com.petland.modules.pet.service.PetService;
 import com.petland.modules.pet.validator.PetValidator;
 import com.petland.modules.petCare.builder.PetCareFilter;
 import com.petland.modules.petCare.calculator.PetCareCalculator;
-import com.petland.modules.petCare.dtos.PetCareHistoryResponseDTO;
-import com.petland.modules.petCare.dtos.PetCareRequestDTO;
-import com.petland.modules.petCare.dtos.PetCareResponseDTO;
-import com.petland.modules.petCare.enums.PetCareType;
+import com.petland.modules.petCare.controller.dtos.PetCareHistoryResponseDTO;
+import com.petland.modules.petCare.controller.dtos.PetCareRequestDTO;
+import com.petland.modules.petCare.controller.dtos.PetCareResponseDTO;
+import com.petland.modules.petCare.model.enums.PetCareType;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
 import com.petland.modules.petCare.repositories.PetCareRepository;
 import com.petland.modules.petCare.specifications.PetCareSpecification;
-import com.petland.modules.petCare.utils.GeneratePetCareResponse;
+import com.petland.modules.petCare.mappers.PetCareMapperGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +30,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -45,7 +43,7 @@ public class PetCareService {
     private final PetCareCalculator calculator;
     private final PetCareRepository repository;
     private final PetCareDetailsService petCareDetailsService;
-    private final GeneratePetCareResponse generateResponse;
+    private final PetCareMapperGenerator generateResponse;
 
     @Transactional
     public PetCare register(PetCareRequestDTO requestDTO) {

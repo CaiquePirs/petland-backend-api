@@ -1,16 +1,16 @@
 package com.petland.consultation;
 
-import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
+import com.petland.modules.consultation.controller.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.strategy.factory.ConsultationFactory;
 import com.petland.modules.consultation.strategy.impl.PetCareConsultationImpl;
 import com.petland.modules.consultation.strategy.impl.SalesConsultationImpl;
 import com.petland.modules.consultation.strategy.impl.VaccinationConsultationImpl;
-import com.petland.modules.petCare.dtos.PetCareRequestDTO;
+import com.petland.modules.petCare.controller.dtos.PetCareRequestDTO;
 import com.petland.modules.petCare.model.PetCare;
-import com.petland.modules.sale.dtos.SaleRequestDTO;
+import com.petland.modules.sale.controller.dtos.SaleRequestDTO;
 import com.petland.modules.sale.model.Sale;
-import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
+import com.petland.modules.vaccination.controller.dto.VaccinationRequestDTO;
 import com.petland.modules.vaccination.module.Vaccination;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

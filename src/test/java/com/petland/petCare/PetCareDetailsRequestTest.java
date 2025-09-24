@@ -1,7 +1,7 @@
 package com.petland.petCare;
 
-import com.petland.modules.petCare.dtos.PetCareDetailsRequestDTO;
-import com.petland.modules.petCare.enums.PetCareType;
+import com.petland.modules.petCare.controller.dtos.PetCareDetailsRequestDTO;
+import com.petland.modules.petCare.model.enums.PetCareType;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

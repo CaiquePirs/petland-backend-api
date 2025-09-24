@@ -1,7 +1,7 @@
 package com.petland.modules.petCare.model;
 
 import com.petland.common.entity.BaseEntity;
-import com.petland.modules.petCare.enums.PetCareType;
+import com.petland.modules.petCare.model.enums.PetCareType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

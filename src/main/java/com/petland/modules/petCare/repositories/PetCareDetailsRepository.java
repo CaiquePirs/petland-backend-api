@@ -1,6 +1,6 @@
 package com.petland.modules.petCare.repositories;
 
-import com.petland.modules.petCare.enums.PetCareType;
+import com.petland.modules.petCare.model.enums.PetCareType;
 import com.petland.modules.petCare.model.PetCareDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 

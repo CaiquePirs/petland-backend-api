@@ -1,10 +1,10 @@
 package com.petland.modules.consultation.model;
 
 import com.petland.common.entity.Address;
-import com.petland.modules.consultation.enums.PaymentType;
-import com.petland.modules.consultation.enums.ConsultationPriority;
-import com.petland.modules.consultation.enums.ServiceType;
-import com.petland.modules.consultation.enums.ConsultationStatus;
+import com.petland.modules.consultation.model.enums.PaymentType;
+import com.petland.modules.consultation.model.enums.ConsultationPriority;
+import com.petland.modules.consultation.model.enums.ServiceType;
+import com.petland.modules.consultation.model.enums.ConsultationStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

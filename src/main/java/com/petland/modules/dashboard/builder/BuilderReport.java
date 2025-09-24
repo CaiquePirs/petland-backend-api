@@ -1,7 +1,7 @@
 package com.petland.modules.dashboard.builder;
 
 import com.petland.common.auth.validator.AccessValidator;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.employee.mappers.EmployeeMapper;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;

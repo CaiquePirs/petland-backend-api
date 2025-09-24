@@ -4,7 +4,7 @@ import com.petland.common.exception.NotFoundException;
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.product.model.Product;
 import com.petland.modules.product.service.ProductService;
-import com.petland.modules.sale.dtos.ItemsSaleRequestDTO;
+import com.petland.modules.sale.controller.dtos.ItemsSaleRequestDTO;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.repositories.ItemsSaleRepository;

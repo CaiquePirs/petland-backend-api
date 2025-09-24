@@ -1,11 +1,11 @@
 package com.petland.modules.sale.controller;
 
 import com.petland.modules.sale.builder.SaleFilter;
-import com.petland.modules.sale.doc.SaleApi;
-import com.petland.modules.sale.dtos.SaleRequestDTO;
-import com.petland.modules.sale.dtos.SaleResponseDTO;
+import com.petland.modules.sale.controller.doc.SaleApi;
+import com.petland.modules.sale.controller.dtos.SaleRequestDTO;
+import com.petland.modules.sale.controller.dtos.SaleResponseDTO;
 import com.petland.modules.sale.model.Sale;
-import com.petland.modules.sale.util.GenerateSaleResponse;
+import com.petland.modules.sale.mappers.SaleMapperGenerator;
 import com.petland.modules.sale.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ import java.util.UUID;
 public class SaleController implements SaleApi {
 
     private final SaleService service;
-    private final GenerateSaleResponse response;
+    private final SaleMapperGenerator response;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")

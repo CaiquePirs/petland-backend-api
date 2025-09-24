@@ -1,8 +1,8 @@
 package com.petland.petCare;
 
 import com.petland.modules.petCare.calculator.PetCareCalculator;
-import com.petland.modules.petCare.dtos.PetCareDetailsRequestDTO;
-import com.petland.modules.petCare.enums.PetCareType;
+import com.petland.modules.petCare.controller.dtos.PetCareDetailsRequestDTO;
+import com.petland.modules.petCare.model.enums.PetCareType;
 import com.petland.modules.petCare.mappers.PetCareDetailsMapper;
 import com.petland.modules.petCare.model.PetCareDetails;
 import com.petland.modules.petCare.service.PetCareDetailsService;

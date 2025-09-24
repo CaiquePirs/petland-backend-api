@@ -1,6 +1,6 @@
 package com.petland.modules.consultation.strategy.factory;
 
-import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
+import com.petland.modules.consultation.controller.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.strategy.ConsultationStrategy;
 import lombok.RequiredArgsConstructor;

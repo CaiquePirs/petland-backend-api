@@ -2,7 +2,7 @@ package com.petland.modules.appointment.builder;
 
 import com.petland.common.entity.enums.StatusEntity;
 import com.petland.modules.appointment.model.enums.AppointmentStatus;
-import com.petland.modules.consultation.enums.ServiceType;
+import com.petland.modules.consultation.model.enums.ServiceType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

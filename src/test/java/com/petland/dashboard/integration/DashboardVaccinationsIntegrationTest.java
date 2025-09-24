@@ -3,7 +3,7 @@ package com.petland.dashboard.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.repository.CustomerRepository;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.employee.model.Employee;
 import com.petland.modules.employee.repository.EmployeeRepository;
 import com.petland.modules.pet.model.Pet;

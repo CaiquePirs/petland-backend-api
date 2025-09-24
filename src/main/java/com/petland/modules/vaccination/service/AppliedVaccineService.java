@@ -1,6 +1,6 @@
 package com.petland.modules.vaccination.service;
 
-import com.petland.modules.vaccination.dto.AppliedVaccineRequestDTO;
+import com.petland.modules.vaccination.controller.dto.AppliedVaccineRequestDTO;
 import com.petland.modules.vaccination.module.Vaccine;
 import com.petland.modules.vaccination.module.AppliedVaccine;
 import lombok.RequiredArgsConstructor;

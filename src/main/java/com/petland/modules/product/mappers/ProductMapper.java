@@ -1,7 +1,7 @@
 package com.petland.modules.product.mappers;
 
-import com.petland.modules.product.dto.ProductRequestDTO;
-import com.petland.modules.product.dto.ProductResponseDTO;
+import com.petland.modules.product.controller.dto.ProductRequestDTO;
+import com.petland.modules.product.controller.dto.ProductResponseDTO;
 import com.petland.modules.product.model.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

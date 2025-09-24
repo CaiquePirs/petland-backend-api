@@ -2,12 +2,12 @@ package com.petland.dashboard;
 
 import com.petland.common.exception.NotFoundException;
 import com.petland.modules.dashboard.builder.BuilderReport;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.PetCareReportsService;
 import com.petland.modules.employee.dto.EmployeeResponseReportDTO;
 import com.petland.modules.employee.enums.Department;
 import com.petland.modules.petCare.calculator.PetCareCalculator;
-import com.petland.modules.petCare.enums.PetCareType;
+import com.petland.modules.petCare.model.enums.PetCareType;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.service.PetCareService;
 import org.junit.jupiter.api.BeforeEach;

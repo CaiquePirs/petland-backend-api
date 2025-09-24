@@ -2,9 +2,9 @@ package com.petland.modules.customer.controller;
 
 import com.petland.common.auth.dto.AuthRequestDTO;
 import com.petland.common.auth.dto.AuthResponseDTO;
-import com.petland.modules.customer.doc.AuthCustomerApi;
-import com.petland.modules.customer.dto.CustomerRequestDTO;
-import com.petland.modules.customer.dto.CustomerResponseDTO;
+import com.petland.modules.customer.controller.doc.AuthCustomerApi;
+import com.petland.modules.customer.controller.dto.CustomerRequestDTO;
+import com.petland.modules.customer.controller.dto.CustomerResponseDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.usecases.AuthCustomerUseCase;

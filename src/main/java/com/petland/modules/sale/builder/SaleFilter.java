@@ -1,7 +1,7 @@
 package com.petland.modules.sale.builder;
 
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.consultation.enums.PaymentType;
+import com.petland.modules.consultation.model.enums.PaymentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,11 +1,11 @@
 package com.petland.modules.consultation.controller;
 
-import com.petland.modules.consultation.doc.ConsultationApi;
+import com.petland.modules.consultation.controller.doc.ConsultationApi;
 import com.petland.modules.consultation.builder.ConsultationFilter;
-import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
-import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
-import com.petland.modules.consultation.enums.ConsultationStatus;
-import com.petland.modules.consultation.generate.GenerateConsultationResponse;
+import com.petland.modules.consultation.controller.dtos.ConsultationRequestDTO;
+import com.petland.modules.consultation.controller.dtos.ConsultationResponseDTO;
+import com.petland.modules.consultation.model.enums.ConsultationStatus;
+import com.petland.modules.consultation.mappers.ConsultationMapperGenerator;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.service.ConsultationService;
 import jakarta.validation.Valid;
@@ -26,7 +26,7 @@ import java.util.UUID;
 public class ConsultationController implements ConsultationApi {
 
     private final ConsultationService service;
-    private final GenerateConsultationResponse generate;
+    private final ConsultationMapperGenerator generate;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")

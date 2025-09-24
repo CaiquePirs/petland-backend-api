@@ -1,19 +1,16 @@
 package com.petland.modules.petCare.specifications;
 
 import com.petland.modules.petCare.builder.PetCareFilter;
-import com.petland.modules.petCare.enums.PetCareType;
+import com.petland.modules.petCare.model.enums.PetCareType;
 import com.petland.modules.petCare.model.PetCare;
 import com.petland.modules.petCare.model.PetCareDetails;
 import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import jakarta.persistence.criteria.Predicate;
 

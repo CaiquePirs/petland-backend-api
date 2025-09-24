@@ -2,7 +2,7 @@ package com.petland.modules.dashboard.service;
 
 import com.petland.common.exception.NotFoundException;
 import com.petland.modules.dashboard.builder.BuilderReport;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.sale.calculator.SaleCalculator;
 import com.petland.modules.sale.model.Sale;
 import com.petland.modules.sale.service.SaleService;

@@ -1,6 +1,6 @@
 package com.petland.modules.dashboard.strategy.impl;
 
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.strategy.generate.GenerateReportPDF;
 import com.petland.modules.dashboard.strategy.ReportStrategy;
 import lombok.RequiredArgsConstructor;

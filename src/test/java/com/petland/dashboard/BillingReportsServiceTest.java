@@ -2,7 +2,7 @@ package com.petland.dashboard;
 
 import com.petland.modules.dashboard.builder.BuilderReport;
 import com.petland.modules.dashboard.calculator.BillingCalculator;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.BillingReportsService;
 import com.petland.modules.employee.dto.EmployeeResponseReportDTO;
 import com.petland.modules.employee.enums.Department;

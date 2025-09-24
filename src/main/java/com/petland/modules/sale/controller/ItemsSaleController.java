@@ -1,7 +1,7 @@
 package com.petland.modules.sale.controller;
 
-import com.petland.modules.sale.doc.ItemSaleApi;
-import com.petland.modules.sale.dtos.ItemsSaleResponseDTO;
+import com.petland.modules.sale.controller.doc.ItemSaleApi;
+import com.petland.modules.sale.controller.dtos.ItemsSaleResponseDTO;
 import com.petland.modules.sale.mappers.ItemSaleMapper;
 import com.petland.modules.sale.model.ItemsSale;
 import com.petland.modules.sale.service.ItemsSaleService;

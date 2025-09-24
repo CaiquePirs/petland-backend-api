@@ -2,7 +2,7 @@ package com.petland.employee.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.customer.dto.CustomerResponseDTO;
+import com.petland.modules.customer.controller.dto.CustomerResponseDTO;
 import com.petland.modules.employee.dto.EmployeeResponseDTO;
 import com.petland.modules.employee.dto.EmployeeUpdateDTO;
 import com.petland.modules.employee.enums.Department;

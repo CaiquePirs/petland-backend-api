@@ -1,8 +1,8 @@
 package com.petland.modules.pet.builder;
 
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.pet.enums.PetGender;
-import com.petland.modules.pet.enums.PetSpecies;
+import com.petland.modules.pet.model.enums.PetGender;
+import com.petland.modules.pet.model.enums.PetSpecies;
 import lombok.Builder;
 import lombok.Data;
 

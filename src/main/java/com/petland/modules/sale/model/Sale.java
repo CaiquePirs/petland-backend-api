@@ -1,7 +1,7 @@
 package com.petland.modules.sale.model;
 
 import com.petland.common.entity.BaseEntity;
-import com.petland.modules.consultation.enums.PaymentType;
+import com.petland.modules.consultation.model.enums.PaymentType;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.employee.model.Employee;
 import jakarta.persistence.*;

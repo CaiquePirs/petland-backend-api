@@ -1,6 +1,6 @@
 package com.petland.modules.pet.validator;
 
-import com.petland.modules.pet.dto.PetUpdateDTO;
+import com.petland.modules.pet.controller.dto.PetUpdateDTO;
 import com.petland.modules.pet.model.Pet;
 import org.springframework.stereotype.Component;
 

@@ -6,11 +6,11 @@ import com.petland.common.exception.NotFoundException;
 import com.petland.common.exception.UnauthorizedException;
 import com.petland.modules.consultation.builder.ConsultationFilter;
 import com.petland.modules.consultation.calculator.ConsultationCalculator;
-import com.petland.modules.consultation.dtos.ConsultationHistoryResponseDTO;
-import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
-import com.petland.modules.consultation.dtos.ConsultationResponseDTO;
-import com.petland.modules.consultation.enums.PaymentType;
-import com.petland.modules.consultation.generate.GenerateConsultationResponse;
+import com.petland.modules.consultation.controller.dtos.ConsultationHistoryResponseDTO;
+import com.petland.modules.consultation.controller.dtos.ConsultationRequestDTO;
+import com.petland.modules.consultation.controller.dtos.ConsultationResponseDTO;
+import com.petland.modules.consultation.model.enums.PaymentType;
+import com.petland.modules.consultation.mappers.ConsultationMapperGenerator;
 import com.petland.modules.consultation.mappers.ConsultationMapper;
 import com.petland.modules.consultation.model.Consultation;
 import com.petland.modules.consultation.model.ConsultationDetails;
@@ -67,7 +67,7 @@ public class ConsultationServiceTest {
     @Mock private ConsultationMapper mapper;
     @Mock private ConsultationFactory factory;
     @Mock private ConsultationCalculator calculator;
-    @Mock private GenerateConsultationResponse generateResponse;
+    @Mock private ConsultationMapperGenerator generateResponse;
     @InjectMocks private ConsultationService consultationService;
 
     private UUID customerId;

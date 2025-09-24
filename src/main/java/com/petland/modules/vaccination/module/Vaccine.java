@@ -1,7 +1,7 @@
 package com.petland.modules.vaccination.module;
 
 import com.petland.common.entity.BaseEntity;
-import com.petland.modules.vaccination.enums.VaccineType;
+import com.petland.modules.vaccination.module.enums.VaccineType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

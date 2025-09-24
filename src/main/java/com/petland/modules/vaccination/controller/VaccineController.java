@@ -1,10 +1,10 @@
 package com.petland.modules.vaccination.controller;
 
 import com.petland.modules.vaccination.builder.VaccineFilter;
-import com.petland.modules.vaccination.doc.VaccineApi;
-import com.petland.modules.vaccination.dto.VaccineRequestDTO;
-import com.petland.modules.vaccination.dto.VaccineResponseDTO;
-import com.petland.modules.vaccination.dto.VaccineUpdateDTO;
+import com.petland.modules.vaccination.controller.doc.VaccineApi;
+import com.petland.modules.vaccination.controller.dto.VaccineRequestDTO;
+import com.petland.modules.vaccination.controller.dto.VaccineResponseDTO;
+import com.petland.modules.vaccination.controller.dto.VaccineUpdateDTO;
 import com.petland.modules.vaccination.mappers.VaccineMapper;
 import com.petland.modules.vaccination.module.Vaccine;
 import com.petland.modules.vaccination.service.VaccineService;

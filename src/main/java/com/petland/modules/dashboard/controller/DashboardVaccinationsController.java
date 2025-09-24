@@ -1,7 +1,7 @@
 package com.petland.modules.dashboard.controller;
 
-import com.petland.modules.dashboard.doc.DashboardVaccinationsApi;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.controller.doc.DashboardVaccinationsApi;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.VaccinationsReportsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

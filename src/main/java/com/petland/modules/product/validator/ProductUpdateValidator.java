@@ -1,6 +1,6 @@
 package com.petland.modules.product.validator;
 
-import com.petland.modules.product.dto.ProductUpdateDTO;
+import com.petland.modules.product.controller.dto.ProductUpdateDTO;
 import com.petland.modules.product.model.Product;
 import org.springframework.stereotype.Service;
 

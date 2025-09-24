@@ -1,9 +1,9 @@
 package com.petland.modules.dashboard.controller;
 
-import com.petland.modules.dashboard.doc.DashboardPetCareApi;
-import com.petland.modules.dashboard.report.Report;
+import com.petland.modules.dashboard.controller.doc.DashboardPetCareApi;
+import com.petland.modules.dashboard.model.Report;
 import com.petland.modules.dashboard.service.PetCareReportsService;
-import com.petland.modules.petCare.enums.PetCareType;
+import com.petland.modules.petCare.model.enums.PetCareType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

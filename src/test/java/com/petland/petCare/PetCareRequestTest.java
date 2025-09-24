@@ -1,8 +1,8 @@
 package com.petland.petCare;
 
 import com.petland.common.entity.Address;
-import com.petland.modules.petCare.dtos.PetCareDetailsRequestDTO;
-import com.petland.modules.petCare.dtos.PetCareRequestDTO;
+import com.petland.modules.petCare.controller.dtos.PetCareDetailsRequestDTO;
+import com.petland.modules.petCare.controller.dtos.PetCareRequestDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

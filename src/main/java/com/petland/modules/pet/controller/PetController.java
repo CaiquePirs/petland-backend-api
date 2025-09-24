@@ -2,10 +2,10 @@ package com.petland.modules.pet.controller;
 
 import com.petland.common.auth.validator.AccessValidator;
 import com.petland.modules.pet.builder.PetFilter;
-import com.petland.modules.pet.doc.PetApi;
-import com.petland.modules.pet.dto.PetRequestDTO;
-import com.petland.modules.pet.dto.PetResponseDTO;
-import com.petland.modules.pet.dto.PetUpdateDTO;
+import com.petland.modules.pet.controller.doc.PetApi;
+import com.petland.modules.pet.controller.dto.PetRequestDTO;
+import com.petland.modules.pet.controller.dto.PetResponseDTO;
+import com.petland.modules.pet.controller.dto.PetUpdateDTO;
 import com.petland.modules.pet.mapper.PetMapper;
 import com.petland.modules.pet.model.Pet;
 import com.petland.modules.pet.service.PetService;

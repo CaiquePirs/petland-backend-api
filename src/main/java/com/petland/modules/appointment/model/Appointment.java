@@ -2,7 +2,7 @@ package com.petland.modules.appointment.model;
 
 import com.petland.common.entity.BaseEntity;
 import com.petland.modules.appointment.model.enums.AppointmentStatus;
-import com.petland.modules.consultation.enums.ServiceType;
+import com.petland.modules.consultation.model.enums.ServiceType;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.pet.model.Pet;
 import jakarta.persistence.*;

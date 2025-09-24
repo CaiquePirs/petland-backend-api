@@ -1,6 +1,6 @@
 package com.petland.sale;
 
-import com.petland.modules.sale.dtos.ItemsSaleRequestDTO;
+import com.petland.modules.sale.controller.dtos.ItemsSaleRequestDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

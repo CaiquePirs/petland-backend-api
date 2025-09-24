@@ -1,7 +1,7 @@
 package com.petland.modules.vaccination.builder;
 
 import com.petland.common.entity.enums.StatusEntity;
-import com.petland.modules.vaccination.enums.VaccineType;
+import com.petland.modules.vaccination.module.enums.VaccineType;
 import lombok.Builder;
 import lombok.Data;
 

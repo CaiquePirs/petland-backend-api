@@ -3,7 +3,7 @@ package com.petland.modules.employee.validator;
 import com.petland.common.entity.Address;
 import com.petland.modules.employee.dto.EmployeeUpdateDTO;
 import com.petland.modules.employee.model.Employee;
-import com.petland.common.entity.AddressUpdateValidator;
+import com.petland.common.utils.AddressUpdateValidator;
 import com.petland.common.auth.validator.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

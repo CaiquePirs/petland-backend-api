@@ -1,8 +1,8 @@
 package com.petland.appointments;
 
-import com.petland.modules.appointment.dtos.AppointmentRequestDTO;
+import com.petland.modules.appointment.controller.dtos.AppointmentRequestDTO;
 import com.petland.modules.appointment.model.enums.AppointmentStatus;
-import com.petland.modules.consultation.enums.ServiceType;
+import com.petland.modules.consultation.model.enums.ServiceType;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

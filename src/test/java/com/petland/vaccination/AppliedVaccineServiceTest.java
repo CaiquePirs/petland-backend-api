@@ -2,7 +2,7 @@ package com.petland.vaccination;
 
 import com.petland.common.exception.InsufficientStockException;
 import com.petland.common.exception.NotFoundException;
-import com.petland.modules.vaccination.dto.AppliedVaccineRequestDTO;
+import com.petland.modules.vaccination.controller.dto.AppliedVaccineRequestDTO;
 import com.petland.modules.vaccination.module.AppliedVaccine;
 import com.petland.modules.vaccination.module.Vaccine;
 import com.petland.modules.vaccination.service.AppliedVaccineService;

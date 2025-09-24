@@ -1,7 +1,7 @@
 package com.petland.modules.appointment.mapper;
 
-import com.petland.modules.appointment.dtos.AppointmentRequestDTO;
-import com.petland.modules.appointment.dtos.AppointmentResponseDTO;
+import com.petland.modules.appointment.controller.dtos.AppointmentRequestDTO;
+import com.petland.modules.appointment.controller.dtos.AppointmentResponseDTO;
 import com.petland.modules.appointment.model.Appointment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

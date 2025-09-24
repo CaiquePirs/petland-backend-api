@@ -1,10 +1,10 @@
 package com.petland.modules.customer.controller;
 
 import com.petland.common.auth.validator.AccessValidator;
-import com.petland.modules.customer.doc.CustomerApi;
+import com.petland.modules.customer.controller.doc.CustomerApi;
 import com.petland.modules.customer.builder.CustomerFilter;
-import com.petland.modules.customer.dto.CustomerResponseDTO;
-import com.petland.modules.customer.dto.UpdateCustomerDTO;
+import com.petland.modules.customer.controller.dto.CustomerResponseDTO;
+import com.petland.modules.customer.controller.dto.UpdateCustomerDTO;
 import com.petland.modules.customer.mappers.CustomerMapper;
 import com.petland.modules.customer.model.Customer;
 import com.petland.modules.customer.service.CustomerService;

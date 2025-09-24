@@ -140,6 +140,4 @@ public class GlobalExceptionHandler {
                 List.of(new ErrorMessageDTO("Access", e.getMessage())));
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
-
-
 }

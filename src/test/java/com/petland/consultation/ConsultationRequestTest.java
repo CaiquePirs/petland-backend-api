@@ -1,10 +1,10 @@
 package com.petland.consultation;
 
-import com.petland.modules.consultation.dtos.ConsultationRequestDTO;
+import com.petland.modules.consultation.controller.dtos.ConsultationRequestDTO;
 import com.petland.modules.consultation.model.ConsultationDetails;
-import com.petland.modules.petCare.dtos.PetCareRequestDTO;
-import com.petland.modules.sale.dtos.SaleRequestDTO;
-import com.petland.modules.vaccination.dto.VaccinationRequestDTO;
+import com.petland.modules.petCare.controller.dtos.PetCareRequestDTO;
+import com.petland.modules.sale.controller.dtos.SaleRequestDTO;
+import com.petland.modules.vaccination.controller.dto.VaccinationRequestDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

@@ -1,7 +1,7 @@
 package com.petland.product;
 
-import com.petland.modules.product.dto.ProductRequestDTO;
-import com.petland.modules.product.enums.ProductType;
+import com.petland.modules.product.controller.dto.ProductRequestDTO;
+import com.petland.modules.product.model.enums.ProductType;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

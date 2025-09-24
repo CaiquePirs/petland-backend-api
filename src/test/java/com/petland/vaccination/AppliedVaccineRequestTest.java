@@ -1,6 +1,6 @@
 package com.petland.vaccination;
 
-import com.petland.modules.vaccination.dto.AppliedVaccineRequestDTO;
+import com.petland.modules.vaccination.controller.dto.AppliedVaccineRequestDTO;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
