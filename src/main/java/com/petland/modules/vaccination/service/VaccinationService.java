@@ -79,13 +79,8 @@ public class VaccinationService {
     }
 
     public Vaccination findById(UUID vaccinationId) {
-        return vaccinationRepository.findById(vaccinationId)
-                .filter(v -> !v.getStatus().equals(StatusEntity.DELETED))
-                .map(vaccinesApplied -> {
-                    List<AppliedVaccine> appliedVaccineList = appliedVaccineRepository.findByVaccinationId(vaccinationId);
-                    vaccinesApplied.setAppliedVaccines(appliedVaccineList);
-                    return vaccinesApplied;
-                }).orElseThrow(() -> new NotFoundException("Vaccination not found"));
+        return vaccinationRepository.findByVaccinationId(vaccinationId)
+                .orElseThrow(() -> new NotFoundException("Vaccination ID not found"));
     }
 
     @Transactional
